@@ -111,6 +111,13 @@ if [ -d ~/bin ] ; then
     export PATH="~/bin:${PATH}"
 fi
 
+# Data Analyisis scripts
+if [ -d ~/analyze ] ; then
+    export PATH="$PATH:~/analyze"
+elif [ -d ~/git/antelope/perl/App-DataExplorer ] ; then
+    export PATH="$PATH:~/git/antelope/perl/App-DataExplorer"
+fi
+
 # Oracle libraries here?
 if [ -d /usr/lib/oracle/11.2/client64/lib ] ; then
     export LD_LIBRARY_PATH=${LD_LIBRARY_PATH}:/usr/lib/oracle/11.2/client64/lib
