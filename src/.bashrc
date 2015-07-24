@@ -94,6 +94,14 @@ if [ -d /usr/local/cuda-7.0 ] ; then
     export PATH="${PATH}:${CUDA_HOME}/bin"
 fi
 
+# For MacPorts
+if [ -d /opt/local/bin ] ; then
+    export PATH="$PATH:/opt/local/bin"
+fi
+if [ -d /opt/local/sbin ] ; then
+    export PATH="$PATH:/opt/local/sbin"
+fi
+
 # Do we have Perl 6's rakudobrew installed?
 if [ -d ~/.rakudobrew ] ; then
     export "PATH=$HOME/.rakudobrew/bin:$PATH"
