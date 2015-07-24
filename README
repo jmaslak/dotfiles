@@ -6,3 +6,11 @@ and thus are not visible to "ls" unless you view hidden files.
 The "src" directory is intended to be copied to the root of a home
 directory to load all dotfiles.
 
+You can install the dot files by changing directory to the directory
+containing this readme, and then executing ./install-dotfiles.pl -
+This script will make symlinks in your home directory that point at
+the files in the src directory for all the files in that src
+directory.  It also renames old files on the first run.  On future
+runs, it skips any files that already exist.  The symlinks allow
+you to keep your dotfiles updated just by running a "git pull".
+
