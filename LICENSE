@@ -1,3 +1,17 @@
+This repo includes code that is available made available by others,
+as stand alone code. Thus, this is a compilation of sources from
+many location.  I do not claim any copyright or license over the
+code I've included from others.  These files will have information
+in them about the original author, when viewed in a text editor.
+
+The Vim Puppet syntax plugin is licensed under the Apache License,
+as indicated in LICENSE.puppet-syntax-vim. The original can be
+found here:
+    https://github.com/puppetlabs/puppet-syntax-vim
+
+All code added by me is licensed under the Artistic License 2.0,
+included below.
+
                The Artistic License 2.0
 
            Copyright (c) 2015 Joel C. Maslak
