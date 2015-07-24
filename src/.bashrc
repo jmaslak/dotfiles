@@ -82,6 +82,8 @@ export VTYSH_PAGER=cat
 # Set up bc options
 if [ -e ~/.bc.startup ] ; then
     BCFILE=~/.bc.startup
+
+    # -l - load math library and set scale=20
     export BC_ENV_ARGS="-l $BCFILE"
 fi
 
