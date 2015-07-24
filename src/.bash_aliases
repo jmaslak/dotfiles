@@ -23,3 +23,6 @@ alias sqlplus="rlwrap -i -f ~/.sqlplus_history -H ~/.sqlplus_history -s 30000 sq
 # Xterm - put in background, and use reverse video (white on black)
 alias xterm="xterm -rv &"
 
+# We use vim
+alias vi="$( which vim )"
+

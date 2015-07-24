@@ -7,6 +7,9 @@
 # If not running interactively, don't do anything
 [ -z "$PS1" ] && return
 
+# Make sure we are in $HOME
+cd $HOME
+
 # don't put duplicate lines in the history. See bash(1) for more options
 # ... or force ignoredups and ignorespace
 HISTCONTROL=ignoredups:ignorespace
@@ -143,3 +146,23 @@ if [ -x /usr/games/fortune ] ; then
     /usr/games/fortune
     echo
 fi
+
+# Solaris workarounds
+if [ "$( uname -a | cut -d' ' -f1,3 )" == 'SunOS 5.10' ] ; then
+    if [ "$TERM" == "screen-256color" ] ; then
+        export TERM=xterm
+    elif [ "$TERM" == "xterm-256color" ] ; then
+        export TERM=xterm
+    fi
+fi
+
+# Local terminfo?
+if [ -d ~/local/lib/terminfo ] ; then
+    export TERMINFO=~/local/lib/terminfo
+fi
+
+# UCB in path?
+if [ -d /usr/ucb ] ; then
+    export PATH="/usr/ucb:$PATH"S
+fi
+
