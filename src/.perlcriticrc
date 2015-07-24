@@ -1,0 +1,4 @@
+severity=4
+verbose=8
+exclude=Subroutines::RequireArgUnpacking InputOutput::RequireBriefOpen
+
