@@ -111,6 +111,13 @@ if [ -d ~/bin ] ; then
     export PATH="~/bin:${PATH}"
 fi
 
+# Oracle libraries here?
+if [ -d /usr/lib/oracle/11.2/client64/lib ] ; then
+    export LD_LIBRARY_PATH=${LD_LIBRARY_PATH}:/usr/lib/oracle/11.2/client64/lib
+    export PATH="$PATH:/usr/lib/oracle/11.2/client64/lib"
+fi
+
+# Private stuff that shouldn't be in Github
 if [ -e ~/.bash_private ] ; then
     . ~/.bash_private
 fi
