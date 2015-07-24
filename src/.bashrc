@@ -30,6 +30,11 @@ if [ -z "$debian_chroot" ] && [ -r /etc/debian_chroot ]; then
     debian_chroot=$(cat /etc/debian_chroot)
 fi
 
+# Set xterms to 256 color
+if [ "$TERM" == "xterm" ] ; then
+    TERM=xterm-256color
+fi
+
 # Set color prompt
 force_color_prompt=yes
 if [ -n "$force_color_prompt" ]; then
@@ -51,16 +56,6 @@ screen*|xterm*|rxvt*)
     PS1="\[\e]0;${debian_chroot:+($debian_chroot)}\u@\h: \w\a\]$PS1"
     ;;
 esac
-
-# enable color support of ls and also add handy aliases
-if [ -x /usr/bin/dircolors ]; then
-    test -r ~/.dircolors && eval "$(dircolors -b ~/.dircolors)" || eval "$(dircolors -b)"
-    alias ls='ls --color=auto'
-
-    alias grep='grep --color=auto'
-    alias fgrep='fgrep --color=auto'
-    alias egrep='egrep --color=auto'
-fi
 
 # Alias definitions.
 if [ -f ~/.bash_aliases ]; then
@@ -111,14 +106,13 @@ if [ ! -z "$PERLBREW_ROOT" ] ; then
     . $PERLBREW_ROOT/etc/bashrc
 fi
 
-# Create my alias for my task manager
-if [ -d ~/git/antelope/perl/tasks ] ; then
-    alias task=~/git/antelope/perl/tasks/task.pl
-fi
-
 # Local bin directory?  Use it!
 if [ -d ~/bin ] ; then
     export PATH="~/bin:${PATH}"
+fi
+
+if [ -e ~/.bash_private ] ; then
+    . ~/.bash_private
 fi
 
 # Can't not have fortune...

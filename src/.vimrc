@@ -49,8 +49,9 @@ au FileType tex setl tw=72 formatoptions+=t
 au BufNewFile,BufRead *.cl set filetype=cool
 au FileType cool setl nospell
 
-" Support syntax highlighting for .bash_aliases
+" Support syntax highlighting for .bash_aliases & .bash_private
 au BufNewFile,BufRead .bash_aliases set filetype=sh
+au BufNewFile,BufRead .bash_private set filetype=sh
 
 au FileType yaml setlocal indentexpr=
 
