@@ -168,9 +168,9 @@ fi
 
 # Perltest installed?
 if [ -d ~/git/antelope/perltest ] ; then
-    export PATH="$PATH:~/git/antelope/perltest"
+    export PATH="$PATH:~/git/antelope/perltest/bin"
 elif [ -d ~/perltest ] ; then
-    export PATH="$PATH:~/git/perltest"
+    export PATH="$PATH:~/git/perltest/bin"
 fi
 
 # dircolors installed?
