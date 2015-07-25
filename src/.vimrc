@@ -1,12 +1,11 @@
-" We use a dark XTerm that supports 256 colors
-" The desert256 theme looks awful on a 256 color console.  You have been
-" warned!
+" We use a dark solarized theme
 
 set background=dark                 " Dark background
 set ruler                           " Ruler at bottom
 set number                          " Line Numbering
 set t_Co=256                        " We do 256 colors
-colorscheme desert256
+set background=dark
+colorscheme solarized
 
 set et                              " Expand Tabs to Spaces
 set sts=4                           " Soft Tabs = 4 spaces
