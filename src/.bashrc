@@ -166,3 +166,8 @@ if [ -d /usr/ucb ] ; then
     export PATH="/usr/ucb:$PATH"
 fi
 
+# dircolors installed?
+if [ "$(which dircolors)" != "" ] ; then
+    eval $(dircolors "$HOME/.dircolors.ansi-universal")
+fi
+
