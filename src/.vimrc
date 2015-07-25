@@ -91,7 +91,7 @@ command -range=% -nargs=* Tidy <line1>,<line2>!
 " iTerm2.app sends weird arrow sequences
 " But we don't have a problem when it's not
 " in xterm/xterm-256 color mode
-if ($TERM_PROGRAM == 'iTerm.app')
+" if ($TERM_PROGRAM == 'iTerm.app')
     if (($TERM == 'xterm') || ($TERM == 'xterm-256color') || ($TERM == 'xterm-color'))
         " Arrows
         set t_ku=[A
@@ -105,5 +105,5 @@ if ($TERM_PROGRAM == 'iTerm.app')
         " End
         set t_@7=[F
     endif
-endif
+" endif
 
