@@ -166,6 +166,13 @@ if [ -d /usr/ucb ] ; then
     export PATH="/usr/ucb:$PATH"
 fi
 
+# Perltest installed?
+if [ -d ~/git/antelope/perltest ] ; then
+    export PATH="$PATH:~/git/antelope/perltest"
+elif [ -d ~/perltest ] ; then
+    export PATH="$PATH:~/git/perltest"
+fi
+
 # dircolors installed?
 if [ "$(which dircolors)" != "" ] ; then
     eval $(dircolors "$HOME/.dircolors.ansi-universal")
