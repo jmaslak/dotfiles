@@ -148,7 +148,7 @@ if [ -x /usr/games/fortune ] ; then
 fi
 
 # Solaris workarounds
-if [ "$( uname -a | cut -d' ' -f1,3 )" == 'SunOS 5.10' ] ; then
+if [ "$( uname -a | cut -d' ' -f1 )" == 'SunOS' ] ; then
     if [ "$TERM" == "screen-256color" ] ; then
         export TERM=xterm
     elif [ "$TERM" == "xterm-256color" ] ; then
