@@ -88,22 +88,3 @@ let perl_include_pod = 1
 command -range=% -nargs=* Tidy <line1>,<line2>!
   \perltidy <args>
 
-" iTerm2.app sends weird arrow sequences
-" But we don't have a problem when it's not
-" in xterm/xterm-256 color mode
-" if ($TERM_PROGRAM == 'iTerm.app')
-    if (($TERM == 'xterm') || ($TERM == 'xterm-256color') || ($TERM == 'xterm-color'))
-        " Arrows
-        set t_ku=[A
-        set t_kd=[B
-        set t_kl=[D
-        set t_kr=[C
-    
-        " Home
-        set t_kh=[H
-    
-        " End
-        set t_@7=[F
-    endif
-" endif
-
