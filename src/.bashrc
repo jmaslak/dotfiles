@@ -163,6 +163,6 @@ fi
 
 # UCB in path?
 if [ -d /usr/ucb ] ; then
-    export PATH="/usr/ucb:$PATH"S
+    export PATH="/usr/ucb:$PATH"
 fi
 
