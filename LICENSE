@@ -9,6 +9,17 @@ as indicated in LICENSE.puppet-syntax-vim. The original can be
 found here:
     https://github.com/puppetlabs/puppet-syntax-vim
 
+The Solarized theme for Vim is licensed under the license described
+in LICENSE.solarized.  The original is available via:
+    http://ethanschoonover.com/solarized
+or  https://github.com/altercation/solarized
+
+The dircolors universal ANSI color scheme is not apparently
+licensed.  The original is available at:
+    https://github.com/seebi/dircolors-solarized
+
+=====
+
 All code added by me is licensed under the Artistic License 2.0,
 included below.
 
