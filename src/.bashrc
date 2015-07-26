@@ -156,6 +156,20 @@ if [ "$( uname -a | cut -d' ' -f1 )" == 'SunOS' ] ; then
     fi
 fi
 
+# More Solaris
+if [ -d /usr/ccs/bin ] ; then
+    export PATH="$PATH:/usr/ccs/bin"
+fi
+if [ -d /usr/sbin ] ; then
+    export PATH="$PATH:/usr/sbin"
+fi
+if [ -d /usr/ccs/bin ] ; then
+    export PATH="$PATH:/usr/ccs/bin"
+fi
+if [ -d /opt/solarisstudio12.4/bin ] ; then
+    export PATH="$PATH:/opt/solarisstudio12.4/bin"
+fi
+
 # Local terminfo?
 if [ -d ~/local/lib/terminfo ] ; then
     export TERMINFO=~/local/lib/terminfo
