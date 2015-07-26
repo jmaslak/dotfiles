@@ -177,7 +177,7 @@ fi
 
 # UCB in path?
 if [ -d /usr/ucb ] ; then
-    export PATH="/usr/ucb:$PATH"
+    export PATH="$PATH:/usr/ucb"
 fi
 
 # Perltest installed?
