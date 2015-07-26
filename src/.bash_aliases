@@ -58,3 +58,13 @@ function tmox-layout12 {
     tmux select-layout 'e078,272x78,0,0[272x25,0,0{68x25,0,0,200,67x25,69,0,215,67x25,137,0,213,67x25,205,0,214},272x25,0,26{68x25,0,26,210,67x25,69,26,219,67x25,137,26,216,67x25,205,26,217},272x26,0,52{68x26,0,52,211,67x26,69,52,220,67x26,137,52,218,67x26,205,52,221}]'
 }
 
+# Set background globally (for VIM) dark
+function dark {
+    echo 'set background=dark' >~/.vim/vimrc.local
+}
+
+# Set background globally (for VIM) light
+function light {
+    echo 'set background=light' >~/.vim/vimrc.local
+}
+

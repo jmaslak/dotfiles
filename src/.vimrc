@@ -4,7 +4,6 @@ set background=dark                 " Dark background
 set ruler                           " Ruler at bottom
 set number                          " Line Numbering
 set t_Co=256                        " We do 256 colors
-set background=dark
 colorscheme solarized
 
 set et                              " Expand Tabs to Spaces
@@ -86,4 +85,9 @@ let perl_include_pod = 1
 " Perl tidy, use :Tidy
 command -range=% -nargs=* Tidy <line1>,<line2>!
   \perltidy <args>
+
+" This lets us globally do something like set background dark
+if filereadable(expand("~/.vim/vimrc.local"))
+    source ~/.vim/vimrc.local
+endif
 
