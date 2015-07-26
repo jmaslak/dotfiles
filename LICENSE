@@ -18,6 +18,11 @@ The dircolors universal ANSI color scheme is not apparently
 licensed.  The original is available at:
     https://github.com/seebi/dircolors-solarized
 
+The gitgutter VIM plugin is licensed under the MIT license.  Copyright
+Andrew Stewart, AirBlade Software Ltd.  Released under the MIT
+licence.  The original is available at:
+    https://github.com/airblade/vim-gitgutter
+
 =====
 
 All code added by me is licensed under the Artistic License 2.0,
