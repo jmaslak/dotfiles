@@ -93,4 +93,5 @@ endif
 
 " Allow toggling between light and dark background using F5
 call togglebg#map("<F5>")
+call togglebg#map("<C-b>")
 
