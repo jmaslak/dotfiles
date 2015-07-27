@@ -4,6 +4,11 @@
 # see /usr/share/doc/bash/examples/startup-files (in the package bash-doc)
 # for examples
 
+# If running on Windows, we need to execute /etc/profile
+if [ ! -z "$SYSTEMROOT" ] ; then
+    . /etc/profile
+fi
+
 # If not running interactively, don't do anything
 [ -z "$PS1" ] && return
 
