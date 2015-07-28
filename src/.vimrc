@@ -98,12 +98,11 @@ nnoremap <leader><space> :noh<cr>
 set colorcolumn=80  " Set 80th column as a colored column
 set textwidth=72    " Wrap at 72 columns
 
-" c -> Wrap comments
 " r -> Continue comments at <enter>
 " q -> Allow reformatting of comments with <block>gq
 " n -> Recognize numbered lists
 " j -> Join removes comment leaders
-set formatoptions+=crqnj
+set formatoptions+=rqnj
 
 " Folding options
 " zC -> Fold all levels
