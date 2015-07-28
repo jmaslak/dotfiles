@@ -1,6 +1,9 @@
 " Everyrapthing pretty much should be UTF-8 by now
 set encoding=utf-8
 
+" Modelines can be a security risk - know you did this...
+set modeline=5
+
 " This means there will be 5 lines above/below the cursor on the
 " screen at all times.  I don't yet know if I like this.  It's not
 " hard to do "zz"...
