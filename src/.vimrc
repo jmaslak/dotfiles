@@ -2,6 +2,7 @@
 set encoding=utf-8
 
 " Modelines can be a security risk - know you did this...
+set modeline
 set modelines=5
 
 " This means there will be 5 lines above/below the cursor on the
