@@ -1,4 +1,4 @@
-" Everything pretty much should be UTF-8 by now
+" Everyrapthing pretty much should be UTF-8 by now
 set encoding=utf-8
 
 " This means there will be 5 lines above/below the cursor on the
@@ -98,11 +98,16 @@ nnoremap <leader><space> :noh<cr>
 set colorcolumn=80  " Set 80th column as a colored column
 set textwidth=72    " Wrap at 72 columns
 
+" Toggle wrapping on/off
+noremap <leader>w :set textwidth=0<cr>
+noremap <leader>W :set textwidth=72<cr>
+
+" c -> Wrap comments
 " r -> Continue comments at <enter>
 " q -> Allow reformatting of comments with <block>gq
 " n -> Recognize numbered lists
-" j -> Join removes comment leaders
-set formatoptions+=rqnj
+" j -> Join removes comment leaders 
+set formatoptions+=crqnj
 
 " Folding options
 " zC -> Fold all levels
