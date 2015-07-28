@@ -48,7 +48,6 @@ autocmd BufNewFile * silent! 0r ~/.vim/templates/%:e.template
 
 filetype plugin indent on
 syntax enable                 " Set syntax highlighting
-autocmd FileType * setlocal formatoptions-=c formatoptions-=r formatoptions-=o
 
 au FileType ruby setl sw=2 sts=2 et
 au FileType asm setl smarttab autoindent
