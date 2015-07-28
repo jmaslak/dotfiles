@@ -122,3 +122,8 @@ endif
 call togglebg#map("<F5>")
 call togglebg#map("<C-b>")
 
+" gitgutter configuration
+let g:gitgutter_sign_columns_always=1 " Always provide space for the signs,
+                                      "  so that windows line up better
+let g:gitgutter_max_signs=50000       " We can edit a big file, allow up to
+                                      "  50,000 lines to change.
