@@ -110,7 +110,11 @@ noremap <leader>W :set textwidth=72<cr>:set fo+=ct<cr>
 " q -> Allow reformatting of comments with <block>gq
 " n -> Recognize numbered lists
 " j -> Join removes comment leaders 
-set formatoptions+=crqnj
+if v:version > 730
+    set formatoptions+=crqnj
+else
+    set formatoptions+=crqn
+endif
 
 " Folding options
 " zC -> Fold all levels
