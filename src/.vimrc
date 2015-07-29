@@ -116,6 +116,9 @@ else
     set formatoptions+=crqn
 endif
 
+" Note that <leader>W turns this on...
+set formatoptions-=t " Turn off text wrapping by default
+
 " Folding options
 " zC -> Fold all levels
 " zO -> Open at position (all levels)
