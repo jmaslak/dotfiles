@@ -98,7 +98,9 @@ set hlsearch    " Highlight matches
 nnoremap <leader><space> :noh<cr>
 
 " Wrapping
-set colorcolumn=80  " Set 80th column as a colored column
+if v:version >= 703
+    set colorcolumn=80  " Set 80th column as a colored column
+endif
 set textwidth=72    " Wrap at 72 columns
 
 " Toggle wrapping on/off
@@ -110,7 +112,7 @@ noremap <leader>W :set textwidth=72<cr>:set fo+=ct<cr>
 " q -> Allow reformatting of comments with <block>gq
 " n -> Recognize numbered lists
 " j -> Join removes comment leaders 
-if v:version > 730
+if v:version > 703
     set formatoptions+=crqnj
 else
     set formatoptions+=crqn
