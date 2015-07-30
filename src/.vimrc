@@ -10,8 +10,8 @@ set modelines=5
 " hard to do "zz"...
 set scrolloff=5
 
-" We use a dark solarized theme
-set background=dark                 " Dark background
+" We use a light solarized theme
+set background=light                " Light background
 set ruler                           " Ruler at bottom
 set number                          " Line Numbering
 set t_Co=256                        " We do 256 colors
@@ -139,7 +139,7 @@ if filereadable(expand("~/.vim/vimrc.local"))
     source ~/.vim/vimrc.local
 endif
 
-" Allow toggling between light and dark background using F5
+" Allow toggling between light and dark background using F5 or C-b
 call togglebg#map("<F5>")
 call togglebg#map("<C-b>")
 
