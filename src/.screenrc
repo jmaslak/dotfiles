@@ -17,21 +17,21 @@ defbce on
 mousetrack on
 
 # default windows
-screen -t Shell01 1 bash
-screen -t Shell02 2 bash
-screen -t Shell03 3 bash
-screen -t Shell04 4 bash
-screen -t Shell05 5 bash
-screen -t Shell06 6 bash
-screen -t Shell07 7 bash
-screen -t Shell08 8 bash
-screen -t Shell09 9 bash
-screen -t Shell10 10 bash
-screen -t Shell11 11 bash
-screen -t Shell12 12 bash
-select 1
-bind c screen 1 # window numbering starts at 1 not 0
-bind 0 select 10
+# screen -t Shell01 1 bash
+# screen -t Shell02 2 bash
+# screen -t Shell03 3 bash
+# screen -t Shell04 4 bash
+# screen -t Shell05 5 bash
+# screen -t Shell06 6 bash
+# screen -t Shell07 7 bash
+# screen -t Shell08 8 bash
+# screen -t Shell09 9 bash
+# screen -t Shell10 10 bash
+# screen -t Shell11 11 bash
+# screen -t Shell12 12 bash
+# select 1
+# bind c screen 1 # window numbering starts at 1 not 0
+# bind 0 select 10
 # bind ! select 11
 # bind @ select 12
 # bind \# select 13
@@ -41,118 +41,118 @@ bind 0 select 10
 bind s split
 
 # layouts
-layout autosave on
-layout new 4x3
+# layout autosave on
+# layout new 4x3
     # Create first column
-    select 1
-    split
-    split
-    split -v
-    split -v
-    split -v
-    focus down
-    select 5
-    split -v
-    split -v
-    split -v
-    focus down
-    select 9
-    split -v
-    split -v
-    split -v
+    #  select 1
+    # split
+    # split
+    # split -v
+    # split -v
+    # split -v
+    # focus down
+    # select 5
+    # split -v
+    # split -v
+    # split -v
+    # focus down
+    # select 9
+    # split -v
+    # split -v
+    # split -v
 
     # Return to 2nd column, top frame
-    focus up
-    focus up
-    focus right
+    # focus up
+    # focus up
+    # focus right
 
     # Create second column
-    select 2
-    focus down
-    select 6
-    focus down
-    select 10
+    # select 2
+    # focus down
+    # select 6
+    # focus down
+    # select 10
 
     # Go to 3rd column, top frame
-    focus up
-    focus up
-    focus right
+    # focus up
+    # focus up
+    # focus right
 
     # Create third column
-    select 3
-    focus down
-    select 7
-    focus down
-    select 11
+    # select 3
+    # focus down
+    # select 7
+    # focus down
+    # select 11
 
     # Go to 4th column, top frame
-    focus up
-    focus up
-    focus right
+    # focus up
+    # focus up
+    # focus right
 
     # Create forth column
-    select 4
-    focus down
-    select 8
-    focus down
-    select 12
+    # select 4
+    # focus down
+    # select 8
+    # focus down
+    # select 12
 
     # Go back to home
-    focus up
-    focus up
-    focus left
-    focus left
-    focus left
-layout save 4x3
+    # focus up
+    # focus up
+    # focus left
+    # focus left
+    # focus left
+# layout save 4x3
 
-layout new 3x3
+# layout new 3x3
     # Create first column
-    split
-    split
-    split -v
-    split -v
-    select 1
-    focus down
-    split -v
-    split -v
-    select 4
-    focus down
-    split -v
-    split -v
-    select 7
+    # split
+    # split
+    # split -v
+    # split -v
+    # select 1
+    # focus down
+    # split -v
+    # split -v
+    # select 4
+    # focus down
+    # split -v
+    # split -v
+    # select 7
 
     # Return to 2nd column, top frame
-    focus up
-    focus up
-    focus right
+    # focus up
+    # focus up
+    # focus right
 
     # Create second column
-    select 2
-    focus down
-    select 5
-    focus down
-    select 8
+    # select 2
+    # focus down
+    # select 5
+    # focus down
+    # select 8
 
     # Go to 3rd column, top frame
-    focus up
-    focus up
-    focus right
+    # focus up
+    # focus up
+    # focus right
 
     # Create third column
-    select 3
-    focus down
-    select 6
-    focus down
-    select 9
+    # select 3
+    # focus down
+    # select 6
+    # focus down
+    # select 9
 
     # Go back to home
-    focus up
-    focus up
-    focus left
-    focus left
+    # focus up
+    # focus up
+    # focus left
+    # focus left
 
-layout attach 3x3
-layout select 3x3
+# layout attach 3x3
+# layout select 3x3
 
 # switch windows with F3 (prev) and F4 (next)
 # bindkey "^[OR" prev
