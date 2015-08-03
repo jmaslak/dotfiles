@@ -75,6 +75,6 @@ fi
     fi
     
     rm .tmp.facter.$$
-    rm .tmp.comment.$$
+    mv .tmp.comment.$$ .cpanreporter/comment.txt
 ) 9<.cpanreporter
 
