@@ -97,7 +97,7 @@ fi
         echo "KERNEL         : $KERNEL $KREL" >>.tmp.comment.$$
     fi
 
-    if [ -z "$VIRT" ]
+    if [ -z "$VIRT" ] ; then
         echo "VIRT not found"
     else
         if [ "$VIRT" == 'physical' ] ; then
