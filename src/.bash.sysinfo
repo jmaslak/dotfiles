@@ -65,7 +65,7 @@ fi
     OSVER=$(  grep 'operatingsystemrelease ' .tmp.facter.$$ 2>/dev/null | sed -e 's/^operatingsystemrelease => //' )
     KERNEL=$( grep 'kernel '                 .tmp.facter.$$ 2>/dev/null | sed -e 's/^kernel => //' )
     KREL=$(   grep 'kernelrelease '          .tmp.facter.$$ 2>/dev/null | sed -e 's/^kernelrelease => //' )
-    VIRT=$(    grep 'virtual '               .tmp.facter.$$ 2>/dev/null | sed -e 's/^virtual => //' )
+    VIRT=$(   egrep '^virtual '              .tmp.facter.$$ 2>/dev/null | sed -e 's/^virtual => //' )
 
     if [ -z "$CPU" ] ; then
         echo "CPU not found"
