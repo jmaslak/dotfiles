@@ -124,8 +124,10 @@ set formatoptions-=t " Turn off text wrapping by default
 " Folding options
 " zC -> Fold all levels
 " zO -> Open at position (all levels)
-set foldmethod=indent
-set nofoldenable
+if v:version > 702
+    set foldmethod=indent
+    set nofoldenable
+endif
 
 " Spell checking in POD
 let perl_include_pod = 1
