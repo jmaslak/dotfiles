@@ -83,7 +83,7 @@ if [ -f /etc/bash_completion ] && ! shopt -oq posix; then
 fi
 
 # Standard editor
-if which vi >/dev/null 2>/dev/null ; then
+if which vim >/dev/null 2>/dev/null ; then
     export VISUAL=$( which vim )
     export EDITOR=$( which vim )
 fi
