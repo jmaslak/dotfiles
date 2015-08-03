@@ -6,6 +6,32 @@
 
 cd $HOME
 
+# Call this with FH#9 reading a file known to exist
+# If flock exists, we lock with that.  Otherwise we lock with a more
+# portable method.
+#
+# FH#9 should go away when the shell exits.
+getlock() {
+    PROG="$1"
+    if [ -x /usr/bin/flock ] ; then
+        flock -n 9
+        if [ $? -ne 0 ] ; then
+            echo "Lock held by other process, exiting" 2>&1
+            exit;
+        fi
+        return;
+    fi
+
+    LOCK=".lockdir-$PROG"
+    if mkdir "$LOCK" >/dev/null 2>&1 ; then
+        trap 'rmdir "$LOCK"' EXIT
+        chmod 0 "$LOCK"  # Discourage edits
+    else
+        echo "Lock held by other process, exiting" 2>&1
+        exit
+    fi
+}
+
 if [ \! -d .cpanreporter ] ; then
     echo ".cpanreporter directory not found, exiting"
     exit;
@@ -17,11 +43,10 @@ if [ \! -x /usr/bin/facter ] ; then
 fi
 
 (
-    flock -n 9
-    if [ $? -ne 0 ] ; then
-        echo "Lock held by other process, exiting"
-        exit;
-    fi
+    getlock bash.sysinfo
+    echo "HERE"
+    sleep 60
+    exit
 
     if [ -e .cpanreporter/comment.head ] ; then
         echo "Heading found for comment"
@@ -76,5 +101,5 @@ fi
     
     rm .tmp.facter.$$
     mv .tmp.comment.$$ .cpanreporter/comment.txt
-) 9<.cpanreporter
+) 9<.bash.sysinfo
 
