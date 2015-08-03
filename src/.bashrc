@@ -16,6 +16,11 @@ fi
 OLDDIR=$PWD
 cd $HOME
 
+# Run this in the background, to create .cpanreporter comment.txt lines
+if [ -x ".bash.sysinfo" ] ; then
+    nohup ./.bash.sysinfo </dev/null >/dev/null 2>/dev/null &
+fi
+
 # don't put duplicate lines in the history. See bash(1) for more options
 # ... or force ignoredups and ignorespace
 HISTCONTROL=ignoredups:ignorespace
