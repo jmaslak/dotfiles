@@ -65,35 +65,45 @@ fi
     OSVER=$(  grep 'operatingsystemrelease ' .tmp.facter.$$ 2>/dev/null | sed -e 's/^operatingsystemrelease => //' )
     KERNEL=$( grep 'kernel '                 .tmp.facter.$$ 2>/dev/null | sed -e 's/^kernel => //' )
     KREL=$(   grep 'kernelrelease '          .tmp.facter.$$ 2>/dev/null | sed -e 's/^kernelrelease => //' )
+    VIRT=$(    grep 'virtual '               .tmp.facter.$$ 2>/dev/null | sed -e 's/^virtual => //' )
 
     if [ -z "$CPU" ] ; then
         echo "CPU not found"
     else
-        echo "CPU    : $CPU" >>.tmp.comment.$$
+        echo "CPU            : $CPU" >>.tmp.comment.$$
     fi
     
     if [ -z "$MEMORY" ] ; then
         echo "MEMORY not found"
     else
-        echo "MEMORY : $MEMORY" >>.tmp.comment.$$
+        echo "MEMORY         : $MEMORY" >>.tmp.comment.$$
     fi
 
     if [ -z "$ARCH" ] ; then
         echo "ARCH not found"
     else
-        echo "ARCH   : $ARCH" >>.tmp.comment.$$
+        echo "ARCH           : $ARCH" >>.tmp.comment.$$
     fi
     
     if [ -z "$OS" -o -z "$OSVER" ] ; then
         echo "OS or OSVER not found"
     else
-        echo "OS     : $OS $OSVER" >>.tmp.comment.$$
+        echo "OS             : $OS $OSVER" >>.tmp.comment.$$
     fi
     
     if [ -z "$KERNEL" -o -z "$KREL" ] ; then
         echo "KERNEL / KREL not found"
     else
-        echo "KERNEL : $KERNEL $KREL" >>.tmp.comment.$$
+        echo "KERNEL         : $KERNEL $KREL" >>.tmp.comment.$$
+    fi
+
+    if [ -z "$VIRT" ]
+        echo "VIRT not found"
+    else
+        if [ "$VIRT" == 'physical' ] ; then
+            VIRT='No Virtualization'
+        fi
+        echo "VIRTUALIZATION : $VIRT" >>.tmp.comment.$$
     fi
     
     rm .tmp.facter.$$
