@@ -27,7 +27,7 @@ alias sqlplus="rlwrap -i -f ~/.sqlplus_history -H ~/.sqlplus_history -s 30000 sq
 alias xterm="xterm -rv &"
 
 # We use vim
-if which vim 2>/dev/null ; then
+if which vim >/dev/null 2>/dev/null ; then
     alias vi="$( which vim )"
 fi
 
