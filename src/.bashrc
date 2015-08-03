@@ -83,8 +83,10 @@ if [ -f /etc/bash_completion ] && ! shopt -oq posix; then
 fi
 
 # Standard editor
-export VISUAL=$( which vim )
-export EDITOR=$( which vim )
+if which vi 2>/dev/null ; then
+    export VISUAL=$( which vim )
+    export EDITOR=$( which vim )
+fi
 
 # Quagga likes to run everything through a pager. Annoying.
 export VTYSH_PAGER=cat
