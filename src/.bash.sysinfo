@@ -44,9 +44,6 @@ fi
 
 (
     getlock bash.sysinfo
-    echo "HERE"
-    sleep 60
-    exit
 
     if [ -e .cpanreporter/comment.head ] ; then
         echo "Heading found for comment"
