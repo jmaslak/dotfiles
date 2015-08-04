@@ -45,16 +45,18 @@ fi
 (
     getlock bash.sysinfo
 
-    if [ -e .cpanreporter/comment.head ] ; then
-        echo "Heading found for comment"
-        cat .cpanreporter/comment.head >.tmp.comment.$$
-    else
-        echo "No heading found, using default."
-        echo "This report is from an automated smoke testing program and was not" >.tmp.comment.$$
-        echo "reviewed by a human for accuracy." >>.tmp.comment.$$
+    if [ -f .tmp.comment.$$ ] ; then
+        # Should not exist
+        rm .tmp.comment.$$
     fi
 
-    echo '' >>.tmp.comment.$$
+    touch .tmp.comment.$$
+
+    if [ -e .cpanreporter/comment.head ] ; then
+        echo "Heading found for comment"
+        cat .cpanreporter/comment.head >>.tmp.comment.$$
+        echo '' >>.tmp.comment.$$
+    fi
 
     facter >.tmp.facter.$$
 
