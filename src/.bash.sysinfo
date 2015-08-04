@@ -32,18 +32,32 @@ getlock() {
     fi
 }
 
+do_darwin () {
+
+}
+
+do_factor () {
+
+}
+
 if [ \! -d .cpanreporter ] ; then
     echo ".cpanreporter directory not found, exiting"
     exit;
 fi
 
-if [ \! -x /usr/bin/facter ] ; then
-    echo "/usr/bin/facter not found, exiting"
+if [ \( \! $( uname -s ) == 'Darwin' \) -a \( \! -x /usr/bin/facter \) ] ; then
+    echo "/usr/bin/facter not found, not MacOS, exiting"
     exit;
 fi
 
 (
     getlock bash.sysinfo
+
+    if [ $( uname -s ) == 'Darwin' ] ; then
+        do_darwin
+    else
+        do_factor
+    fi
 
     if [ -e .cpanreporter/comment.head ] ; then
         echo "Heading found for comment"
