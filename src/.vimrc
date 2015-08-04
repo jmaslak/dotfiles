@@ -74,7 +74,9 @@ au FileType yaml setlocal indentexpr= autoindent
 " Show hidden characters
 set list
 " The next line has a trailing space.
-set listchars=tab:\⇥\ 
+if v:version >= 703
+    set listchars=tab:\⇥\ 
+endif
 " This next line doesn't seem to work fo rme.
 highlight SpecialKey guifg=red ctermfg=red
 
@@ -128,6 +130,10 @@ if v:version > 702
     set foldmethod=indent
     set nofoldenable
 endif
+
+" Highlight columns and rows
+noremap <leader>+ :set cursorline cursorcolumn<cr>
+noremap <leader>- :set nocursorline nocursorcolumn<cr>
 
 " Spell checking in POD
 let perl_include_pod = 1
