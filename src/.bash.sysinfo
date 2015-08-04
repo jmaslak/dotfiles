@@ -6,6 +6,83 @@
 
 cd $HOME
 
+MAIN() {
+    if [ \! -d .cpanreporter ] ; then
+        echo ".cpanreporter directory not found, exiting"
+        exit;
+    fi
+
+    if [ \( \! $( uname -s ) == 'Darwin' \) -a \( \! -x /usr/bin/facter \) ] ; then
+        echo "/usr/bin/facter not found, not MacOS, exiting"
+        exit;
+    fi
+
+    (
+        getlock bash.sysinfo
+
+        if [ $( uname -s ) == 'Darwin' ] ; then
+            do_darwin
+        else
+            do_factor
+        fi
+
+        if [ -f .tmp.comment.$$ ] ; then
+            # Should not exist
+            rm .tmp.comment.$$
+        fi
+
+        touch .tmp.comment.$$
+
+        if [ -e .cpanreporter/comment.head ] ; then
+            echo "Heading found for comment"
+            cat .cpanreporter/comment.head >>.tmp.comment.$$
+            echo '' >>.tmp.comment.$$
+        fi
+
+        if [ -z "$CPU" ] ; then
+            echo "CPU not found"
+        else
+            echo "CPU            : $CPU" >>.tmp.comment.$$
+        fi
+    
+        if [ -z "$MEMORY" ] ; then
+            echo "MEMORY not found"
+        else
+            echo "MEMORY         : $MEMORY" >>.tmp.comment.$$
+        fi
+
+        if [ -z "$ARCH" ] ; then
+            echo "ARCH not found"
+        else
+            echo "ARCH           : $ARCH" >>.tmp.comment.$$
+        fi
+    
+        if [ -z "$OS" -o -z "$OSVER" ] ; then
+            echo "OS or OSVER not found"
+        else
+            echo "OS             : $OS $OSVER" >>.tmp.comment.$$
+        fi
+    
+        if [ -z "$KERNEL" -o -z "$KREL" ] ; then
+            echo "KERNEL / KREL not found"
+        else
+            echo "KERNEL         : $KERNEL $KREL" >>.tmp.comment.$$
+        fi
+
+        if [ -z "$VIRT" ] ; then
+            echo "VIRT not found"
+        else
+            if [ "$VIRT" == 'physical' ] ; then
+                VIRT='No Virtualization'
+            fi
+            echo "VIRTUALIZATION : $VIRT" >>.tmp.comment.$$
+        fi
+    
+        mv .tmp.comment.$$ .cpanreporter/comment.txt
+    ) 9<.bash.sysinfo
+
+}
+
 # Call this with FH#9 reading a file known to exist
 # If flock exists, we lock with that.  Otherwise we lock with a more
 # portable method.
@@ -32,43 +109,24 @@ getlock() {
     fi
 }
 
+#
+# Gather Mac system information
+#
 do_darwin () {
-
+    CPU=$( sysctl -n machdep.cpu.brand_string )
+    MEMORY="$(( ( $( sysctl -n hw.memsize ) + 512 * 1024 * 1024 ) \
+                / ( 1024 * 1024 * 1024 ) )) GB"
+    ARCH=$( uname -m )
+    OS=$( sw_vers -productName )
+    OSVER="$( sw_vers -productVersion ) build $( sw_vers -buildVersion )"
+    KERNEL=$( uname -s )
+    KREL=$( uname -r )
 }
 
+#
+# Gather system information using facter (from Puppet)
+#
 do_factor () {
-
-}
-
-if [ \! -d .cpanreporter ] ; then
-    echo ".cpanreporter directory not found, exiting"
-    exit;
-fi
-
-if [ \( \! $( uname -s ) == 'Darwin' \) -a \( \! -x /usr/bin/facter \) ] ; then
-    echo "/usr/bin/facter not found, not MacOS, exiting"
-    exit;
-fi
-
-(
-    getlock bash.sysinfo
-
-    if [ $( uname -s ) == 'Darwin' ] ; then
-        do_darwin
-    else
-        do_factor
-    fi
-
-    if [ -e .cpanreporter/comment.head ] ; then
-        echo "Heading found for comment"
-        cat .cpanreporter/comment.head >.tmp.comment.$$
-    else
-        echo "No heading found, using default."
-        echo "This report is from an automated smoke testing program and was not" >.tmp.comment.$$
-        echo "reviewed by a human for accuracy." >>.tmp.comment.$$
-    fi
-
-    echo '' >>.tmp.comment.$$
 
     facter >.tmp.facter.$$
 
@@ -81,46 +139,7 @@ fi
     KREL=$(   grep 'kernelrelease '          .tmp.facter.$$ 2>/dev/null | sed -e 's/^kernelrelease => //' )
     VIRT=$(   egrep '^virtual '              .tmp.facter.$$ 2>/dev/null | sed -e 's/^virtual => //' )
 
-    if [ -z "$CPU" ] ; then
-        echo "CPU not found"
-    else
-        echo "CPU            : $CPU" >>.tmp.comment.$$
-    fi
-    
-    if [ -z "$MEMORY" ] ; then
-        echo "MEMORY not found"
-    else
-        echo "MEMORY         : $MEMORY" >>.tmp.comment.$$
-    fi
-
-    if [ -z "$ARCH" ] ; then
-        echo "ARCH not found"
-    else
-        echo "ARCH           : $ARCH" >>.tmp.comment.$$
-    fi
-    
-    if [ -z "$OS" -o -z "$OSVER" ] ; then
-        echo "OS or OSVER not found"
-    else
-        echo "OS             : $OS $OSVER" >>.tmp.comment.$$
-    fi
-    
-    if [ -z "$KERNEL" -o -z "$KREL" ] ; then
-        echo "KERNEL / KREL not found"
-    else
-        echo "KERNEL         : $KERNEL $KREL" >>.tmp.comment.$$
-    fi
-
-    if [ -z "$VIRT" ] ; then
-        echo "VIRT not found"
-    else
-        if [ "$VIRT" == 'physical' ] ; then
-            VIRT='No Virtualization'
-        fi
-        echo "VIRTUALIZATION : $VIRT" >>.tmp.comment.$$
-    fi
-    
     rm .tmp.facter.$$
-    mv .tmp.comment.$$ .cpanreporter/comment.txt
-) 9<.bash.sysinfo
+}
 
+MAIN
