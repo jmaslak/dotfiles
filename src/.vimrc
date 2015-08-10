@@ -99,6 +99,14 @@ set hlsearch    " Highlight matches
 " Leader is normally "\"
 nnoremap <leader><space> :noh<cr>
 
+" Mouse support
+" Leader ("\") + M will turn on mouse support
+" Leader ("\") + m will turn off mouse support
+" It will default on
+set mouse=a
+nnoremap <leader>M :set mouse=a<cr>
+nnoremap <leader>m :set mouse=""<cr>
+
 " Wrapping
 if v:version >= 703
     set colorcolumn=80  " Set 80th column as a colored column
