@@ -18,6 +18,7 @@ my %IGNORE_FILENAME = (
     '.'           => 1,
     '..'          => 1,
     '.git'        => 1,
+    '.gitignore'  => 1,
     'nytprof.out' => 1
 );
 
