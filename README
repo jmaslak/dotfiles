@@ -14,3 +14,16 @@ renames old files on the first run.  On future runs, it skips any files
 that already exist.  The symlinks allow you to keep your dotfiles
 updated just by running a "git pull".
 
+Note that ./install-dotfiles.pl, after the first execution, will
+overwrite templates in .vim/templates where there is a file of the same
+name ending in .base in the same directory.
+
+#######################################################################
+# HOW TO USE THIS REPO                                                #
+#######################################################################
+
+This repo probably shouldn't be used as-is, unless you are Joel Maslak.
+I've added my preferences in these files, but many of these preferences
+are things two different developers/sysadmins may disagree about.
+That's okay!  Feel free to modify them to your own style.
+
