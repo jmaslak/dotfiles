@@ -68,7 +68,7 @@ syntax enable                 " Set syntax highlighting
 au FileType gitcommit setl spell
 
 " Text
-au FileType gitcommit setl spell
+au FileType text setl spell textwidth=72 fo+=t
 
 " Ruby
 au FileType ruby setl sw=2 sts=2 et
