@@ -30,6 +30,8 @@ vmap <s-tab> <gv
 " In normal mode, tab indents, shift-tab un-indents
 nmap <tab> I<tab><esc>
 nmap <s-tab> ^i<bs><esc>
+set shiftround                      " This mode makes more sense
+                                    " (<< and >> use tab stops)
 
 " backspace, %, C++ options
 set backspace=indent,eol,start      " Let me do anything with backspace!
