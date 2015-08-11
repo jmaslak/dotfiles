@@ -24,7 +24,12 @@ set sw=4                            " Retab the entire document (replace
                                     "  tabs with the right amount of space)
 " Shift Width = 4 spaces on indenting
 nnoremap <leader><tab> :retab<cr>
-                                    
+" In visual mode, tab indents block, shift-tab un-indent
+vmap <tab> >gv
+vmap <s-tab> <gv
+" In normal mode, tab indents, shift-tab un-indents
+nmap <tab> I<tab><esc>
+nmap <s-tab> ^i<bs><esc>
 
 " backspace, %, C++ options
 set backspace=indent,eol,start      " Let me do anything with backspace!
