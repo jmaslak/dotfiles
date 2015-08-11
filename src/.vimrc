@@ -122,6 +122,10 @@ au BufNewFile,BufRead .bash_private set filetype=sh
 " from previous line.
 au FileType yaml setlocal indentexpr= autoindent
 
+" Makefile
+" Use real tabs!
+autocmd FileType make set noexpandtab shiftwidth=8 softtabstop=8
+
 " Show hidden characters
 set list
 " The next line has a trailing space.
