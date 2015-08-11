@@ -20,9 +20,8 @@ colorscheme solarized
 " Tab settings
 set et                              " Expand Tabs to Spaces
 set sts=4                           " Soft Tabs = 4 spaces
-set sw=4                            " Retab the entire document (replace
-                                    "  tabs with the right amount of space)
-" Shift Width = 4 spaces on indenting
+set sw=4                            " Shift Width = 4 spaces on indenting
+" Retab the entire document (replace tabs with the right amount of space)
 nnoremap <leader><tab> :retab<cr>
 " In visual mode, tab indents block, shift-tab un-indent
 vmap <tab> >gv
