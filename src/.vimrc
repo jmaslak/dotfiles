@@ -1,4 +1,4 @@
-" Everyrapthing pretty much should be UTF-8 by now
+" Everything pretty much should be UTF-8 by now
 set encoding=utf-8
 
 " Modelines can be a security risk - know you did this...
@@ -94,7 +94,7 @@ command -range=% -nargs=* Tidy <line1>,<line2>!
 " You can use:
 "    :make  (compile)
 "    cc     (display current error)
-"    cn     (dispaly next error)
+"    cn     (display next error)
 "    cp     (display previous error)
 "    cfirst (display first error)
 "
@@ -132,7 +132,7 @@ set list
 if v:version >= 703
     set listchars=tab:\⇥\ 
 endif
-" This next line doesn't seem to work fo rme.
+" This next line doesn't seem to work for me.
 highlight SpecialKey guifg=red ctermfg=red
 
 " Completion hints:
@@ -145,8 +145,8 @@ highlight SpecialKey guifg=red ctermfg=red
 "   CTRL-T - Jumps back one on the stack
 
 " Search parameters
-set ignorecase  " A lowercase string is case-insensitve searching
-set smartcase   " If upercase letters appear, they are case sensitive
+set ignorecase  " A lowercase string is case-insensitive searching
+set smartcase   " If uppercase letters appear, they are case sensitive
 set incsearch   " Incremental searching
 set hlsearch    " Highlight matches
 
@@ -184,7 +184,7 @@ else
 endif
 
 " Note that <leader>W turns this on (even though we turn it off
-" by default here - \W afer \w doesn't go back to default)...
+" by default here - \W after \w doesn't go back to default)...
 set formatoptions-=t " Turn off text wrapping by default
 
 " Folding options
