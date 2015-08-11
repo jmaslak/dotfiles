@@ -52,23 +52,51 @@ autocmd BufNewFile * silent! 0r ~/.vim/templates/%:e.template
 filetype plugin indent on
 syntax enable                 " Set syntax highlighting
 
+"
+" Filetype setup
+"
+
+" Git commit
+au FileType gitcommit setl spell
+
+" Text
+au FileType gitcommit setl spell
+
+" Ruby
 au FileType ruby setl sw=2 sts=2 et
+
+" ASM
 au FileType asm setl smarttab autoindent
+
+" Haskel
 au FileType haskell setl smarttab autoindent sw=4 sts=4 et
 
+" Perl
 " Set "K" to go to perldoc -f
 au FileType perl setl keywordprg=perldoc\ -f
 
+" Spell checking in POD
+let perl_include_pod = 1
+
+" Perl tidy, use :Tidy
+command -range=% -nargs=* Tidy <line1>,<line2>!
+  \perltidy <args>
+
+
+" Tex
 let g:tex_flavor='latex'
 au FileType tex setl tw=72 formatoptions+=t
 
+" Cool
 au BufNewFile,BufRead *.cl set filetype=cool
 au FileType cool setl nospell
 
+" Shell
 " Support syntax highlighting for .bash_aliases & .bash_private
 au BufNewFile,BufRead .bash_aliases set filetype=sh
 au BufNewFile,BufRead .bash_private set filetype=sh
 
+" YAML
 " I don't know what VIM is trying to do with YAML indenting, but
 " I need to turn it all off and just copy indent (autoindent)
 " from previous line.
@@ -146,13 +174,6 @@ endif
 " Highlight columns and rows
 noremap <leader>+ :set cursorline cursorcolumn<cr>
 noremap <leader>- :set nocursorline nocursorcolumn<cr>
-
-" Spell checking in POD
-let perl_include_pod = 1
-
-" Perl tidy, use :Tidy
-command -range=% -nargs=* Tidy <line1>,<line2>!
-  \perltidy <args>
 
 " This lets us globally do something like set background dark
 if filereadable(expand("~/.vim/vimrc.local"))
