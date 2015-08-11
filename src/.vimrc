@@ -83,9 +83,17 @@ command -range=% -nargs=* Tidy <line1>,<line2>!
   \perltidy <args>
 
 " Make command and errors
+" You can use:
+"    :make  (compile)
+"    cc     (display current error)
+"    cn     (dispaly next error)
+"    cp     (display previous error)
+"    cfirst (display first error)
+"
+autocmd FileType perl compiler perl
+" The perl compiler will actually use -W, which makes include files ugly
+" We don't do that.
 autocmd FileType perl setl makeprg=perl\ -c\ %\ $*
-autocmd FileType perl setl errorformat=%f:%l:%m
-
 
 " Tex
 let g:tex_flavor='latex'
