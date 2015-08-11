@@ -20,9 +20,11 @@ colorscheme solarized
 " Tab settings
 set et                              " Expand Tabs to Spaces
 set sts=4                           " Soft Tabs = 4 spaces
-set sw=4                            " Shift Width = 4 spaces on indenting
-nnoremap <leader><tab> :retab<cr>   " Retab the entire document (replace
+set sw=4                            " Retab the entire document (replace
                                     "  tabs with the right amount of space)
+" Shift Width = 4 spaces on indenting
+nnoremap <leader><tab> :retab<cr>
+                                    
 
 " backspace, %, C++ options
 set backspace=indent,eol,start      " Let me do anything with backspace!
