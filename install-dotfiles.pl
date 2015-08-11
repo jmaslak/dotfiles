@@ -7,7 +7,7 @@
 
 use strict;
 use warnings;
-use autodie;
+# use autodie;  # This is incompatible with older perl
 
 use Carp;
 use Cwd;
