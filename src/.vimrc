@@ -82,6 +82,10 @@ let perl_include_pod = 1
 command -range=% -nargs=* Tidy <line1>,<line2>!
   \perltidy <args>
 
+" Make command and errors
+autocmd FileType perl setl makeprg=perl\ -c\ %\ $*
+autocmd FileType perl setl errorformat=%f:%l:%m
+
 
 " Tex
 let g:tex_flavor='latex'
