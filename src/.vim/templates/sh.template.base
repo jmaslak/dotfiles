@@ -1,0 +1,13 @@
+#!/bin/bash
+
+#
+# Copyright (C) 2015 _COPYRIGHT_
+# All Rights Reserved - See License
+#
+
+doit() {
+
+}
+
+doit
+

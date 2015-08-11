@@ -1,0 +1,27 @@
+#!/usr/bin/perl
+
+#
+# Copyright (C) 2015 _COPYRIGHT_
+# All Rights Reserved - See License
+#
+
+use v5.22;
+
+package <NAME HERE> v0.01.00;
+
+use strict;
+use warnings;
+use autodie;
+
+use Moose;
+
+use Carp;
+use namespace::autoclean;
+
+
+
+
+__PACKAGE__->meta->make_immutable;
+
+1;
+

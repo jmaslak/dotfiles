@@ -12,6 +12,7 @@ use warnings;
 use Carp;
 use Cwd;
 use File::Copy qw(move);
+use Symbol;
 
 # Files to ignore
 my %IGNORE_FILENAME = (
@@ -38,6 +39,32 @@ MAIN: {
         # We don't rename if we've already installed stuff
         $rename_old = undef;
     }
+
+    my $copyright;
+    if ( -e "$home/.dotfiles.copyright" ) {
+        $copyright = slurp("$home/.dotfiles.copyright");
+    } else {
+        print "Please enter the name to use for copyright in templates:\n";
+        local $| = 1;
+        print " > ";
+        $copyright = <STDIN>;
+        chomp($copyright);
+
+        print "Creating $home/.dotfiles.copyright ...";
+        spitout("$home/.dotfiles.copyright", $copyright);
+        print "\n";
+    }
+
+    install_files($rename_old);
+    install_vim_templates($copyright);
+}
+
+sub install_files {
+    if (scalar(@_) != 1) { confess 'invalid call'; }
+    my $rename_old = shift;
+
+    my $home    = $ENV{HOME};
+    my $current = getcwd;
 
     opendir( my $dh, "$current/src" );
     my @files = sort readdir($dh);
@@ -74,3 +101,68 @@ MAIN: {
     }
 }
 
+sub install_vim_templates {
+    if (scalar(@_) != 1) { confess 'invalid call'; }
+    my $copyright = shift;
+
+    my $home    = $ENV{HOME};
+    my $current = getcwd;
+
+    opendir( my $dh, "$current/src/.vim/templates" );
+    my @files = sort readdir($dh);
+    closedir $dh;
+
+  LOOP:
+    foreach my $file (@files) {
+        print "Template: $file -> ";
+        if ( exists( $IGNORE_FILENAME{$file} ) ) {
+            print "ignoring\n";
+            next;
+        }
+        foreach my $suffix ( keys %IGNORE_SUFFIX ) {
+            if ( $file =~ m/${suffix}$/ ) {
+                print "ignoring\n";
+                next LOOP;
+            }
+        }
+
+        if (! ( $file =~ m/\.base$/ ) ) {
+            print "ignoring\n";
+            next LOOP;
+        }
+
+        my $basefile = $file;
+        $basefile =~ s/\.base$//;
+
+        print "Creating ... ";
+        my $file = slurp( "$current/src/.vim/templates/$file" );
+        my $out = $file;
+        $out =~ s/_COPYRIGHT_/$copyright/g;
+        spitout("$home/.vim/templates/$basefile", $out);
+
+        print "done\n";
+    }
+}
+
+sub slurp {
+    if (scalar(@_) != 1) { confess 'invalid call' }
+    my $fn = shift;
+
+    # Be compatible with old Perl
+    my $fh = gensym();
+    open($fh, '<', $fn) or die($!);
+    my @out = <$fh>;
+    close($fh);
+
+    return join('', @out);
+}
+
+sub spitout {
+    if (scalar(@_) != 2) { confess 'invalid call' }
+    my ($fn, $val) = @_;
+
+    my $fh = gensym();
+    open($fh, '>', $fn) or die($!);
+    print $fh $val or die($!);
+    close($fh);
+}
