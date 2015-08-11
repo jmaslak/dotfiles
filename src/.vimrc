@@ -41,7 +41,10 @@ set cinoptions=g-1                  " For C++
 "   :spellr[epll] Replace all using previous z=
 
 set spelllang=en_us           " Set spelling Language
-" To turn on spelling, use "set spell"
+" To turn on spelling, <leader>S
+" To turn off spelling, <leader>s
+nnoremap <leader>S :set spell<cr>
+nnoremap <leader>s :set nospell<cr>
 
 " Use templates to create new files
 autocmd BufNewFile * silent! 0r ~/.vim/templates/%:e.template
@@ -128,7 +131,8 @@ else
     set formatoptions+=crqn
 endif
 
-" Note that <leader>W turns this on...
+" Note that <leader>W turns this on (even though we turn it off
+" by default here - \W afer \w doesn't go back to default)...
 set formatoptions-=t " Turn off text wrapping by default
 
 " Folding options
