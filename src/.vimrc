@@ -126,6 +126,10 @@ au FileType yaml setlocal indentexpr= autoindent
 " Use real tabs!
 autocmd FileType make set noexpandtab shiftwidth=8 softtabstop=8
 
+" Asterisk
+" We want to make sure "same =>" gets syntax-colored properly
+au FileType asterisk syn match asteriskExten "^\s*same\s*=>\?\s*[^,]\+" contains=asteriskPriority
+
 " Show hidden characters
 set list
 " The next line has a trailing space.
