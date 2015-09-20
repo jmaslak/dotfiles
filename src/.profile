@@ -22,6 +22,10 @@ fi
 
 # if running bash
 if [ -n "$BASH_VERSION" ]; then
+
+    # We try to set ulimit <open files> to a more useful value
+    ulimit -n 4096 >/dev/null 2>&1
+
     # include .bashrc if it exists
     if [ -f "$HOME/.bashrc" ]; then
         . "$HOME/.bashrc"
