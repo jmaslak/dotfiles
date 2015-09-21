@@ -103,6 +103,10 @@ autocmd FileType perl compiler perl
 " We don't do that.
 autocmd FileType perl setl makeprg=perl\ -c\ %\ $*
 
+" Apache
+" Preserve indent levels
+au FileType apache setlocal indentexpr= autoindent
+
 " Tex
 let g:tex_flavor='latex'
 au FileType tex setl tw=72 formatoptions+=t
