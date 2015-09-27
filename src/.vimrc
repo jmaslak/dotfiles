@@ -107,6 +107,9 @@ autocmd FileType perl setl makeprg=perl\ -c\ %\ $*
 " Preserve indent levels
 au FileType apache setlocal indentexpr= autoindent
 
+au FileType html set sts=2          " Soft Tabs = 2 spaces
+au FileType html set sw=2           " Shift Width = 2 spaces on indenting
+
 " Tex
 let g:tex_flavor='latex'
 au FileType tex setl tw=72 formatoptions+=t
