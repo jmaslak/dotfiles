@@ -76,6 +76,9 @@ au FileType ruby setl sw=2 sts=2 et
 " ASM
 au FileType asm setl smarttab autoindent
 
+" CSS
+au BufNewFile,BufRead *.less set filetype=css
+
 " Haskel
 au FileType haskell setl smarttab autoindent sw=4 sts=4 et
 
