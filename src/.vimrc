@@ -78,6 +78,8 @@ au FileType asm setl smarttab autoindent
 
 " CSS
 au BufNewFile,BufRead *.less set filetype=css
+au FileType css set sts=2          " Soft Tabs = 2 spaces
+au FileType css set sw=2           " Shift Width = 2 spaces on indenting
 
 " Haskel
 au FileType haskell setl smarttab autoindent sw=4 sts=4 et
