@@ -177,10 +177,10 @@ nnoremap <leader><space> :noh<cr>
 " Mouse support
 " Leader ("\") + M will turn on mouse support
 " Leader ("\") + m will turn off mouse support
-" It will default on
+" It will default off
 " I'm guessing this is the version that started with mouse support
 if v:version > 702
-    set mouse=a
+    set mouse=""
     nnoremap <leader>M :set mouse=a<cr>
     nnoremap <leader>m :set mouse=""<cr>
 endif
