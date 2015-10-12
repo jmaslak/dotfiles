@@ -149,6 +149,8 @@ set list
 " work on 702
 if v:version >= 702
     set listchars=tab:\⇥\ 
+else
+    set listchars=
 endif
 " This next line doesn't seem to work for me.
 highlight SpecialKey guifg=red ctermfg=red
@@ -176,9 +178,12 @@ nnoremap <leader><space> :noh<cr>
 " Leader ("\") + M will turn on mouse support
 " Leader ("\") + m will turn off mouse support
 " It will default on
-set mouse=a
-nnoremap <leader>M :set mouse=a<cr>
-nnoremap <leader>m :set mouse=""<cr>
+" I'm guessing this is the version that started with mouse support
+if v:version > 702
+    set mouse=a
+    nnoremap <leader>M :set mouse=a<cr>
+    nnoremap <leader>m :set mouse=""<cr>
+endif
 
 " Wrapping
 if v:version >= 703
