@@ -202,6 +202,27 @@ elif [ -d ~/perltest ] ; then
     export PATH="$PATH:~/perltest/bin"
 fi
 
+# Check for proper terminal functionality
+which infocmp 2>&1 >/dev/null
+if [ $? -eq 0 ] ; then
+    infocmp -1 "$TERM" 2>&1 >/dev/null
+    if [ $? -ne 0 ] ; then
+        export TERM=screen-256color
+        infocmp -1 "$TERM" 2>&1 >/dev/null
+        if [ $? -ne 0 ] ; then
+            export TERM=xterm-256color
+            infocmp -1 "$TERM" 2>&1 >/dev/null
+            if [ $? -ne 0 ] ; then
+                export TERM=xterm
+                infocmp -1 "$TERM" 2>&1 >/dev/null
+                if [ $? -ne 0 ] ; then
+                    export TERM=vt102
+                fi
+            fi
+        fi
+    fi
+fi
+
 # dircolors installed?
 if [ "$(which dircolors)" != "" ] ; then
     eval $(dircolors "$HOME/.dircolors.ansi-universal")
