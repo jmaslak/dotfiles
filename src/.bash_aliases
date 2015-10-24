@@ -31,6 +31,11 @@ if which vim >/dev/null 2>/dev/null ; then
     alias vi="$( which vim )"
 fi
 
+# Json Pretty Printer with my options
+if which json_pp >/dev/null 2>&1 ; then
+    alias jsonpp="json_pp -json_opt canonical,indent"
+fi
+
 # TMUX Stuff
 # Start 8 terminals and layout in 3x3 (one terminal should have already
 # been running)
