@@ -37,7 +37,8 @@ if which json_pp >/dev/null 2>&1 ; then
 fi
 
 # ksudo (uses ksu to execute arbitrary commands as root)
-alias ksudo="ksu -e /bin/bash -c"
+ENVLOC=$(which env)
+alias ksudo="ksu -q -e $ENVLOC --"
 
 # TMUX Stuff
 # Start 8 terminals and layout in 3x3 (one terminal should have already
