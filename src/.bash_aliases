@@ -40,6 +40,11 @@ fi
 ENVLOC=$(which env)
 alias ksudo="ksu -q -e $ENVLOC --"
 
+# If we have a perlbrew version of ipmitool, use it
+if [ -f /usr/local/Cellar/ipmitool/1.8.15/bin/ipmitool ] ; then
+    alias ipmitool=/usr/local/Cellar/ipmitool/1.8.15/bin/ipmitool
+fi
+
 # TMUX Stuff
 # Start 8 terminals and layout in 3x3 (one terminal should have already
 # been running)
@@ -79,3 +84,24 @@ function light {
     echo 'set background=light' >~/.vim/vimrc.local
 }
 
+# SOL Helper
+function sol {
+    if [ "$1" == "" ] ; then
+        echo "Must supply hostname" >&2
+        return 1
+    fi
+    ipmitool -I lanplus -H "$1" -U ADMIN -P ADMIN sol activate
+}
+
+# IPMI Helper
+function ipmi {
+    if [ "$1" == "" ] ; then
+        echo "Must supply hostname" >&2
+        return 1
+    fi
+
+    HOST="$1"
+    shift
+
+    ipmitool -I lanplus -H "$HOST" -U ADMIN -P ADMIN "$@"
+}
