@@ -228,7 +228,7 @@ if [ "$(which dircolors)" != "" ] ; then
     eval $(dircolors "$HOME/.dircolors.ansi-universal")
 fi
 
-# Make sure we are in $HOME, save old dir
+# Make sure we are in the proper directory
 if [ \! -z $OLDDIR ] ; then
     if [ -d $OLDDIR ] ; then
         cd $OLDDIR
