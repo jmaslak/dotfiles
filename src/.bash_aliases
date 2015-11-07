@@ -40,6 +40,9 @@ fi
 ENVLOC=$(which env)
 alias ksudo="ksu -q -e $ENVLOC --"
 
+# kinit should use renewable option
+alias kinit="kinit --renewable"
+
 # If we have a perlbrew version of ipmitool, use it
 if [ -f /usr/local/Cellar/ipmitool/1.8.15/bin/ipmitool ] ; then
     alias ipmitool=/usr/local/Cellar/ipmitool/1.8.15/bin/ipmitool
@@ -90,7 +93,13 @@ function sol {
         echo "Must supply hostname" >&2
         return 1
     fi
-    ipmitool -I lanplus -H "$1" -U ADMIN -P ADMIN sol activate
+    
+    if [ \! -f ~/.ipmi.pw ] ; then
+        echo "Must include the IPMI password in ~/.ipmi.pw" >&2
+        return 2
+    fi
+
+    ipmitool -I lanplus -H "$1" -U ADMIN -P "$(cat ~/.ipmi.pw)" sol activate
 }
 
 # IPMI Helper
@@ -100,8 +109,13 @@ function ipmi {
         return 1
     fi
 
+    if [ \! -f ~/.ipmi.pw ] ; then
+        echo "Must include the IPMI password in ~/.ipmi.pw" >&2
+        return 2
+    fi
+
     HOST="$1"
     shift
 
-    ipmitool -I lanplus -H "$HOST" -U ADMIN -P ADMIN "$@"
+    ipmitool -I lanplus -H "$HOST" -U ADMIN -P "$(cat ~/.ipmi_pw)" "$@"
 }
