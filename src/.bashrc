@@ -232,7 +232,7 @@ fi
 klist 2>&1 >/dev/null
 if [ 0"$?" -eq 0 ] ; then
     # Renew if we can
-    kinit -R 2>&1 >/dev/null
+    kinit -R 2>/dev/null >/dev/null
 fi
 
 # Make sure we are in the proper directory
