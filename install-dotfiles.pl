@@ -162,7 +162,7 @@ sub spitout {
     my ($fn, $val) = @_;
 
     my $fh = gensym();
-    open($fh, '>', $fn) or die($!);
+    open($fh, '>', $fn) or die("Couldn't create $fn - $!\n");
     print $fh $val or die($!);
     close($fh);
 }
