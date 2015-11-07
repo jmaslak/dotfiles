@@ -41,7 +41,20 @@ ENVLOC=$(which env)
 alias ksudo="ksu -q -e $ENVLOC --"
 
 # kinit should use renewable option
-alias kinit="kinit --renewable"
+KINIT=$(which kinit)
+if [ "$KINIT" != "" ] ; then
+
+    # This works on Heimdal, fails on MIT
+    kinit --version 2>/dev/null
+
+    if [ "$?" -eq 0 ] ; then
+        # Heimdal Kerberos
+        alias kinit="kinit --renewable --lifetime=30h"
+    else
+        # MIT Kerberos
+        alias kinit="kinit -r 30h"
+    fi
+fi
 
 # If we have a perlbrew version of ipmitool, use it
 if [ -f /usr/local/Cellar/ipmitool/1.8.15/bin/ipmitool ] ; then
