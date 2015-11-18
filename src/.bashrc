@@ -229,10 +229,12 @@ if [ "$(which dircolors)" != "" ] ; then
 fi
 
 # Do we have a Kerberos ticket?
-klist 2>&1 >/dev/null
-if [ 0"$?" -eq 0 ] ; then
-    # Renew if we can
-    kinit -R 2>/dev/null >/dev/null
+if [ "$(which klist)" != "" ] ; then
+    klist >/dev/null 2>&1
+    if [ 0"$?" -eq 0 ] ; then
+        # Renew if we can
+        kinit -R >/dev/null 2>&1
+    fi
 fi
 
 # Make sure we are in the proper directory
