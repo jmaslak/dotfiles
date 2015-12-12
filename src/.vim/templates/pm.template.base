@@ -6,6 +6,8 @@
 #
 
 use v5.22;
+use feature 'signatures';
+use feature 'switch";
 
 package <NAME HERE> v0.01.00;
 
@@ -18,7 +20,8 @@ use Moose;
 use Carp;
 use namespace::autoclean;
 
-
+no warnings 'method::signatures';
+no warnings 'experimental::smartmatch";
 
 
 __PACKAGE__->meta->make_immutable;

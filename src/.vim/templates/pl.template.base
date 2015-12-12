@@ -5,9 +5,20 @@
 # All Rights Reserved - See License
 #
 
+use v5.22;
+use feature 'signatures';
+use feature 'switch";
+
 use strict;
 use warnings;
 use autodie;
 
 use Carp;
+
+no warnings 'method::signatures';
+no warnings 'experimental::smartmatch";
+
+MAIN: {
+
+}
 
