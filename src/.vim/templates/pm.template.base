@@ -6,8 +6,10 @@
 #
 
 use v5.22;
+use feature 'postderef';
+use feature 'refaliasing';
 use feature 'signatures';
-use feature 'switch";
+use feature 'switch';
 
 package <NAME HERE> v0.01.00;
 
@@ -16,12 +18,17 @@ use warnings;
 use autodie;
 
 use Moose;
+use MooseX::StrictConstructor;
 
 use Carp;
 use namespace::autoclean;
 
-no warnings 'method::signatures';
-no warnings 'experimental::smartmatch";
+use Smart::Comments;
+
+no warnings 'experimental::postderef';
+no warnings 'experimental::refaliasing';
+no warnings 'experimental::signatures';
+no warnings 'experimental::smartmatch';
 
 
 __PACKAGE__->meta->make_immutable;
