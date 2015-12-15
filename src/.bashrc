@@ -158,7 +158,11 @@ fi
 # Can't not have fortune...
 if [ -x /usr/games/fortune ] ; then
     echo
-    /usr/games/fortune
+    if [ -d ~/.fortune ] ; then
+        /usr/games/fortune ~/.fortune
+    else
+        /usr/games/fortune
+    fi
     echo
 fi
 
