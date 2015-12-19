@@ -5,6 +5,8 @@
 # All Rights Reserved - See License
 #
 
+package <INSERT_NAME_HERE> v0.01.00;
+
 use JCM::Boilerplate 'class';
 
 
