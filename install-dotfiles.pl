@@ -57,6 +57,8 @@ MAIN: {
 
     install_files($rename_old);
     install_vim_templates($copyright);
+
+    system "$current/perl-setup.sh";
 }
 
 sub install_files {
