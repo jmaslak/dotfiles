@@ -1,0 +1,48 @@
+---
+abstract: "Default Boilerplate for Joel's Code"
+author:
+  - 'Joel Maslak <jmaslak@antelope.net>'
+build_requires:
+  Test::More: '1.001014'
+configure_requires:
+  ExtUtils::MakeMaker: '0'
+dynamic_config: 0
+generated_by: 'Dist::Zilla version 5.042, CPAN::Meta::Converter version 2.150005'
+license: perl
+meta-spec:
+  url: http://module-build.sourceforge.net/META-spec-v1.4.html
+  version: '1.4'
+name: JCM-Boilerplate
+requires:
+  Bytes::Random: '0.29'
+  Carp: '1.38'
+  Data::Dumper: '2.154'
+  File::Slurp: '9999.19'
+  File::Slurper: '0.008'
+  FindBin: '1.51'
+  IO::Pipe: '1.15'
+  IO::Prompter: '0.004014'
+  IO::Select: '1.22'
+  Import::Into: '1.002005'
+  List::Util: '1.42'
+  Math::Random::ISAAC::XS: '1.004'
+  Moose: '2.1604'
+  Moose::Util::TypeConstraints: '2.1604'
+  MooseX::StrictConstructor: '0.19'
+  Net::LDAP: '0.65'
+  POSIX: '1.53'
+  Smart::Comments: '1.06'
+  Storable: '2.51'
+  Term::ANSIColor: '4.04'
+  Term::ReadKey: v2.30.1
+  Test::Exception: '0.40'
+  Test::More: '1.001014'
+  Try::Tiny: '0.24'
+  TryCatch: '1.003002'
+  YAML::Syck: '1.29'
+  autodie: '2.29'
+  feature: '0'
+  namespace::autoclean: '0.28'
+  perl: v5.22.0
+  warnings: '0'
+version: '1.003'
