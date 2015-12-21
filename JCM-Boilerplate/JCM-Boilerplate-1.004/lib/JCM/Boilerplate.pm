@@ -7,7 +7,7 @@
 
 package JCM::Boilerplate v0.01.02;
 # ABSTRACT: Default Boilerplate for Joel's Code
-$JCM::Boilerplate::VERSION = '1.003';
+$JCM::Boilerplate::VERSION = '1.004';
 
 use v5.22;
 
@@ -64,7 +64,7 @@ JCM::Boilerplate - Default Boilerplate for Joel's Code
 
 =head1 VERSION
 
-version 1.003
+version 1.004
 
 =head1 SYNOPSIS
 
