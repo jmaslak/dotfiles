@@ -23,6 +23,12 @@ fi
 # Make sqlplus usable
 alias sqlplus="rlwrap -i -f ~/.sqlplus_history -H ~/.sqlplus_history -s 30000 sqlplus"
 
+# REPL for Perl6
+if [ \! -f ~/.perl6repl_history ] ; then
+    touch ~/.perl6repl_history
+fi
+alias perl6repl="rlwrap -i -f ~/.perl6repl_history -H ~/.perl6repl_history -s 30000 perl6"
+
 # Xterm - put in background, and use reverse video (white on black)
 alias xterm="xterm -rv &"
 
