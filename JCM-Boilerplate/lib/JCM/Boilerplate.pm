@@ -1,5 +1,3 @@
-#!/usr/bin/perl
-
 #
 # Copyright (C) 2015 Joel C. Maslak
 # All Rights Reserved - See License
