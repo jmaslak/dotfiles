@@ -50,6 +50,8 @@ sub import($self, $type='script') {
 
     feature->import::into($target, ':5.22');
 
+    utf8->import::into($target); # Allow UTF-8 Source
+
     if ($type eq 'class') {
         Moose->import::into($target);
         Moose::Util::TypeConstraints->import::into($target);
