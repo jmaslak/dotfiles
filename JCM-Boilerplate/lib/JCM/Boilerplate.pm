@@ -58,13 +58,14 @@ sub import($self, $type='script') {
     }
 
     Carp->import::into($target);
+    English->import::into($target);
     Smart::Comments->import::into($target);
 
-    feature->import::into($target, 'postderef');
+    feature->import::into($target, 'postderef');    # Not needed if >= 5.23.1
     feature->import::into($target, 'refaliasing');
     feature->import::into($target, 'signatures');
     feature->import::into($target, 'switch');
-    warnings->unimport::out_of($target, 'experimental::postderef');
+    warnings->unimport::out_of($target, 'experimental::postderef'); # Not needed if >= 5.23.1
     warnings->unimport::out_of($target, 'experimental::refaliasing');
     warnings->unimport::out_of($target, 'experimental::signatures');
 
