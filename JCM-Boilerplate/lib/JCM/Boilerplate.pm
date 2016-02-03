@@ -3,7 +3,7 @@
 # All Rights Reserved - See License
 #
 
-package JCM::Boilerplate v0.01.02;
+package JCM::Boilerplate v0.01.07;
 # ABSTRACT: Default Boilerplate for Joel's Code
 
 =head1 SYNOPSIS
@@ -59,7 +59,7 @@ sub import($self, $type='script') {
 
     Carp->import::into($target);
     English->import::into($target);
-    Smart::Comments->import::into($target);
+    Smart::Comments->import::into($target, '-ENV', '###');
 
     feature->import::into($target, 'postderef');    # Not needed if >= 5.23.1
     feature->import::into($target, 'refaliasing');
