@@ -1,9 +1,9 @@
 #
-# Copyright (C) 2015 Joel C. Maslak
+# Copyright (C) 2015,2016 Joel C. Maslak
 # All Rights Reserved - See License
 #
 
-package JCM::Boilerplate v0.01.07;
+package JCM::Boilerplate v0.01.08;
 # ABSTRACT: Default Boilerplate for Joel's Code
 
 =head1 SYNOPSIS
