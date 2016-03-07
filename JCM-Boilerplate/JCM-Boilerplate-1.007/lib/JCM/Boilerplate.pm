@@ -3,9 +3,9 @@
 # All Rights Reserved - See License
 #
 
-package JCM::Boilerplate v0.01.02;
+package JCM::Boilerplate v0.01.07;
 # ABSTRACT: Default Boilerplate for Joel's Code
-$JCM::Boilerplate::VERSION = '1.006';
+$JCM::Boilerplate::VERSION = '1.007';
 
 use v5.22;
 
@@ -37,7 +37,7 @@ sub import($self, $type='script') {
 
     Carp->import::into($target);
     English->import::into($target);
-    Smart::Comments->import::into($target);
+    Smart::Comments->import::into($target, '-ENV', '###');
 
     feature->import::into($target, 'postderef');    # Not needed if >= 5.23.1
     feature->import::into($target, 'refaliasing');
@@ -65,7 +65,7 @@ JCM::Boilerplate - Default Boilerplate for Joel's Code
 
 =head1 VERSION
 
-version 1.006
+version 1.007
 
 =head1 SYNOPSIS
 
@@ -95,7 +95,7 @@ Joel Maslak <jmaslak@antelope.net>
 
 =head1 COPYRIGHT AND LICENSE
 
-This software is copyright (c) 2015 by Joel Maslak.
+This software is copyright (c) 2015,2016 by Joel Maslak.
 
 This is free software; you can redistribute it and/or modify it under
 the same terms as the Perl 5 programming language system itself.
