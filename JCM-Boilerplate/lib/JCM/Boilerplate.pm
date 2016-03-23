@@ -65,6 +65,7 @@ sub import($self, $type='script') {
     feature->import::into($target, 'refaliasing');
     feature->import::into($target, 'signatures');
     feature->import::into($target, 'switch');
+    feature->import::into($target, 'unicode_strings');
     warnings->unimport::out_of($target, 'experimental::postderef'); # Not needed if >= 5.23.1
     warnings->unimport::out_of($target, 'experimental::refaliasing');
     warnings->unimport::out_of($target, 'experimental::signatures');
