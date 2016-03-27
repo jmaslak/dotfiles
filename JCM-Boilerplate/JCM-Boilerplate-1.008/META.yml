@@ -68,6 +68,7 @@ requires:
   NetAddr::IP: '4.078'
   POSIX: '1.53'
   Parallel::WorkUnit: '1.006'
+  Privileges::Drop: '1.03'
   Proc::Daemon: '0.22'
   Readonly: '2.00'
   Regexp::Common: '2015121601'
