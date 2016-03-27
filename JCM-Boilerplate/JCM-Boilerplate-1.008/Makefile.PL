@@ -179,4 +179,8 @@ unless ( eval { ExtUtils::MakeMaker->VERSION(6.63_03) } ) {
 delete $WriteMakefileArgs{CONFIGURE_REQUIRES}
   unless eval { ExtUtils::MakeMaker->VERSION(6.52) };
 
+if ( $^O eq 'linux' ) {
+	$WriteMakefileArgs{PREREQ_PM}{'Linux::Prctl'} = '> v1.6.1';
+}
+
 WriteMakefile(%WriteMakefileArgs);
