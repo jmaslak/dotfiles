@@ -16,8 +16,9 @@ name: JCM-Boilerplate
 provides:
   JCM::Boilerplate:
     file: lib/JCM/Boilerplate.pm
-    version: '1.007'
+    version: '1.008'
 requires:
+  AnyEvent::Ping: '0.11'
   Bytes::Random::Secure: '0.29'
   CHI: '0.6'
   Carp: '1.38'
@@ -60,6 +61,7 @@ requires:
   Moose: '2.1604'
   Moose::Util::TypeConstraints: '2.1604'
   MooseX::Clone: '0.06'
+  MooseX::Singleton: '0.29'
   MooseX::StrictConstructor: '0.19'
   Net::DNS: '1.04'
   Net::LDAP: '0.65'
@@ -71,6 +73,7 @@ requires:
   Regexp::Common: '2015121601'
   Smart::Comments: '1.06'
   Storable: '2.51'
+  Sys::Hostname::FQDN: '0.11'
   Term::ANSIColor: '4.04'
   Term::ReadKey: v2.30.1
   Term::Tmux::Layout: '1.003'
@@ -85,4 +88,4 @@ requires:
   namespace::autoclean: '0.28'
   perl: v5.22.0
   warnings: '0'
-version: '1.007'
+version: '1.008'
