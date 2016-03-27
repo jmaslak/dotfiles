@@ -17,6 +17,10 @@ set number                          " Line Numbering
 set t_Co=256                        " We do 256 colors
 colorscheme solarized
 
+" Swapfile configuration
+set swapfile
+set dir=~/tmp
+
 " Tab settings
 set et                              " Expand Tabs to Spaces
 set sts=4                           " Soft Tabs = 4 spaces

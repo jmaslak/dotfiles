@@ -17,9 +17,9 @@ and turns on the strictures I've come to rely upon.  Secondly, it depends
 on a number of other modules to aid in setting up new environments (I can
 just do a "cpan JCM-Boilerplate" to install everything I need).
 
-This module optionally takes one of two parameters, 'script' or 'class'. If
-'script' is specified, the module assumes that you do not need Moose or
-MooseX modules.
+This module optionally takes one of two parameters, 'script', 'class',
+or 'role'. If 'script' is specified, the module assumes that you do not
+need Moose or MooseX modules.
 
 =head1 WARNINGS
 This module makes significant changes in the calling package!
@@ -38,7 +38,7 @@ use Import::Into;
 use Smart::Comments;
 
 sub import($self, $type='script') {
-    ### assert: (($type eq 'class') || ($type eq 'script'))
+    ### assert: ($type =~ m/^(?:class|role|script)$/ms)
     
     my $target = caller;
 
@@ -52,6 +52,11 @@ sub import($self, $type='script') {
 
     if ($type eq 'class') {
         Moose->import::into($target);
+        Moose::Util::TypeConstraints->import::into($target);
+        MooseX::StrictConstructor->import::into($target);
+        namespace::autoclean->import::into($target);
+    } elsif ($type eq 'role') {
+        Moose::Role->import::into($target);
         Moose::Util::TypeConstraints->import::into($target);
         MooseX::StrictConstructor->import::into($target);
         namespace::autoclean->import::into($target);

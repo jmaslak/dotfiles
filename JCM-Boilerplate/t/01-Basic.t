@@ -8,7 +8,7 @@
 
 # Basic testing
 
-use Test::More tests => 2;
+use Test::More tests => 5;
 
 # Instantiate the object
 require_ok('JCM::Boilerplate');
@@ -25,4 +25,25 @@ eval {
         }
     }
 } or fail('Boilerplate fails');
+
+eval {
+    package foo_script {
+        use JCM::Boilerplate 'script';
+    }
+    pass('Boilerplate script tag works');
+} or fail('Boilerplate script tag works');
+
+eval {
+    package foo_class {
+        use JCM::Boilerplate 'class';
+    }
+    pass('Boilerplate class tag works');
+} or fail('Boilerplate class tag works');
+
+eval {
+    package foo_role {
+        use JCM::Boilerplate 'role';
+    }
+    pass('Boilerplate role tag works');
+} or fail('Boilerplate role tag works');
 
