@@ -233,7 +233,7 @@ if [ "$(which dircolors)" != "" ] ; then
 fi
 
 # Do we have a Kerberos ticket?
-if [ "$(which klist)" != "" ] ; then
+if [ "$(which klist 2>/dev/null)" != "" ] ; then
     klist >/dev/null 2>&1
     if [ 0"$?" -eq 0 ] ; then
         # Renew if we can
