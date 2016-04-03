@@ -47,7 +47,7 @@ ENVLOC=$(which env)
 alias ksudo="ksu -q -e $ENVLOC --"
 
 # kinit should use renewable option
-KINIT=$(which kinit)
+KINIT=$(which kinit 2>/dev/null)
 if [ "$KINIT" != "" ] ; then
 
     # This works on Heimdal, fails on MIT
