@@ -67,6 +67,15 @@ if [ -f /usr/local/Cellar/ipmitool/1.8.15/bin/ipmitool ] ; then
     alias ipmitool=/usr/local/Cellar/ipmitool/1.8.15/bin/ipmitool
 fi
 
+# Make "home" go to home directory (use Windows home directory on
+# Cygwin)
+if [ "$(uname -o)" == "Cygwin" ] ; then
+    cpath=$(cygpath $HOMEPATH)
+    alias home="cd $cpath ; pwd"
+else
+    alias home="cd ~ ; pwd"
+fi
+
 # TMUX Stuff
 # Start 8 terminals and layout in 3x3 (one terminal should have already
 # been running)
