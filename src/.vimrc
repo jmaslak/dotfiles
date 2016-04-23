@@ -1,11 +1,13 @@
 " Everything pretty much should be UTF-8 by now
 set encoding=utf-8
 
-" Cygwin doesn't set the default shell right, which causes
+" Some environments don't set the shell right, which causes
 " issues with gitgutter and probably other things that assume
-" bash is present.
-if has("win32unix")
-    set shell=bash
+" the shell is actually bash and not sh.
+if !empty(glob("/bin/bash"))
+    set shell=/bin/bash
+elseif !empty(glob("/usr/bin/bash"))
+    set shell=/usr/bin/bash
 endif
 
 " Modelines can be a security risk - know you did this...
