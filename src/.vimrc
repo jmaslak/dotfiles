@@ -182,11 +182,11 @@ au FileType asterisk syn match asteriskExten "^\s*same\s*=>\?\s*[^,]\+" contains
 
 " Show hidden characters
 set list
-" The next line has a trailing space.
 " Note that the version was 703 for some reason, but I think this should
 " work on 702
 if v:version >= 702
-    set listchars=tab:\⇥\ 
+    " The next line has a trailing space.
+    set listchars=tab:\→\ 
 else
     set listchars=
 endif
