@@ -73,6 +73,9 @@ screen*|xterm*|rxvt*)
     ;;
 esac
 
+# Make sure shell is exported
+export SHELL="$0"
+
 # Alias definitions.
 if [ -f ~/.bash_aliases ]; then
     . ~/.bash_aliases
