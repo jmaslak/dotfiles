@@ -105,6 +105,9 @@ syntax enable                 " Set syntax highlighting
 " Git commit
 au FileType gitcommit setl spell
 
+" Markdown
+au FileType markdown setl spell textwidth=72 fo+=t autoindent smarttab
+
 " Text
 au FileType text setl spell textwidth=72 fo+=t
 
