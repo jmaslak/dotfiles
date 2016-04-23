@@ -73,6 +73,9 @@ screen*|xterm*|rxvt*)
     ;;
 esac
 
+# Make sure shell is exported
+export SHELL="$0"
+
 # Alias definitions.
 if [ -f ~/.bash_aliases ]; then
     . ~/.bash_aliases
@@ -233,7 +236,7 @@ if [ "$(which dircolors)" != "" ] ; then
 fi
 
 # Do we have a Kerberos ticket?
-if [ "$(which klist)" != "" ] ; then
+if [ "$(which klist 2>/dev/null)" != "" ] ; then
     klist >/dev/null 2>&1
     if [ 0"$?" -eq 0 ] ; then
         # Renew if we can

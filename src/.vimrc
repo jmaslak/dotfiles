@@ -1,6 +1,15 @@
 " Everything pretty much should be UTF-8 by now
 set encoding=utf-8
 
+" Some environments don't set the shell right, which causes
+" issues with gitgutter and probably other things that assume
+" the shell is actually bash and not sh.
+if !empty(glob("/bin/bash"))
+    set shell=/bin/bash
+elseif !empty(glob("/usr/bin/bash"))
+    set shell=/usr/bin/bash
+endif
+
 " Modelines can be a security risk - know you did this...
 set modeline
 set modelines=5
@@ -10,12 +19,37 @@ set modelines=5
 " hard to do "zz"...
 set scrolloff=5
 
-" We use a light solarized theme
-set background=light                " Light background
 set ruler                           " Ruler at bottom
 set number                          " Line Numbering
 set t_Co=256                        " We do 256 colors
-colorscheme solarized
+
+" Set GUI font & turn off bold
+if has("gui_running")
+    let g:solarized_bold=0
+    if has("gui_win32")
+        set guifont=Consolas:h10:cANSI
+    endif
+endif
+
+" If we are not on Windows *or* if we're running Windows gvim
+if ( ! has("win32") ) || has("gui_running")
+    " We use a light solarized theme
+    set background=light            " Light background
+    colorscheme solarized
+else
+    " We need a dark background because this is being run from
+    " a Windows command prompt
+    set background=dark
+    colorscheme industry  " Always present & readable, albeit ugly
+endif
+
+" Swapfile configuration
+set swapfile
+if !has("win32")
+    set dir=~/tmp
+else
+    set dir=$TMP
+endif
 
 " Tab settings
 set et                              " Expand Tabs to Spaces
@@ -55,7 +89,11 @@ nnoremap <leader>S :set spell<cr>
 nnoremap <leader>s :set nospell<cr>
 
 " Use templates to create new files
-autocmd BufNewFile * silent! 0r ~/.vim/templates/%:e.template
+if has("win32")
+    autocmd BufNewFile * silent! 0r $USERPROFILE\vimfiles\templates/%:e.template
+else
+    autocmd BufNewFile * silent! 0r ~/.vim/templates/%:e.template
+endif
 
 filetype plugin indent on
 syntax enable                 " Set syntax highlighting
@@ -147,11 +185,11 @@ au FileType asterisk syn match asteriskExten "^\s*same\s*=>\?\s*[^,]\+" contains
 
 " Show hidden characters
 set list
-" The next line has a trailing space.
 " Note that the version was 703 for some reason, but I think this should
 " work on 702
 if v:version >= 702
-    set listchars=tab:\⇥\ 
+    " The next line has a trailing space.
+    set listchars=tab:\→\ 
 else
     set listchars=
 endif

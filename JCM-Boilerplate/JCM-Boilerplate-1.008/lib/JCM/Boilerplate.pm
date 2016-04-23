@@ -1,11 +1,11 @@
 #
-# Copyright (C) 2015 Joel C. Maslak
+# Copyright (C) 2015,2016 Joel C. Maslak
 # All Rights Reserved - See License
 #
 
-package JCM::Boilerplate v0.01.02;
+package JCM::Boilerplate v0.01.08;
 # ABSTRACT: Default Boilerplate for Joel's Code
-$JCM::Boilerplate::VERSION = '1.006';
+$JCM::Boilerplate::VERSION = '1.008';
 
 use v5.22;
 
@@ -16,7 +16,7 @@ use Import::Into;
 use Smart::Comments;
 
 sub import($self, $type='script') {
-    ### assert: (($type eq 'class') || ($type eq 'script'))
+    ### assert: ($type =~ m/^(?:class|role|script)$/ms)
     
     my $target = caller;
 
@@ -33,16 +33,22 @@ sub import($self, $type='script') {
         Moose::Util::TypeConstraints->import::into($target);
         MooseX::StrictConstructor->import::into($target);
         namespace::autoclean->import::into($target);
+    } elsif ($type eq 'role') {
+        Moose::Role->import::into($target);
+        Moose::Util::TypeConstraints->import::into($target);
+        MooseX::StrictConstructor->import::into($target);
+        namespace::autoclean->import::into($target);
     }
 
     Carp->import::into($target);
     English->import::into($target);
-    Smart::Comments->import::into($target);
+    Smart::Comments->import::into($target, '-ENV', '###');
 
     feature->import::into($target, 'postderef');    # Not needed if >= 5.23.1
     feature->import::into($target, 'refaliasing');
     feature->import::into($target, 'signatures');
     feature->import::into($target, 'switch');
+    feature->import::into($target, 'unicode_strings');
     warnings->unimport::out_of($target, 'experimental::postderef'); # Not needed if >= 5.23.1
     warnings->unimport::out_of($target, 'experimental::refaliasing');
     warnings->unimport::out_of($target, 'experimental::signatures');
@@ -65,7 +71,7 @@ JCM::Boilerplate - Default Boilerplate for Joel's Code
 
 =head1 VERSION
 
-version 1.006
+version 1.008
 
 =head1 SYNOPSIS
 
@@ -78,9 +84,9 @@ and turns on the strictures I've come to rely upon.  Secondly, it depends
 on a number of other modules to aid in setting up new environments (I can
 just do a "cpan JCM-Boilerplate" to install everything I need).
 
-This module optionally takes one of two parameters, 'script' or 'class'. If
-'script' is specified, the module assumes that you do not need Moose or
-MooseX modules.
+This module optionally takes one of two parameters, 'script', 'class',
+or 'role'. If 'script' is specified, the module assumes that you do not
+need Moose or MooseX modules.
 
 =head1 WARNINGS
 This module makes significant changes in the calling package!
@@ -95,7 +101,7 @@ Joel Maslak <jmaslak@antelope.net>
 
 =head1 COPYRIGHT AND LICENSE
 
-This software is copyright (c) 2015 by Joel Maslak.
+This software is copyright (c) 2015,2016 by Joel Maslak.
 
 This is free software; you can redistribute it and/or modify it under
 the same terms as the Perl 5 programming language system itself.

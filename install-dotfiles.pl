@@ -58,6 +58,12 @@ MAIN: {
     install_files($rename_old);
     install_vim_templates($copyright);
 
+    if ( ! -d "$home/tmp" ) {
+        print "Creating temporary directory...";
+        mkdir "$home/tmp";
+        print "\n";
+    }
+
     system "$current/perl-setup.sh";
 }
 

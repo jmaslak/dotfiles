@@ -14,6 +14,10 @@ in LICENSE.solarized.  The original is available via:
     http://ethanschoonover.com/solarized
 or  https://github.com/altercation/solarized
 
+The Windows Bash Console theme was not apparently licensed.
+The original from which I modified is available at:
+    https://github.com/neilpa/cmd-colors-solarized
+
 The dircolors universal ANSI color scheme is not apparently
 licensed.  The original is available at:
     https://github.com/seebi/dircolors-solarized

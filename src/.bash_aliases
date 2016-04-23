@@ -47,7 +47,7 @@ ENVLOC=$(which env)
 alias ksudo="ksu -q -e $ENVLOC --"
 
 # kinit should use renewable option
-KINIT=$(which kinit)
+KINIT=$(which kinit 2>/dev/null)
 if [ "$KINIT" != "" ] ; then
 
     # This works on Heimdal, fails on MIT
@@ -65,6 +65,15 @@ fi
 # If we have a perlbrew version of ipmitool, use it
 if [ -f /usr/local/Cellar/ipmitool/1.8.15/bin/ipmitool ] ; then
     alias ipmitool=/usr/local/Cellar/ipmitool/1.8.15/bin/ipmitool
+fi
+
+# Make "home" go to home directory (use Windows home directory on
+# Cygwin)
+if [ "$(uname -o)" == "Cygwin" ] ; then
+    cpath=$(cygpath $HOMEPATH)
+    alias home="cd $cpath ; pwd"
+else
+    alias home="cd ~ ; pwd"
 fi
 
 # TMUX Stuff
