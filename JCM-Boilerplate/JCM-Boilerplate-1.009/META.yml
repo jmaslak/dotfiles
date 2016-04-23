@@ -16,7 +16,7 @@ name: JCM-Boilerplate
 provides:
   JCM::Boilerplate:
     file: lib/JCM/Boilerplate.pm
-    version: '1.008'
+    version: '1.009'
 requires:
   AnyEvent::Ping: '0.11'
   Bytes::Random::Secure: '0.29'
@@ -66,8 +66,9 @@ requires:
   Net::DNS: '1.04'
   Net::LDAP: '0.65'
   NetAddr::IP: '4.078'
+  PAR::Packer: '1.030'
   POSIX: '1.53'
-  Parallel::WorkUnit: '1.006'
+  Parallel::WorkUnit: '1.009'
   Privileges::Drop: '1.03'
   Proc::Daemon: '0.22'
   Readonly: '2.00'
@@ -89,4 +90,4 @@ requires:
   namespace::autoclean: '0.28'
   perl: v5.22.0
   warnings: '0'
-version: '1.008'
+version: '1.009'
