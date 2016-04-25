@@ -24,7 +24,7 @@ doit() {
     if [ "$HOMEPATH" == "" ] ; then
         die_error "HOMEPATH not defined"
     fi
-    CYGWINHOME=$(cygpath $HOMEPATH)
+    CYGWINHOME=$(cygpath $HOMEDRIVE$HOMEPATH)
     if [ "$CYGWINHOME" == "" ] ; then
         die_error "Could not determine Windows home directory"
     fi
