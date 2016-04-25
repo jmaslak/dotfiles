@@ -231,8 +231,17 @@ if [ $? -eq 0 ] ; then
 fi
 
 # dircolors installed?
-if [ "$(which dircolors)" != "" ] ; then
+if [ "$(which dircolors 2>/dev/null)" != "" ] ; then
     eval $(dircolors "$HOME/.dircolors.ansi-universal")
+fi
+
+# X running?
+if [ "$(which xrdb 2>/dev/null)" != "" ] ; then
+    if [ "$DISPLAY" != "" ] ; then
+        if [ -f ~/.Xresources ] ; then
+            xrdb -merge -I$HOME ~/.Xresources &
+        fi
+    fi
 fi
 
 # Do we have a Kerberos ticket?
