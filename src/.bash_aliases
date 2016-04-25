@@ -70,11 +70,7 @@ fi
 # Make "home" go to home directory (use Windows home directory on
 # Cygwin)
 if [ "$(uname -o)" == "Cygwin" ] ; then
-    if [ \( "$HOMEPATH" != "" \) -a \( "$HOMEPATH" != "\\" \)  ] ; then
-        cpath=$(cygpath $HOMEPATH)
-    else
-        cpath=$(cygpath $USERPROFILE)
-    fi
+    cpath=$(cygpath $HOMEPATH)
     alias home="cd $cpath ; pwd"
 else
     alias home="cd ~ ; pwd"
