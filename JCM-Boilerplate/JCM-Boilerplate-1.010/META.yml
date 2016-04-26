@@ -7,7 +7,7 @@ build_requires:
 configure_requires:
   ExtUtils::MakeMaker: '0'
 dynamic_config: 1
-generated_by: 'Dist::Zilla version 5.042, CPAN::Meta::Converter version 2.150005'
+generated_by: 'Dist::Zilla version 5.043, CPAN::Meta::Converter version 2.150001'
 license: perl
 meta-spec:
   url: http://module-build.sourceforge.net/META-spec-v1.4.html
@@ -16,7 +16,7 @@ name: JCM-Boilerplate
 provides:
   JCM::Boilerplate:
     file: lib/JCM/Boilerplate.pm
-    version: '1.009'
+    version: '1.010'
 requires:
   AnyEvent::Ping: '0.11'
   Bytes::Random::Secure: '0.29'
@@ -74,6 +74,7 @@ requires:
   Readonly: '2.00'
   Regexp::Common: '2015121601'
   Smart::Comments: '1.06'
+  Socket6: '0.26'
   Storable: '2.51'
   Sys::Hostname::FQDN: '0.11'
   Term::ANSIColor: '4.04'
@@ -90,4 +91,4 @@ requires:
   namespace::autoclean: '0.28'
   perl: v5.22.0
   warnings: '0'
-version: '1.009'
+version: '1.010'
