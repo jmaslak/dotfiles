@@ -29,6 +29,12 @@ if [ \! -f ~/.perl6repl_history ] ; then
 fi
 alias perl6repl="rlwrap -i -f ~/.perl6repl_history -H ~/.perl6repl_history -s 30000 perl6"
 
+# REPL for Perl5 Debugger
+if [ \! -f ~/.perl5d_repl_history ] ; then
+    touch ~/.perl5d_repl_history
+fi
+alias perl5d="rlwrap -i -f ~/.perl5d_repl_history -H ~/.perl5d_repl_history -s 30000 perl -d"
+
 # We use vim
 if which vim >/dev/null 2>/dev/null ; then
     alias vi="$( which vim )"
