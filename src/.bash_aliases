@@ -71,8 +71,8 @@ if [ -f /usr/local/Cellar/ipmitool/1.8.15/bin/ipmitool ] ; then
 fi
 
 # Make "home" go to home directory (use Windows home directory on
-# Cygwin)
-if [ "$(uname -o)" == "Cygwin" ] ; then
+# Cygwin); Note OS X doesn't have the -o switch...
+if [ "$(uname -o 2>/dev/null )" == "Cygwin" ] ; then
     cpath=$(cygpath "$HOMEDRIVE$HOMEPATH")
     alias home="cd $cpath ; pwd"
 else
