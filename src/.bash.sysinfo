@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 #
 # Creates smoketest info comments
@@ -12,8 +12,8 @@ MAIN() {
         exit;
     fi
 
-    if [ \( \! $( uname -s ) == 'Darwin' \) -a \( \! -x /usr/bin/facter \) ] ; then
-        echo "/usr/bin/facter not found, not MacOS, exiting"
+    if [ \( \! $( uname -s ) == 'Darwin' \) -a \( \! -x /usr/bin/facter \) -a \( \! -x /usr/local/bin/facter \) ] ; then
+        echo "facter not found, not MacOS, exiting"
         exit;
     fi
 
@@ -131,13 +131,24 @@ do_factor () {
     facter >.tmp.facter.$$
 
     CPU=$(    grep 'processor0 '             .tmp.facter.$$ 2>/dev/null | sed -e 's/^processor0 => //' )
+    if [ "$CPU" == "" ] ; then
+        CPU=$(grep 'processor '              .tmp.facter.$$ 2>/dev/null | sed -e 's/^processor0 => //' )
+    fi
+
     MEMORY=$( grep 'memorysize '             .tmp.facter.$$ 2>/dev/null | sed -e 's/^memorysize => //' )
     ARCH=$(   grep 'architecture '           .tmp.facter.$$ 2>/dev/null | sed -e 's/^architecture => //' )
     OS=$(     grep 'operatingsystem '        .tmp.facter.$$ 2>/dev/null | sed -e 's/^operatingsystem => //' )
     OSVER=$(  grep 'operatingsystemrelease ' .tmp.facter.$$ 2>/dev/null | sed -e 's/^operatingsystemrelease => //' )
     KERNEL=$( grep 'kernel '                 .tmp.facter.$$ 2>/dev/null | sed -e 's/^kernel => //' )
     KREL=$(   grep 'kernelrelease '          .tmp.facter.$$ 2>/dev/null | sed -e 's/^kernelrelease => //' )
+
     VIRT=$(   egrep '^virtual '              .tmp.facter.$$ 2>/dev/null | sed -e 's/^virtual => //' )
+    if [ "$VIRT" == "" ] ; then
+        tmp=$(egrep ' 00:0c:29:'             .tmp.facter.$$ 2>/dev/null)
+        if [ "$tmp" != "" ] ; then
+            VIRT="VMWware"
+        fi
+    fi
 
     rm .tmp.facter.$$
 }
