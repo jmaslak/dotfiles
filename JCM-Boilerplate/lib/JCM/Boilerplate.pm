@@ -30,6 +30,7 @@ outside dependencies that may be undesired.
 =cut
 
 use v5.22;
+use strict;
 
 use feature 'signatures';
 no warnings 'experimental::signatures';

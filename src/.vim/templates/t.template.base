@@ -10,7 +10,7 @@ use JCM::Boilerplate 'script';
 use Test::More tests => 1;
 
 MAIN: {
-    ok("Test dependencies load");
+    pass("Test dependencies load");
 }
 
 1;
