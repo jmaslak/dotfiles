@@ -129,7 +129,7 @@ au FileType css set sw=2           " Shift Width = 2 spaces on indenting
 " Haskel
 au FileType haskell setl smarttab autoindent sw=4 sts=4 et
 
-" Perl
+" Perl 5
 " Set "K" to go to perldoc -f
 au FileType perl setl keywordprg=perldoc\ -f
 
@@ -152,6 +152,30 @@ autocmd FileType perl compiler perl
 " The perl compiler will actually use -W, which makes include files ugly
 " We don't do that.
 autocmd FileType perl setl makeprg=perl\ -c\ %\ $*
+
+" Perl 6
+au BufNewFile,BufRead *.pl6,*.pm6,*.t6,*.xt6 set filetype=perl6
+
+" check for Perl 6 code
+" Modified from original David Færrel article at
+"   http://perltricks.com/article/194/2015/9/22/Activating-Perl-6-syntax-highlighting-in-Vim/
+"
+" This allows us to check possibly-not-perl6-files for perl6 hints
+"
+function! LooksLikePerl6 ()
+  if getline(1) =~# '^#!.*perl6'
+    set filetype=perl6
+  else
+    for i in [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20]
+      if getline(i) == 'use v6;'
+        set filetype=perl6
+        break
+      endif
+    endfor
+  endif
+endfunction
+
+au BufNewFile,BufRead *.pl,*.pm,*.t,*.xt call LooksLikePerl6()
 
 " Apache
 " Preserve indent levels

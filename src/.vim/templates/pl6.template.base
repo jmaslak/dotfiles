@@ -1,0 +1,12 @@
+#!/usr/bin/env perl6
+use v6;
+
+#
+# Copyright (C) 2016 _COPYRIGHT_
+# All Rights Reserved - See License
+#
+
+MAIN: {
+
+}
+
