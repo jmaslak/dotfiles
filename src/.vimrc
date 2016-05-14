@@ -10,6 +10,10 @@ elseif !empty(glob("/usr/bin/bash"))
     set shell=/usr/bin/bash
 endif
 
+" Set digraphs - for instance, type » by using > <BS> > instead of
+" just <ctrl-k> > >
+set digraph
+
 " Modelines can be a security risk - know you did this...
 set modeline
 set modelines=5
