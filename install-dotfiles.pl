@@ -65,6 +65,7 @@ MAIN: {
     }
 
     system "$current/perl-setup.sh";
+    system "$current/perl6-modules.sh";
 }
 
 sub install_files {

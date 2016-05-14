@@ -12,7 +12,7 @@ endif
 
 " Set digraphs - for instance, type » by using > <BS> > instead of
 " just <ctrl-k> > >
-set digraph
+" set digraph  " This became quite annoying
 digraphs ca 128042 " 🐪  - We need this for Perl.  :)
 
 " Modelines can be a security risk - know you did this...
