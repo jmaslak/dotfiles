@@ -19,8 +19,7 @@ set modeline
 set modelines=5
 
 " This means there will be 5 lines above/below the cursor on the
-" screen at all times.  I don't yet know if I like this.  It's not
-" hard to do "zz"...
+" screen at all times.  This is an alternative to zz (which centers)
 set scrolloff=5
 
 set ruler                           " Ruler at bottom
