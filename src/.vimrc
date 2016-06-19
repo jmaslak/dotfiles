@@ -154,7 +154,7 @@ autocmd FileType perl compiler perl
 autocmd FileType perl setl makeprg=perl\ -c\ %\ $*
 
 " Perl 6
-au BufNewFile,BufRead *.pl6,*.pm6,*.t6,*.xt6 set filetype=perl6
+au BufNewFile,BufRead *.p6,*.pl6,*.pm6,*.t6,*.xt6 set filetype=perl6
 
 " check for Perl 6 code
 " Modified from original David Færrel article at
