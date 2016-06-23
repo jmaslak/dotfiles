@@ -14,6 +14,19 @@ endif
 " just <ctrl-k> > >
 " set digraph  " This became quite annoying
 digraphs ca 128042 " 🐪  - We need this for Perl.  :)
+"
+" Useful digraphs:
+"   ca → camel 🐪
+"   -> → right arrow →
+"   << → double left arrow «
+"   >> → double right arrow »
+"   12 → one half ½
+"   2S → superscript two ²   (also 22)
+"   3S → superscript three ³ (also 33)
+"   00 → infinity ∞
+"   -: → divsiion ÷
+"   p* → pi π
+"   c0 → copyright ©
 
 " Modelines can be a security risk - know you did this...
 set modeline
