@@ -82,10 +82,13 @@ nmap <tab> I<tab><esc>
 nmap <s-tab> ^i<bs><esc>
 set shiftround                      " This mode makes more sense
                                     " (<< and >> use tab stops)
+                                    "
+" vaa selects whole file
+vmap aa Vgo1G
 
 " backspace, %, C++ options
 set backspace=indent,eol,start      " Let me do anything with backspace!
-set matchpairs+=<:>                 " Allow % to bounce between angles
+set matchpairs+=<:>,«:»             " Allow % to bounce between angles
 set cinoptions=g-1                  " For C++
 
 " Spelling:
@@ -150,7 +153,7 @@ au FileType perl setl keywordprg=perldoc\ -f
 let perl_include_pod = 1
 
 " Perl tidy, use :Tidy
-command -range=% -nargs=* Tidy <line1>,<line2>!
+command! -range=% -nargs=* Tidy <line1>,<line2>!
   \perltidy <args>
 
 " Make command and errors
@@ -165,6 +168,12 @@ autocmd FileType perl compiler perl
 " The perl compiler will actually use -W, which makes include files ugly
 " We don't do that.
 autocmd FileType perl setl makeprg=perl\ -c\ %\ $*
+" Add keyword characters for Perl
+autocmd FileType perl set iskeyword+=$
+autocmd FileType perl set iskeyword+=%
+autocmd FileType perl set iskeyword+=@-@
+autocmd FileType perl set iskeyword+=:
+autocmd FileType perl set iskeyword+=,
 
 " Perl 6
 au BufNewFile,BufRead *.p6,*.pl6,*.pm6,*.t6,*.xt6 set filetype=perl6
@@ -189,6 +198,12 @@ function! LooksLikePerl6 ()
 endfunction
 
 au BufNewFile,BufRead *.pl,*.pm,*.t,*.xt call LooksLikePerl6()
+" Add keyword characters for Perl6
+autocmd FileType perl6 set iskeyword+=$
+autocmd FileType perl6 set iskeyword+=%
+autocmd FileType perl6 set iskeyword+=@-@
+autocmd FileType perl6 set iskeyword+=:
+autocmd FileType perl6 set iskeyword+=,
 
 " Apache
 " Preserve indent levels
@@ -318,3 +333,50 @@ let g:gitgutter_sign_columns_always=1 " Always provide space for the signs,
                                       "  so that windows line up better
 let g:gitgutter_max_signs=50000       " We can edit a big file, allow up to
                                       "  50,000 lines to change.
+
+" set persistent undo
+if has('persistent_undo')
+    if !has("win32")
+        set undodir=~/tmp
+    else
+        set undodir=$TMP
+    endif
+
+    set undolevels=5000             " Allow a lot of undo
+    set undofile
+endif
+
+" From Damian Conway's .VIMRC
+" Reload config file/plugins
+augroup VimReload
+autocmd!
+    autocmd BufWritePost $MYVIMRC source $MYVIMRC
+augroup END
+
+" From Damian Conway's .VIMRC
+" Build interim directoreis
+function! AskQuit (msg, options, quit_option)
+    if confirm(a:msg, a:options) == a:quit_option
+        quit!  " Damian had exit, but that doesn't work with templates
+    endif
+endfunction
+
+function! EnsureDirExists ()
+    let required_dir = expand("%:h")
+    if !isdirectory(required_dir)
+        call AskQuit("Parent directory '" . required_dir . "' doesn't exist.",
+            \        "&Create it\nor &Quit", 2)
+        try
+            call mkdir( required_dir, 'p' )
+        catch
+            call AskQuit("Can't create '" . required_dir . "'"
+                \        "&Quit\nor &Continue anyway?", 1)
+        endtry
+    endif
+endfunction
+
+augroup AutoMkdir
+    autocmd!
+    autocmd  BufNewFile * :call EnsureDirExists()
+augroup END
+
