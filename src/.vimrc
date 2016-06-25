@@ -380,3 +380,18 @@ augroup AutoMkdir
     autocmd  BufNewFile * :call EnsureDirExists()
 augroup END
 
+" Converts a filename with lib in it to a Perl module name
+function! FilenameToPerlMod (pathname)
+    let modulename = substitute( a:pathname, '/', '::', "g" )  " Linux
+    let modulename = substitute( modulename, '\\', '::', "g" ) " Windows 32
+
+    if match(modulename, '^\(.*::\)\=lib::.*\.pm$') == -1
+        return '<INSERT_NAME_HERE>'
+    endif
+
+    let modulename = substitute( modulename, '^\(.*::\)\=lib::', '', "" )
+    let modulename = substitute( modulename, '\.pm$', '', "" )
+    return modulename
+endfunction
+autocmd BufNewFile *.pm exec "1,10s/<INSERT_NAME_HERE>/" . FilenameToPerlMod(expand("%:f")) . "/g"
+
