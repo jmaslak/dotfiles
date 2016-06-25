@@ -169,11 +169,11 @@ autocmd FileType perl compiler perl
 " We don't do that.
 autocmd FileType perl setl makeprg=perl\ -c\ %\ $*
 " Add keyword characters for Perl
-autocmd FileType perl set iskeyword+=$
-autocmd FileType perl set iskeyword+=%
-autocmd FileType perl set iskeyword+=@-@
-autocmd FileType perl set iskeyword+=:
-autocmd FileType perl set iskeyword+=,
+autocmd FileType perl setl iskeyword+=$
+autocmd FileType perl setl iskeyword+=%
+autocmd FileType perl setl iskeyword+=@-@
+autocmd FileType perl setl iskeyword+=:
+autocmd FileType perl setl iskeyword+=,
 
 " Perl 6
 au BufNewFile,BufRead *.p6,*.pl6,*.pm6,*.t6,*.xt6 set filetype=perl6
@@ -199,11 +199,11 @@ endfunction
 
 au BufNewFile,BufRead *.pl,*.pm,*.t,*.xt call LooksLikePerl6()
 " Add keyword characters for Perl6
-autocmd FileType perl6 set iskeyword+=$
-autocmd FileType perl6 set iskeyword+=%
-autocmd FileType perl6 set iskeyword+=@-@
-autocmd FileType perl6 set iskeyword+=:
-autocmd FileType perl6 set iskeyword+=,
+autocmd FileType perl6 setl iskeyword+=$
+autocmd FileType perl6 setl iskeyword+=%
+autocmd FileType perl6 setl iskeyword+=@-@
+autocmd FileType perl6 setl iskeyword+=:
+autocmd FileType perl6 setl iskeyword+=,
 
 " Apache
 " Preserve indent levels
