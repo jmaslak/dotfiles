@@ -22,11 +22,13 @@ or 'role'. If 'script' is specified, the module assumes that you do not
 need Moose or MooseX modules.
 
 =head1 WARNINGS
+
 This module makes significant changes in the calling package!
 
 In addition, this module should be incorporated into any project by
 copying it into the project's library tree. This protects the project from
 outside dependencies that may be undesired.
+
 =cut
 
 use v5.22;
@@ -88,4 +90,6 @@ sub import($self, $type='script') {
 }
 
 1;
+
+
 
