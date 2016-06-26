@@ -259,3 +259,6 @@ if [ \! -z $OLDDIR ] ; then
         cd $OLDDIR
     fi
 fi
+
+# Use vi bindings, not emacs
+set -o vi
