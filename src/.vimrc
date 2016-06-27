@@ -14,6 +14,8 @@ endif
 " just <ctrl-k> > >
 " set digraph  " This became quite annoying
 digraphs ca 128042 " 🐪  - We need this for Perl.  :)
+digraphs ee 8715   " ∋  - Contains
+digraphs e/ 8716   " ∌  - Does not contain
 "
 " Useful digraphs:
 "   ca → camel 🐪
@@ -27,6 +29,8 @@ digraphs ca 128042 " 🐪  - We need this for Perl.  :)
 "   -: → divsiion ÷
 "   p* → pi π
 "   c0 → copyright ©
+"   ee -> contains as member ∋
+"   e/ -> does not contain as member ∌
 
 " Modelines can be a security risk - know you did this...
 set modeline
@@ -82,7 +86,14 @@ nmap <tab> I<tab><esc>
 nmap <s-tab> ^i<bs><esc>
 set shiftround                      " This mode makes more sense
                                     " (<< and >> use tab stops)
-                                    "
+
+" \c will add comments to lines
+nnoremap <leader>c :s/^/#--/<cr>:noh<cr>
+vnoremap <leader>c :s/^/#--/<cr>:noh<cr>
+" \C will remove tabs
+nnoremap <leader>C :s/^#--//<cr>:noh<cr>
+vnoremap <leader>C :s/^#--//<cr>:noh<cr>
+
 " vaa selects whole file
 vmap aa Vgo1G
 
