@@ -149,6 +149,11 @@ sub install_vim_templates {
         $out =~ s/_COPYRIGHT_/$copyright/g;
         spitout("$home/.vim/templates/$basefile", $out);
 
+        # Make executable if needed
+        if ( -x "$current/src/.vim/templates/$file" ) {
+            chmod 0755, "$home/.vim/templates/$basefile";
+        }
+
         print "done\n";
     }
 }
