@@ -163,6 +163,12 @@ au FileType perl setl keywordprg=perldoc\ -f
 " Spell checking in POD
 let perl_include_pod = 1
 
+" Highlight extended vars
+let perl_extended_vars = 1
+
+" Increase context distance
+let perl_sync_dist = 250
+
 " Perl tidy, use :Tidy
 command! -range=% -nargs=* Tidy <line1>,<line2>!
   \perltidy <args>
