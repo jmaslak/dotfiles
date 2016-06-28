@@ -33,6 +33,10 @@ license is at:
     https://github.com/ClockworkNet/vim-junos-syntax/blob/master/LICENSE
 It is also in this distro as LICENSE.vim-junos-syntax
 
+The delimitMate plugin is not apparently licensed.  The original is
+available at:
+    https://github.com/Raimondi/delimitMate
+
 =====
 
 All code added by me is licensed under the Artistic License 2.0,
