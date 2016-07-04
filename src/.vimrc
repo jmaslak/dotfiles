@@ -100,6 +100,7 @@ vmap aa Vgo1G
 " backspace, %, C++ options
 set backspace=indent,eol,start      " Let me do anything with backspace!
 set matchpairs+=<:>,«:»             " Allow % to bounce between angles
+let loaded_delimitMate=1            " Disable delimitMate
 set cinoptions=g-1                  " For C++
 
 " Spelling:

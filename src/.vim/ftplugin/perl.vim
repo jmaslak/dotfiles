@@ -14,7 +14,6 @@ let s:BIN = fnamemodify(resolve(expand("<sfile>:p")), ":h")
 
 function s:init_tags()
 perl <<EOF
-    use lib '~/.vim/perllib';
     use strict; use warnings;
     our $tagger;
 
@@ -41,10 +40,9 @@ let s:tagsfile = tempname()
  
 function PT_do_tags(filename)
 perl <<EOF
-    use lib '~/.vim/perllib';
     my $filename = VIM::Eval('a:filename');
 
-    if ( ! -f $filename ) { return; } # Unreadable file
+    if ( ! -r $filename ) { return; } # Unreadable file
 
     our $tagger;
     $tagger->process(files => $filename, refresh=>1 );
@@ -59,7 +57,6 @@ endfunction
 
 function PT_show_tags()
 perl <<EOF
-    use lib '~/.vim/perllib';
     our $tagger;
     VIM::Msg($tagger);
 EOF
