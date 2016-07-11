@@ -9,5 +9,5 @@ doit() {
 
 }
 
-doit
+doit "$@"
 
