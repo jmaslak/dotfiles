@@ -79,6 +79,52 @@ else
     alias home="cd ~ ; pwd"
 fi
 
+alias lgrep="grep --line-buffered"
+
+if which vim >/dev/null 2>/dev/null ; then
+    # Do Nothing
+    true
+else
+    function seq {
+        if [[ "$1" =~ ^-?[0-9]+$ ]] ; then
+            # OK!
+            true
+        else
+            echo "Provide a start and end integer" >&2
+            return 1
+        fi
+
+        if [[ "$2" =~ ^-?[0-9]+$ ]] ; then
+            # OK!
+            true
+        else
+            echo "Provide a start and end integer" >&2
+            return 1
+        fi
+        
+        DIR=1
+        if [ "$1" -gt "$2" ] ; then
+            DIR=-1
+        fi
+
+        NUM=$(( $1 + 0 ))
+        END=$2
+        if [ "$END" == "" ] ; then
+            echo "Provide a start and end integer" >&2
+            return 1
+        fi
+        while true ; do
+            echo $NUM
+
+            if [ $NUM -eq $END ] ; then
+                return 0
+            fi
+            
+            NUM=$(( $NUM + $DIR ))
+        done
+    }
+fi
+
 # Set background globally (for VIM) dark
 function dark {
     echo 'set background=dark' >~/.vim/vimrc.local
