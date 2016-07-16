@@ -126,8 +126,8 @@ fi
 # Do we have a Perlbrew?  Prefer local to system perlbrew
 if [ -d ~/perl5/perlbrew ] ; then
     export PERLBREW_ROOT=~/perl5/perlbrew
-elif [ -d /usr/local/perlbrew ] ; then
-    export PERLBREW_ROOT=/usr/local/perlbrew
+# elif [ -d /usr/local/perlbrew ] ; then
+#     export PERLBREW_ROOT=/usr/local/perlbrew
 fi
 
 # Load the appropriate perlbrew
