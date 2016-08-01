@@ -124,6 +124,10 @@ if [ -d ~/.rakudobrew ] ; then
 fi
 
 # Do we have a Perlbrew?  Prefer local to system perlbrew
+# If shell is set to "-su", reset it to bash
+if [ "$SHELL" == "-su" ] ; then
+    SHELL="-bash"
+fi
 if [ -d ~/perl5/perlbrew ] ; then
     export PERLBREW_ROOT=~/perl5/perlbrew
 # elif [ -d /usr/local/perlbrew ] ; then
