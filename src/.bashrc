@@ -75,6 +75,14 @@ esac
 
 # Make sure shell is exported
 export SHELL="$0"
+# If shell is set to "-su", reset it to bash
+if [ "$SHELL" == "-su" ] ; then
+    SHELL="-bash"
+fi
+# If shell is just "bash", set it to path
+if [ "$SHELL" == "bash" ] ; then
+    SHELL="$(which bash)"
+fi
 
 # Alias definitions.
 if [ -f ~/.bash_aliases ]; then
@@ -124,10 +132,6 @@ if [ -d ~/.rakudobrew ] ; then
 fi
 
 # Do we have a Perlbrew?  Prefer local to system perlbrew
-# If shell is set to "-su", reset it to bash
-if [ "$SHELL" == "-su" ] ; then
-    SHELL="-bash"
-fi
 if [ -d ~/perl5/perlbrew ] ; then
     export PERLBREW_ROOT=~/perl5/perlbrew
 # elif [ -d /usr/local/perlbrew ] ; then
@@ -240,13 +244,13 @@ if [ "$(which dircolors 2>/dev/null)" != "" ] ; then
 fi
 
 # X running?
-if [ "$(which xrdb 2>/dev/null)" != "" ] ; then
-    if [ "$DISPLAY" != "" ] ; then
-        if [ -f ~/.Xresources ] ; then
-            xrdb -merge -I$HOME ~/.Xresources &
-        fi
-    fi
-fi
+# if [ "$(which xrdb 2>/dev/null)" != "" ] ; then
+#     if [ "$DISPLAY" != "" ] ; then
+#         if [ -f ~/.Xresources ] ; then
+#             xrdb -merge -I$HOME ~/.Xresources &
+#         fi
+#     fi
+# fi
 
 # Do we have a Kerberos ticket?
 if [ "$(which klist 2>/dev/null)" != "" ] ; then
