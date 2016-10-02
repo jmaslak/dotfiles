@@ -144,8 +144,7 @@ sub install_vim_templates {
         $basefile =~ s/\.base$//;
 
         print "Creating ... ";
-        my $file = slurp( "$current/src/.vim/templates/$file" );
-        my $out = $file;
+        my $out = slurp( "$current/src/.vim/templates/$file" );
         $out =~ s/_COPYRIGHT_/$copyright/g;
         spitout("$home/.vim/templates/$basefile", $out);
 
