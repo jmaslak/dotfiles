@@ -13,6 +13,7 @@ endif
 let s:BIN = fnamemodify(resolve(expand("<sfile>:p")), ":h")
 
 function s:init_tags()
+if has("perl")
 perl <<EOF
     use strict; use warnings;
     our $tagger;
@@ -33,12 +34,14 @@ perl <<EOF
         ],
     );
 EOF
+endif
 endfunction
  
 " let vim do the tempfile cleanup and protection
 let s:tagsfile = tempname()
  
 function PT_do_tags(filename)
+if has("perl")
 perl <<EOF
     my $filename = VIM::Eval('a:filename');
 
@@ -53,13 +56,16 @@ perl <<EOF
     # of course, it may not even output, for example, if there's nothing new to process
     $tagger->output( outfile => $tagsfile );
 EOF
+endif
 endfunction
 
 function PT_show_tags()
+if has("perl")
 perl <<EOF
     our $tagger;
     VIM::Msg($tagger);
 EOF
+endif
 endfunction
  
 call s:init_tags() " only the first time
