@@ -337,6 +337,10 @@ endif
 noremap <leader>+ :set cursorline cursorcolumn<cr>
 noremap <leader>- :set nocursorline nocursorcolumn<cr>
 
+" Just rows
+noremap <leader>L :set cursorline<cr>
+noremap <leader>l :set nocursorline<cr>
+
 " This lets us globally do something like set background dark
 if filereadable(expand("~/.vim/vimrc.local"))
     source ~/.vim/vimrc.local
