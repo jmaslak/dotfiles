@@ -1,5 +1,8 @@
-XTerm*faceName: Consolas Sans Mono
-XTerm*faceSize: 11
+!! XTerm*faceName: Consolas Sans Mono
+XTerm*faceName: Consolas
+XTerm*faceSize: 12
+XTerm*ToolBar: false
+XTerm*ScrollBar: false
 
 #define S_base03        #002b36
 #define S_base02        #073642
@@ -57,3 +60,4 @@ XTerm*faceSize: 11
 !! white dark/light
 *color7:                S_base2
 *color15:               S_base3
+
