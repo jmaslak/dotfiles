@@ -5,7 +5,6 @@ set encoding=utf-8
 if has("win32")
     set runtimepath^=$USERPROFILE\vimfiles\bundle\vim-ps1
 else
-    autocmd BufNewFile * silent! 0r ~/.vim/templates/%:e.template
     set runtimepath^=~/.vim/bundle/vim-ps1
 endif
 
