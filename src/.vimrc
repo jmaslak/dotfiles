@@ -1,6 +1,14 @@
 " Everything pretty much should be UTF-8 by now
 set encoding=utf-8
 
+" Set proper plugin directories
+if has("win32")
+    set runtimepath^=$USERPROFILE\vimfiles\bundle\vim-ps1
+else
+    autocmd BufNewFile * silent! 0r ~/.vim/templates/%:e.template
+    set runtimepath^=~/.vim/bundle/vim-ps1
+endif
+
 " Some environments don't set the shell right, which causes
 " issues with gitgutter and probably other things that assume
 " the shell is actually bash and not sh.
@@ -8,6 +16,18 @@ if !empty(glob("/bin/bash"))
     set shell=/bin/bash
 elseif !empty(glob("/usr/bin/bash"))
     set shell=/usr/bin/bash
+endif
+
+" If we are not on Windows *or* if we're running Windows gvim
+if ( ! has("win32") ) || has("gui_running")
+    " We use a light solarized theme
+    set background=light            " Light background
+    colorscheme solarized
+else
+    " We need a dark background because this is being run from
+    " a Windows command prompt
+    set background=dark
+    colorscheme industry  " Always present & readable, albeit ugly
 endif
 
 " Set digraphs - for instance, type » by using > <BS> > instead of
@@ -230,6 +250,17 @@ au FileType apache setlocal indentexpr= autoindent
 au FileType html set sts=2          " Soft Tabs = 2 spaces
 au FileType html set sw=2           " Shift Width = 2 spaces on indenting
 
+" XML
+au FileType xml  set sts=2          " Soft Tabs = 2 spaces
+au FileType xml  set sw=2           " Shift Width = 2 spaces on indenting
+au Filetype xml  set autoindent
+
+" PowerShell
+au BufNewFile,BufRead *.ps1 set filetype=ps1
+au FileType ps1  set sts=4          " Soft Tabs = 4 spaces
+au FileType ps1  set sw=4           " Shift Width = 4 spaces on indenting
+au Filetype ps1  set autoindent
+
 " Tex
 let g:tex_flavor='latex'
 au FileType tex setl tw=72 formatoptions+=t
@@ -336,6 +367,10 @@ endif
 " Highlight columns and rows
 noremap <leader>+ :set cursorline cursorcolumn<cr>
 noremap <leader>- :set nocursorline nocursorcolumn<cr>
+
+" Just rows
+noremap <leader>L :set cursorline<cr>
+noremap <leader>l :set nocursorline<cr>
 
 " This lets us globally do something like set background dark
 if filereadable(expand("~/.vim/vimrc.local"))

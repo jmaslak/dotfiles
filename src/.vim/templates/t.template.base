@@ -7,10 +7,12 @@
 
 use JCM::Boilerplate 'script';
 
-use Test::More tests => 1;
+use Test2::Bundle::Extended 0.000058;
 
 MAIN: {
     pass("Test dependencies load");
+    # Tests here
+    done_testing;
 }
 
 1;
