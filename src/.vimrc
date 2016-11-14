@@ -334,8 +334,11 @@ if v:version > 702
 endif
 
 " Highlight columns and rows
-noremap <leader>+ :set cursorline cursorcolumn<cr>
-noremap <leader>- :set nocursorline nocursorcolumn<cr>
+" noremap <leader>+ :set cursorline cursorcolumn<cr>
+" noremap <leader>- :set nocursorline nocursorcolumn<cr>
+" Change this to just do the line:
+noremap <leader>+ :set cursorline<cr>
+noremap <leader>- :set nocursorline<cr>
 
 " This lets us globally do something like set background dark
 if filereadable(expand("~/.vim/vimrc.local"))
