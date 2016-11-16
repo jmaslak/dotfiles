@@ -32,9 +32,11 @@ endif
 " Set digraphs - for instance, type » by using > <BS> > instead of
 " just <ctrl-k> > >
 " set digraph  " This became quite annoying
-digraphs ca 128042 " 🐪  - We need this for Perl.  :)
-digraphs ee 8715   " ∋  - Contains
-digraphs e/ 8716   " ∌  - Does not contain
+if v:version >= 701
+    digraphs ca 128042 " 🐪  - We need this for Perl.  :)
+    digraphs ee 8715   " ∋  - Contains
+    digraphs e/ 8716   " ∌  - Does not contain
+endif
 "
 " Useful digraphs:
 "   ca → camel 🐪
