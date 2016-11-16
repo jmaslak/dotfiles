@@ -118,7 +118,11 @@ vmap aa Vgo1G
 
 " backspace, %, C++ options
 set backspace=indent,eol,start      " Let me do anything with backspace!
-set matchpairs+=<:>,«:»             " Allow % to bounce between angles
+if v:version >= 701
+    set matchpairs+=<:>,«:»             " Allow % to bounce between angles
+else
+    set matchpairs+=<:>                 " Can't do angles on old vim
+endif
 let loaded_delimitMate=1            " Disable delimitMate
 set cinoptions=g-1                  " For C++
 
