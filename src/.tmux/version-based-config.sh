@@ -12,14 +12,14 @@ load_tmux_conf() {
     tmux_minor=$(echo $tmux_version | cut -d. -f2)
 
     if (( $tmux_major < 2 )) ; then
-        tmux source-file "$tmux_home/tmux_pre_2_2.conf"
-    elif (( $tmux_minor >= 2 )) ; then
-        tmux source-file "$tmux_home/tmux_2_2.conf"
+        tmux source-file "$tmux_home/tmux_pre_2_1.conf"
+    elif (( $tmux_minor >= 1 )) ; then
+        tmux source-file "$tmux_home/tmux_2_1.conf"
     elif (( $tmux_major > 2 )) ; then
-        tmux source-file "$tmux_home/tmux_2_2.conf"
+        tmux source-file "$tmux_home/tmux_2_1.conf"
     else
-        # 2.x < 2.2
-        tmux source-file "$tmux_home/tmux_pre_2_2.conf"
+        # 2.x < 2.1
+        tmux source-file "$tmux_home/tmux_pre_2_1.conf"
     fi
 
     tmux source-file "$tmux_home/tmux_all.conf"
