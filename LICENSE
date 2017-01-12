@@ -46,6 +46,10 @@ See LICENSE-APACHE and LICENSE-MIT in src/.vim/bundle/rust.vim .  This
 plugin is available at:
     https://github.com/rust-lang/rust.vim
 
+The TOML VIM plugin is licensed under the MIT license.  See LICENSE in
+src/.vim/bundle/vim-toml .  This plugin is available at:
+    https://github.com/cespare/vim-toml
+
 Pathogen is licensed under the terms of Vim (in VIM, go :help license)
 The plugin is available at:
     https://github.com/tpope/vim-pathogen
