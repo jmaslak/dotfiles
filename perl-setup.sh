@@ -15,6 +15,7 @@ doit() {
             echo "SORRY, COULDN'T PROCEED."
             exit 1;
         fi
+        cpan install CPAN
         cpan .
     else
         echo ""
