@@ -2,11 +2,11 @@
 set encoding=utf-8
 
 " Set proper plugin directories
-if has("win32")
-    set runtimepath^=$USERPROFILE\vimfiles\bundle\vim-ps1
-else
-    set runtimepath^=~/.vim/bundle/vim-ps1
-endif
+" if has("win32")
+"     set runtimepath^=$USERPROFILE\vimfiles\bundle\vim-ps1
+" else
+"     set runtimepath^=~/.vim/bundle/vim-ps1
+" endif
 
 " Some environments don't set the shell right, which causes
 " issues with gitgutter and probably other things that assume
@@ -16,6 +16,8 @@ if !empty(glob("/bin/bash"))
 elseif !empty(glob("/usr/bin/bash"))
     set shell=/usr/bin/bash
 endif
+
+execute pathogen#infect()
 
 " If we are not on Windows *or* if we're running Windows gvim
 if ( ! has("win32") ) || has("gui_running")
@@ -178,6 +180,10 @@ au FileType asm setl smarttab autoindent
 au BufNewFile,BufRead *.less set filetype=css
 au FileType css set sts=2          " Soft Tabs = 2 spaces
 au FileType css set sw=2           " Shift Width = 2 spaces on indenting
+
+" Rust
+au FileType rust setl smarttab autoindent et
+au BufNewFile,BufRead *.rs set filetype=rust
 
 " Haskel
 au FileType haskell setl smarttab autoindent sw=4 sts=4 et
