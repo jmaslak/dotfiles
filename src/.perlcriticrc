@@ -12,3 +12,8 @@ exclude=InputOutput::RequireBriefOpen Subroutines::ProhibitSubroutinePrototypes 
 # When we modify $_, we know what we're doing.
 [-ControlStructures::ProhibitMutatingListFunctions]
 
+# It's okay to do "no warnings 'foo'" if needed - you are expected to
+# know what you're doing if you do that!
+[TestingAndDebugging::ProhibitNoWarnings]
+allow_with_category_restriction = 1
+
