@@ -199,6 +199,14 @@ let perl_sync_dist = 250
 command! -range=% -nargs=* Tidy <line1>,<line2>!
   \perltidy <args>
 
+" Perl critic, use :Critic
+command! Critic
+    \ execute 'silent !rm -f errors.err'
+    \ | execute 'silent !perlcritic % --quiet --verbose "\%f:\%l:\%m (\%p)\\n" >errors.err'
+    \ | redraw!
+    \ | cf
+" Use cf (first), cn (next), and cp (previous) to go through file
+
 " Make command and errors
 " You can use:
 "    :make  (compile)
@@ -217,6 +225,7 @@ autocmd FileType perl setl iskeyword+=%
 autocmd FileType perl setl iskeyword+=@-@
 autocmd FileType perl setl iskeyword+=:
 autocmd FileType perl setl iskeyword+=,
+autocmd FileType perl setl errorformat+=%f:%l:%m
 
 " Perl 6
 au BufNewFile,BufRead *.p6,*.pl6,*.pm6,*.t6,*.xt6 set filetype=perl6

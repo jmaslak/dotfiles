@@ -1,3 +1,14 @@
 severity=4
 verbose=8
-exclude=InputOutput::RequireBriefOpen Subroutines::ProhibitExplicitReturnUndef Subroutines::ProhibitSubroutinePrototypes Subroutines::RequireArgUnpacking
+exclude=InputOutput::RequireBriefOpen Subroutines::ProhibitSubroutinePrototypes Subroutines::RequireArgUnpacking
+
+# Classes with metod signatures
+[-Subroutines::ProhibitSubroutinePrototypes]
+
+# We turn on strictures in our bootstrap module we almost always use
+[-TestingAndDebugging::RequireUseStrict]
+[-TestingAndDebugging::RequireUseWarnings]
+
+# When we modify $_, we know what we're doing.
+[-ControlStructures::ProhibitMutatingListFunctions]
+
