@@ -192,6 +192,9 @@ au FileType haskell setl smarttab autoindent sw=4 sts=4 et
 " Set "K" to go to perldoc -f
 au FileType perl setl keywordprg=perldoc\ -f
 
+" But not .ep!
+au FileType .ep setl nosmarttab noautoindent
+
 " Spell checking in POD
 let perl_include_pod = 1
 

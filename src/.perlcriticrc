@@ -17,3 +17,10 @@ exclude=InputOutput::RequireBriefOpen Subroutines::ProhibitSubroutinePrototypes 
 [TestingAndDebugging::ProhibitNoWarnings]
 allow_with_category_restriction = 1
 
+# If I use <STDIN>, I don't want <>!
+[-InputOutput::ProhibitExplicitStdin]
+
+# This is useful in map to map an array to a hash ( map { $_, $_ } ... )
+[ValuesAndExpressions::ProhibitCommaSeparatedStatements]
+allow_last_statement_to_be_comma_separated_in_map_and_grep = 1
+
