@@ -292,6 +292,10 @@ au FileType tex setl tw=72 formatoptions+=t
 au BufNewFile,BufRead *.cl set filetype=cool
 au FileType cool setl nospell
 
+" C++
+au FileType cpp setl cinoptions+=g2
+au FileType cpp setl softtabstop=2 shiftwidth=2 expandtab
+
 " Shell
 " Support syntax highlighting for .bash_aliases & .bash_private
 au BufNewFile,BufRead .bash_aliases set filetype=sh
