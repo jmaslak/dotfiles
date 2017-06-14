@@ -208,6 +208,10 @@ let perl_sync_dist = 250
 command! -range=% -nargs=* Tidy <line1>,<line2>!
   \perltidy <args>
 
+" Uncrustify
+command! -range=% -nargs=* Uncrustify <line1>,<line2>!
+  \uncrustify -q <args>
+
 " Perl critic, use :Critic
 command! Critic
     \ execute 'silent !rm -f errors.err'
