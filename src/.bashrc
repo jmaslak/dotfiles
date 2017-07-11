@@ -270,3 +270,12 @@ fi
 
 # Use vi bindings, not emacs
 set -o vi
+
+# Go
+if [ \! -d ~/go ] ; then
+    mkdir ~/go
+fi
+export GOPATH=~/go
+PATH="$PATH:~/go/bin"
+
+export UNCRUSTIFY_CONFIG=${HOME}/.uncrustify

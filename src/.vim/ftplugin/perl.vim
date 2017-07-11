@@ -68,16 +68,16 @@ EOF
 endif
 endfunction
  
-call s:init_tags() " only the first time
+" call s:init_tags() " only the first time
  
 let s:defined_functions = 1
 endif
  
-call PT_do_tags(expand('%'))
+" call PT_do_tags(expand('%'))
  
 " this should probably be added to ftplugin/perl to add the autocommand to
 " that buffer?
-augroup perltags
-    au!
-    autocmd BufRead,BufWritePost *.pm,*.pl,*.t call PT_do_tags(expand('%'))
-augroup END
+" augroup perltags
+"     au!
+"     autocmd BufRead,BufWritePost *.pm,*.pl,*.t call PT_do_tags(expand('%'))
+" augroup END
