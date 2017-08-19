@@ -1,7 +1,7 @@
 #!/bin/bash
 
 #
-# Copyright (C) 2015 Joel C. Maslak
+# Copyright (C) 2015 J. Maslak
 # All Rights Reserved - See License
 #
 

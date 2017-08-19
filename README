@@ -22,7 +22,7 @@ name ending in .base in the same directory.
 # HOW TO USE THIS REPO                                                #
 #######################################################################
 
-This repo probably shouldn't be used as-is, unless you are Joel Maslak.
+This repo probably shouldn't be used as-is, unless you are J. Maslak.
 I've added my preferences in these files, but many of these preferences
 are things two different developers/sysadmins may disagree about.
 That's okay!  Feel free to modify them to your own style.

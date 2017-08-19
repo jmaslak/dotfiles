@@ -1,5 +1,5 @@
 #
-# Copyright (C) 2015,2016 Joel C. Maslak
+# Copyright (C) 2015,2016 J. Maslak
 # All Rights Reserved - See License
 #
 
@@ -105,11 +105,11 @@ outside dependencies that may be undesired.
 
 =head1 AUTHOR
 
-Joel Maslak <jmaslak@antelope.net>
+J. Maslak <jmaslak@antelope.net>
 
 =head1 COPYRIGHT AND LICENSE
 
-This software is copyright (c) 2015,2016 by Joel Maslak.
+This software is copyright (c) 2015,2016 by J. Maslak.
 
 This is free software; you can redistribute it and/or modify it under
 the same terms as the Perl 5 programming language system itself.

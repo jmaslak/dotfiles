@@ -8,7 +8,7 @@ use ExtUtils::MakeMaker;
 
 my %WriteMakefileArgs = (
   "ABSTRACT" => "Default Boilerplate for Joel's Code",
-  "AUTHOR" => "Joel Maslak <jmaslak\@antelope.net>",
+  "AUTHOR" => "J. Maslak <jmaslak\@antelope.net>",
   "CONFIGURE_REQUIRES" => {
     "ExtUtils::MakeMaker" => 0
   },
