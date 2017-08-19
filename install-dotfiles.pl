@@ -1,7 +1,7 @@
 #!/usr/bin/perl
 
 #
-# Copyright (C) 2015 Joel Maslak
+# Copyright (C) 2015 J. Maslak
 # All Rights Reserved - See License
 #
 

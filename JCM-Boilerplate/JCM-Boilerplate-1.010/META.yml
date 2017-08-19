@@ -1,7 +1,7 @@
 ---
 abstract: "Default Boilerplate for Joel's Code"
 author:
-  - 'Joel Maslak <jmaslak@antelope.net>'
+  - 'J. Maslak <jmaslak@antelope.net>'
 build_requires:
   Test::More: '1.001014'
 configure_requires:
