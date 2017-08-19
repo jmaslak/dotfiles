@@ -43,7 +43,12 @@ MAIN: {
     my $copyright;
     if ( -e "$home/.dotfiles.copyright" ) {
         $copyright = slurp("$home/.dotfiles.copyright");
-    } else {
+        if ($copyright =~ m/Joel/s) { # We want to change this always!
+            $copyright = undef;
+        }
+    }
+
+    if (!defined($copyright)) {
         print "Please enter the name to use for copyright in templates:\n";
         local $| = 1;
         print " > ";
