@@ -3,8 +3,8 @@
 # All Rights Reserved - See License
 #
 
-package JCM::Boilerplate v0.01.11;
-# ABSTRACT: Default Boilerplate for Joel's Code
+package JCM::Boilerplate;
+# ABSTRACT: Default Boilerplate for J. Maslak's Code
 
 =head1 SYNOPSIS
 
