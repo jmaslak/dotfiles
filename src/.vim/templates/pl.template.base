@@ -5,7 +5,7 @@
 # All Rights Reserved - See License
 #
 
-use JCM::Boilerplate 'script';
+use JTM::Boilerplate 'script';
 
 MAIN: {
 

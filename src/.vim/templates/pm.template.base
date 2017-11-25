@@ -7,7 +7,7 @@
 
 package <INSERT_NAME_HERE>;
 
-use JCM::Boilerplate 'class';
+use JTM::Boilerplate 'class';
 
 
 __PACKAGE__->meta->make_immutable;

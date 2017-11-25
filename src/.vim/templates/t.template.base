@@ -6,7 +6,7 @@
 #
 
 use Test2::Bundle::Extended 0.000058;
-use JCM::Boilerplate 'script';
+use JTM::Boilerplate 'script';
 
 MAIN: {
     pass("Test dependencies load");
