@@ -43,7 +43,7 @@ MAIN: {
     my $copyright;
     if ( -e "$home/.dotfiles.copyright" ) {
         $copyright = slurp("$home/.dotfiles.copyright");
-        if ($copyright =~ m/Joel/s) { # We want to change this always!
+        if ($copyright =~ m/Joel\W/s) { # We want to change this always!
             $copyright = undef;
         }
     }
