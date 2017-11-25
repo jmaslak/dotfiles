@@ -1,21 +1,21 @@
 #
-# Copyright (C) 2015-2017 Joelle Maslak
+# Copyright (C) 2015,2016 Joelle Maslak
 # All Rights Reserved - See License
 #
 
-package JCM::Boilerplate;
+package JTM::Boilerplate;
 # ABSTRACT: Default Boilerplate for Joelle Maslak's Code
 
 =head1 SYNOPSIS
 
-  use JCM::Boilerplate 'script';
+  use JTM::Boilerplate 'script';
 
 =head1 DESCRIPTION
 
 This module serves two purposes.  First, it sets some default imports,
 and turns on the strictures I've come to rely upon.  Secondly, it depends
 on a number of other modules to aid in setting up new environments (I can
-just do a "cpan JCM-Boilerplate" to install everything I need).
+just do a "cpan JTM-Boilerplate" to install everything I need).
 
 This module optionally takes one of two parameters, 'script', 'class',
 or 'role'. If 'script' is specified, the module assumes that you do not
@@ -41,25 +41,25 @@ use English;
 use Import::Into;
 use Smart::Comments;
 
-sub import($self, $type='script') {
+sub import ( $self, $type = 'script' ) {
     ### assert: ($type =~ m/^(?:class|role|script)$/ms)
-    
+
     my $target = caller;
 
     strict->import::into($target);
     warnings->import::into($target);
     autodie->import::into($target);
 
-    feature->import::into($target, ':5.22');
+    feature->import::into( $target, ':5.22' );
 
-    utf8->import::into($target); # Allow UTF-8 Source
+    utf8->import::into($target);    # Allow UTF-8 Source
 
-    if ($type eq 'class') {
+    if ( $type eq 'class' ) {
         Moose->import::into($target);
         Moose::Util::TypeConstraints->import::into($target);
         MooseX::StrictConstructor->import::into($target);
         namespace::autoclean->import::into($target);
-    } elsif ($type eq 'role') {
+    } elsif ( $type eq 'role' ) {
         Moose::Role->import::into($target);
         Moose::Util::TypeConstraints->import::into($target);
         MooseX::StrictConstructor->import::into($target);
@@ -68,30 +68,28 @@ sub import($self, $type='script') {
 
     Carp->import::into($target);
     English->import::into($target);
-    Smart::Comments->import::into($target, '-ENV', '###');
+    Smart::Comments->import::into( $target, '-ENV', '###' );
 
-    feature->import::into($target, 'postderef');    # Not needed if feature budle >= 5.23.1
+    feature->import::into( $target, 'postderef' );    # Not needed if feature budle >= 5.23.1
 
     # We haven't been using this
     # feature->import::into($target, 'refaliasing');
-    feature->import::into($target, 'signatures');
+    feature->import::into( $target, 'signatures' );
 
-    feature->import::into($target, 'switch');
-    feature->import::into($target, 'unicode_strings');
+    feature->import::into( $target, 'switch' );
+    feature->import::into( $target, 'unicode_strings' );
     # warnings->unimport::out_of($target, 'experimental::refaliasing');
-    warnings->unimport::out_of($target, 'experimental::signatures');
+    warnings->unimport::out_of( $target, 'experimental::signatures' );
 
-    if ($PERL_VERSION lt v5.24.0) {
-        warnings->unimport::out_of($target, 'experimental::postderef');
+    if ( $PERL_VERSION lt v5.24.0 ) {
+        warnings->unimport::out_of( $target, 'experimental::postderef' );
     }
 
     # For "switch" feature
-    warnings->unimport::out_of($target, 'experimental::smartmatch');
+    warnings->unimport::out_of( $target, 'experimental::smartmatch' );
 
     return;
 }
 
 1;
-
-
 
