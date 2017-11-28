@@ -1,4 +1,9 @@
+1.018 - ???
+Joelle Maslak <jmaslak@antelope.net>
+ * Enable strict regular expression checking
+
 1.017 - November 25, 2017
+Joelle Maslak <jmaslak@antelope.net>
  * Many changes, see git change log
 
 1.002 - December 19, 2015

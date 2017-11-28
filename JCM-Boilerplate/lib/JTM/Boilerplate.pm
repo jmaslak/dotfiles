@@ -1,5 +1,5 @@
 #
-# Copyright (C) 2015,2016 Joelle Maslak
+# Copyright (C) 2015-2017 Joelle Maslak
 # All Rights Reserved - See License
 #
 
@@ -37,9 +37,13 @@ use strict;
 use feature 'signatures';
 no warnings 'experimental::signatures';
 
+no warnings 'experimental::re_strict';
+use re 'strict';
+
 use English;
 use Import::Into;
 use Smart::Comments;
+use re;
 
 sub import ( $self, $type = 'script' ) {
     ### assert: ($type =~ m/^(?:class|role|script)$/ms)
@@ -87,6 +91,10 @@ sub import ( $self, $type = 'script' ) {
 
     # For "switch" feature
     warnings->unimport::out_of( $target, 'experimental::smartmatch' );
+
+    # For "re 'strict'" feature
+    warnings->unimport::out_of( $target, 'experimental::re_strict' );
+    re->import( 'strict' );
 
     return;
 }
