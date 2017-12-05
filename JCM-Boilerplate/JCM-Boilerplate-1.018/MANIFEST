@@ -7,7 +7,6 @@ META.yml
 Makefile.PL
 README
 dist.ini
-errors.err
 lib/JCM/Boilerplate.pm
 lib/JTM/Boilerplate.pm
 t/01-Basic.t
