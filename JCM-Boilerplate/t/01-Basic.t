@@ -51,7 +51,7 @@ $ret = eval {
     my $x = 'abc';
     local $SIG{__WARN__} = sub { };
     eval(
-        "use JCM::Boilerplate 'script'; if (\$x =~ m/\xabc/) { warn('Should not see this'); }; 1 ");
+        "use JCM::Boilerplate 'script'; if (\$x =~ m/\\xabc/) { warn('Should not see this'); }; 1");
 };
 if ($ret) {
     fail('Invalid regex under strict mode dies');
@@ -105,7 +105,7 @@ $ret = eval {
     my $x = 'abc';
     local $SIG{__WARN__} = sub { };
     eval(
-        "use JTM::Boilerplate 'script'; if (\$x =~ m/\xabc/) { warn('Should not see this'); }; 1 ");
+        "use JTM::Boilerplate 'script'; if (\$x =~ m/\\xabc/) { warn('Should not see this'); }; 1 ");
 };
 if ($ret) {
     fail('Invalid regex under strict mode dies');
