@@ -1,3 +1,7 @@
+1.019 - December 8, 2017
+Joelle Maslak <jmaslak@antelope.net>
+ * Fix tests that failed on perl <= 5.24
+
 1.018 - December 5, 2017
 Joelle Maslak <jmaslak@antelope.net>
  * Enable strict regular expression checking
