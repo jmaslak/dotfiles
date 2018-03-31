@@ -5,7 +5,7 @@
 # All Rights Reserved - See License
 #
 
-use Test2::v0 0.000111;
+use Test2::V0 0.000111;
 use JTM::Boilerplate 'script';
 
 MAIN: {
