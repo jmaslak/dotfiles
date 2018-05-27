@@ -40,30 +40,15 @@ MAIN: {
         $rename_old = undef;
     }
 
-    my $copyright;
-    if ( -e "$home/.dotfiles.copyright" ) {
-        $copyright = slurp("$home/.dotfiles.copyright");
-        if ($copyright =~ m/Joel\W/s) { # We want to change this always!
-            $copyright = undef;
-        }
-    }
-
-    if (!defined($copyright)) {
-        print "Please enter the name to use for copyright in templates:\n";
-        local $| = 1;
-        print " > ";
-        $copyright = <STDIN>;
-        chomp($copyright);
-
-        print "Creating $home/.dotfiles.copyright ...";
-        spitout("$home/.dotfiles.copyright", $copyright);
-        print "\n";
-    }
+    my $copyright = get_copyright($home);
+    my $fullname  = get_fullname($home);
+    my $email     = get_email($home);
 
     install_files($rename_old);
     install_vim_templates($copyright);
+    install_git_config( $fullname, $email );
 
-    if ( ! -d "$home/tmp" ) {
+    if ( !-d "$home/tmp" ) {
         print "Creating temporary directory...";
         mkdir "$home/tmp";
         print "\n";
@@ -73,8 +58,89 @@ MAIN: {
     system "$current/perl6-modules.sh";
 }
 
+sub get_copyright {
+    my ($home) = @_;
+
+    my $copyright;
+
+    if ( -e "$home/.dotfiles.copyright" ) {
+        $copyright = slurp("$home/.dotfiles.copyright");
+        if ( $copyright =~ m/Joel\W/s ) {    # We want to change this always!
+            $copyright = undef;
+        }
+    }
+
+    if ( !defined($copyright) ) {
+        print "Please enter the name to use for copyright in templates:\n";
+        local $| = 1;
+        print " > ";
+        $copyright = <STDIN>;
+        chomp($copyright);
+
+        print "Creating $home/.dotfiles.copyright ...";
+        spitout( "$home/.dotfiles.copyright", $copyright );
+        print "\n";
+    }
+
+    return $copyright;
+}
+
+sub get_fullname {
+    my ($home) = @_;
+
+    my $fullname;
+
+    if ( -e "$home/.dotfiles.fullname" ) {
+        $fullname = slurp("$home/.dotfiles.fullname");
+        if ( $fullname =~ m/Joel\W/s ) {    # We want to change this always!
+            $fullname = undef;
+        }
+    }
+
+    if ( !defined($fullname) ) {
+        print "Please enter the full name to use for git in templates:\n";
+        local $| = 1;
+        print " > ";
+        $fullname = <STDIN>;
+        chomp($fullname);
+
+        print "Creating $home/.dotfiles.fullname...";
+        spitout( "$home/.dotfiles.fullname", $fullname );
+        print "\n";
+    }
+
+    return $fullname;
+}
+
+sub get_email {
+    my ($home) = @_;
+
+    my $email;
+
+    if ( -e "$home/.dotfiles.email" ) {
+        $email = slurp("$home/.dotfiles.email");
+        if ( $email =~ m/joel\W/is ) {    # We want to change this always!
+            $email = undef;
+        }
+    }
+
+    if ( !defined($email) ) {
+        print "Please enter the email address to use for git in templates:\n";
+        local $| = 1;
+        print " > ";
+        $email = <STDIN>;
+        chomp($email);
+
+        print "Creating $home/.dotfiles.email...";
+        spitout( "$home/.dotfiles.email", $email );
+        print "\n";
+    }
+
+    return $email;
+}
+
 sub install_files {
-    if (scalar(@_) != 1) { confess 'invalid call'; }
+    if ( scalar(@_) != 1 ) { confess 'invalid call'; }
     my $rename_old = shift;
 
     my $home    = $ENV{HOME};
@@ -116,7 +182,7 @@ sub install_files {
 }
 
 sub install_vim_templates {
-    if (scalar(@_) != 1) { confess 'invalid call'; }
+    if ( scalar(@_) != 1 ) { confess 'invalid call'; }
     my $copyright = shift;
 
     my $home    = $ENV{HOME};
@@ -140,7 +206,7 @@ sub install_vim_templates {
             }
         }
 
-        if (! ( $file =~ m/\.base$/ ) ) {
+        if ( !( $file =~ m/\.base$/ ) ) {
             print "ignoring\n";
             next LOOP;
         }
@@ -149,9 +215,9 @@ sub install_vim_templates {
         $basefile =~ s/\.base$//;
 
         print "Creating ... ";
-        my $out = slurp( "$current/src/.vim/templates/$file" );
+        my $out = slurp("$current/src/.vim/templates/$file");
         $out =~ s/_COPYRIGHT_/$copyright/g;
-        spitout("$home/.vim/templates/$basefile", $out);
+        spitout( "$home/.vim/templates/$basefile", $out );
 
         # Make executable if needed
         if ( -x "$current/src/.vim/templates/$file" ) {
@@ -162,25 +228,35 @@ sub install_vim_templates {
     }
 }
 
+sub install_git_config {
+    my ( $fullname, $email ) = @_;
+
+    system("git config --global user.email \"$email\"");
+    system("git config --global user.name \"$fullname\"");
+    system("git config --global log.mailmap true");
+
+    return;
+}
+
 sub slurp {
-    if (scalar(@_) != 1) { confess 'invalid call' }
+    if ( scalar(@_) != 1 ) { confess 'invalid call' }
     my $fn = shift;
 
     # Be compatible with old Perl
     my $fh = gensym();
-    open($fh, '<', $fn) or die($!);
+    open( $fh, '<', $fn ) or die($!);
     my @out = <$fh>;
     close($fh);
 
-    return join('', @out);
+    return join( '', @out );
 }
 
 sub spitout {
-    if (scalar(@_) != 2) { confess 'invalid call' }
-    my ($fn, $val) = @_;
+    if ( scalar(@_) != 2 ) { confess 'invalid call' }
+    my ( $fn, $val ) = @_;
 
     my $fh = gensym();
-    open($fh, '>', $fn) or die("Couldn't create $fn - $!\n");
+    open( $fh, '>', $fn ) or die("Couldn't create $fn - $!\n");
     print $fh $val or die($!);
     close($fh);
 }
