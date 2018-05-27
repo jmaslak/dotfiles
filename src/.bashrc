@@ -276,6 +276,6 @@ if [ \! -d ~/go ] ; then
     mkdir ~/go
 fi
 export GOPATH=~/go
-PATH="$PATH:~/go/bin"
+PATH="$PATH:~/go/bin:/usr/local/go/bin"
 
 export UNCRUSTIFY_CONFIG=${HOME}/.uncrustify
