@@ -7,9 +7,9 @@
 
 doit() {
     if [ "$PERLBREW_HOME" != "" ] ; then
-        cd JCM-Boilerplate
+        cd JTM-Boilerplate
 
-        DIR=$( ls -Fd JCM-Boilerplate-* | grep / | sort | tail -1 )
+        DIR=$( ls -Fd JTM-Boilerplate-* | grep / | sort | tail -1 )
         cd "$DIR"
         if [ $? -ne 0 ] ; then
             echo "SORRY, COULDN'T PROCEED."

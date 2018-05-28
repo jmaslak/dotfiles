@@ -68,12 +68,12 @@ DEFINE_VERSION = -D$(VERSION_MACRO)=\"$(VERSION)\"
 XS_VERSION = 1.019
 XS_VERSION_MACRO = XS_VERSION
 XS_DEFINE_VERSION = -D$(XS_VERSION_MACRO)=\"$(XS_VERSION)\"
-INST_ARCHLIB = blib/arch
-INST_SCRIPT = blib/script
-INST_BIN = blib/bin
-INST_LIB = blib/lib
-INST_MAN1DIR = blib/man1
-INST_MAN3DIR = blib/man3
+INST_ARCHLIB = ../blib/arch
+INST_SCRIPT = ../blib/script
+INST_BIN = ../blib/bin
+INST_LIB = ../blib/lib
+INST_MAN1DIR = ../blib/man1
+INST_MAN3DIR = ../blib/man3
 MAN1EXT = 1
 MAN3EXT = 3
 INSTALLDIRS = site
@@ -246,24 +246,7 @@ makemakerdflt : all
 	$(NOECHO) $(NOOP)
 
 
-# --- MakeMaker dist section:
-TAR = tar
-TARFLAGS = cvf
-ZIP = zip
-ZIPFLAGS = -r
-COMPRESS = gzip --best
-SUFFIX = .gz
-SHAR = shar
-PREOP = $(NOECHO) $(NOOP)
-POSTOP = $(NOECHO) $(NOOP)
-TO_UNIX = $(NOECHO) $(NOOP)
-CI = ci -u
-RCS_LABEL = rcs -Nv$(VERSION_SYM): -q
-DIST_CP = best
-DIST_DEFAULT = tardist
-DISTNAME = JCM-Boilerplate
-DISTVNAME = JCM-Boilerplate-1.019
-
+# --- MakeMaker dist section skipped.
 
 # --- MakeMaker macro section:
 
@@ -750,91 +733,15 @@ signature :
 	cpansign -s
 
 
-# --- MakeMaker dist_basics section:
-distclean :: realclean distcheck
-	$(NOECHO) $(NOOP)
+# --- MakeMaker dist_basics section skipped.
 
-distcheck :
-	$(PERLRUN) "-MExtUtils::Manifest=fullcheck" -e fullcheck
+# --- MakeMaker dist_core section skipped.
 
-skipcheck :
-	$(PERLRUN) "-MExtUtils::Manifest=skipcheck" -e skipcheck
+# --- MakeMaker distdir section skipped.
 
-manifest :
-	$(PERLRUN) "-MExtUtils::Manifest=mkmanifest" -e mkmanifest
+# --- MakeMaker dist_test section skipped.
 
-veryclean : realclean
-	$(RM_F) *~ */*~ *.orig */*.orig *.bak */*.bak *.old */*.old
-
-
-
-# --- MakeMaker dist_core section:
-
-dist : $(DIST_DEFAULT) $(FIRST_MAKEFILE)
-	$(NOECHO) $(ABSPERLRUN) -l -e 'print '\''Warning: Makefile possibly out of date with $(VERSION_FROM)'\''' \
-	  -e '    if -e '\''$(VERSION_FROM)'\'' and -M '\''$(VERSION_FROM)'\'' < -M '\''$(FIRST_MAKEFILE)'\'';' --
-
-tardist : $(DISTVNAME).tar$(SUFFIX)
-	$(NOECHO) $(NOOP)
-
-uutardist : $(DISTVNAME).tar$(SUFFIX)
-	uuencode $(DISTVNAME).tar$(SUFFIX) $(DISTVNAME).tar$(SUFFIX) > $(DISTVNAME).tar$(SUFFIX)_uu
-	$(NOECHO) $(ECHO) 'Created $(DISTVNAME).tar$(SUFFIX)_uu'
-
-$(DISTVNAME).tar$(SUFFIX) : distdir
-	$(PREOP)
-	$(TO_UNIX)
-	$(TAR) $(TARFLAGS) $(DISTVNAME).tar $(DISTVNAME)
-	$(RM_RF) $(DISTVNAME)
-	$(COMPRESS) $(DISTVNAME).tar
-	$(NOECHO) $(ECHO) 'Created $(DISTVNAME).tar$(SUFFIX)'
-	$(POSTOP)
-
-zipdist : $(DISTVNAME).zip
-	$(NOECHO) $(NOOP)
-
-$(DISTVNAME).zip : distdir
-	$(PREOP)
-	$(ZIP) $(ZIPFLAGS) $(DISTVNAME).zip $(DISTVNAME)
-	$(RM_RF) $(DISTVNAME)
-	$(NOECHO) $(ECHO) 'Created $(DISTVNAME).zip'
-	$(POSTOP)
-
-shdist : distdir
-	$(PREOP)
-	$(SHAR) $(DISTVNAME) > $(DISTVNAME).shar
-	$(RM_RF) $(DISTVNAME)
-	$(NOECHO) $(ECHO) 'Created $(DISTVNAME).shar'
-	$(POSTOP)
-
-
-# --- MakeMaker distdir section:
-create_distdir :
-	$(RM_RF) $(DISTVNAME)
-	$(PERLRUN) "-MExtUtils::Manifest=manicopy,maniread" \
-		-e "manicopy(maniread(),'$(DISTVNAME)', '$(DIST_CP)');"
-
-distdir : create_distdir distmeta 
-	$(NOECHO) $(NOOP)
-
-
-
-# --- MakeMaker dist_test section:
-disttest : distdir
-	cd $(DISTVNAME) && $(ABSPERLRUN) Makefile.PL "INSTALLDIRS=site"
-	cd $(DISTVNAME) && $(MAKE) $(PASTHRU)
-	cd $(DISTVNAME) && $(MAKE) test $(PASTHRU)
-
-
-
-# --- MakeMaker dist_ci section:
-ci :
-	$(ABSPERLRUN) -MExtUtils::Manifest=maniread -e '@all = sort keys %{ maniread() };' \
-	  -e 'print(qq{Executing $(CI) @all\n});' \
-	  -e 'system(qq{$(CI) @all}) == 0 or die $$!;' \
-	  -e 'print(qq{Executing $(RCS_LABEL) ...\n});' \
-	  -e 'system(qq{$(RCS_LABEL) @all}) == 0 or die $$!;' --
-
+# --- MakeMaker dist_ci section skipped.
 
 # --- MakeMaker distmeta section:
 distmeta : create_distdir metafile
@@ -856,117 +763,7 @@ distsignature : distmeta
 
 
 
-# --- MakeMaker install section:
-
-install :: pure_install doc_install
-	$(NOECHO) $(NOOP)
-
-install_perl :: pure_perl_install doc_perl_install
-	$(NOECHO) $(NOOP)
-
-install_site :: pure_site_install doc_site_install
-	$(NOECHO) $(NOOP)
-
-install_vendor :: pure_vendor_install doc_vendor_install
-	$(NOECHO) $(NOOP)
-
-pure_install :: pure_$(INSTALLDIRS)_install
-	$(NOECHO) $(NOOP)
-
-doc_install :: doc_$(INSTALLDIRS)_install
-	$(NOECHO) $(NOOP)
-
-pure__install : pure_site_install
-	$(NOECHO) $(ECHO) INSTALLDIRS not defined, defaulting to INSTALLDIRS=site
-
-doc__install : doc_site_install
-	$(NOECHO) $(ECHO) INSTALLDIRS not defined, defaulting to INSTALLDIRS=site
-
-pure_perl_install :: all
-	$(NOECHO) $(MOD_INSTALL) \
-		read "$(PERL_ARCHLIB)/auto/$(FULLEXT)/.packlist" \
-		write "$(DESTINSTALLARCHLIB)/auto/$(FULLEXT)/.packlist" \
-		"$(INST_LIB)" "$(DESTINSTALLPRIVLIB)" \
-		"$(INST_ARCHLIB)" "$(DESTINSTALLARCHLIB)" \
-		"$(INST_BIN)" "$(DESTINSTALLBIN)" \
-		"$(INST_SCRIPT)" "$(DESTINSTALLSCRIPT)" \
-		"$(INST_MAN1DIR)" "$(DESTINSTALLMAN1DIR)" \
-		"$(INST_MAN3DIR)" "$(DESTINSTALLMAN3DIR)"
-	$(NOECHO) $(WARN_IF_OLD_PACKLIST) \
-		"$(SITEARCHEXP)/auto/$(FULLEXT)"
-
-
-pure_site_install :: all
-	$(NOECHO) $(MOD_INSTALL) \
-		read "$(SITEARCHEXP)/auto/$(FULLEXT)/.packlist" \
-		write "$(DESTINSTALLSITEARCH)/auto/$(FULLEXT)/.packlist" \
-		"$(INST_LIB)" "$(DESTINSTALLSITELIB)" \
-		"$(INST_ARCHLIB)" "$(DESTINSTALLSITEARCH)" \
-		"$(INST_BIN)" "$(DESTINSTALLSITEBIN)" \
-		"$(INST_SCRIPT)" "$(DESTINSTALLSITESCRIPT)" \
-		"$(INST_MAN1DIR)" "$(DESTINSTALLSITEMAN1DIR)" \
-		"$(INST_MAN3DIR)" "$(DESTINSTALLSITEMAN3DIR)"
-	$(NOECHO) $(WARN_IF_OLD_PACKLIST) \
-		"$(PERL_ARCHLIB)/auto/$(FULLEXT)"
-
-pure_vendor_install :: all
-	$(NOECHO) $(MOD_INSTALL) \
-		read "$(VENDORARCHEXP)/auto/$(FULLEXT)/.packlist" \
-		write "$(DESTINSTALLVENDORARCH)/auto/$(FULLEXT)/.packlist" \
-		"$(INST_LIB)" "$(DESTINSTALLVENDORLIB)" \
-		"$(INST_ARCHLIB)" "$(DESTINSTALLVENDORARCH)" \
-		"$(INST_BIN)" "$(DESTINSTALLVENDORBIN)" \
-		"$(INST_SCRIPT)" "$(DESTINSTALLVENDORSCRIPT)" \
-		"$(INST_MAN1DIR)" "$(DESTINSTALLVENDORMAN1DIR)" \
-		"$(INST_MAN3DIR)" "$(DESTINSTALLVENDORMAN3DIR)"
-
-
-doc_perl_install :: all
-	$(NOECHO) $(ECHO) Appending installation info to "$(DESTINSTALLARCHLIB)/perllocal.pod"
-	-$(NOECHO) $(MKPATH) "$(DESTINSTALLARCHLIB)"
-	-$(NOECHO) $(DOC_INSTALL) \
-		"Module" "$(NAME)" \
-		"installed into" "$(INSTALLPRIVLIB)" \
-		LINKTYPE "$(LINKTYPE)" \
-		VERSION "$(VERSION)" \
-		EXE_FILES "$(EXE_FILES)" \
-		>> "$(DESTINSTALLARCHLIB)/perllocal.pod"
-
-doc_site_install :: all
-	$(NOECHO) $(ECHO) Appending installation info to "$(DESTINSTALLARCHLIB)/perllocal.pod"
-	-$(NOECHO) $(MKPATH) "$(DESTINSTALLARCHLIB)"
-	-$(NOECHO) $(DOC_INSTALL) \
-		"Module" "$(NAME)" \
-		"installed into" "$(INSTALLSITELIB)" \
-		LINKTYPE "$(LINKTYPE)" \
-		VERSION "$(VERSION)" \
-		EXE_FILES "$(EXE_FILES)" \
-		>> "$(DESTINSTALLARCHLIB)/perllocal.pod"
-
-doc_vendor_install :: all
-	$(NOECHO) $(ECHO) Appending installation info to "$(DESTINSTALLARCHLIB)/perllocal.pod"
-	-$(NOECHO) $(MKPATH) "$(DESTINSTALLARCHLIB)"
-	-$(NOECHO) $(DOC_INSTALL) \
-		"Module" "$(NAME)" \
-		"installed into" "$(INSTALLVENDORLIB)" \
-		LINKTYPE "$(LINKTYPE)" \
-		VERSION "$(VERSION)" \
-		EXE_FILES "$(EXE_FILES)" \
-		>> "$(DESTINSTALLARCHLIB)/perllocal.pod"
-
-
-uninstall :: uninstall_from_$(INSTALLDIRS)dirs
-	$(NOECHO) $(NOOP)
-
-uninstall_from_perldirs ::
-	$(NOECHO) $(UNINSTALL) "$(PERL_ARCHLIB)/auto/$(FULLEXT)/.packlist"
-
-uninstall_from_sitedirs ::
-	$(NOECHO) $(UNINSTALL) "$(SITEARCHEXP)/auto/$(FULLEXT)/.packlist"
-
-uninstall_from_vendordirs ::
-	$(NOECHO) $(UNINSTALL) "$(VENDORARCHEXP)/auto/$(FULLEXT)/.packlist"
-
+# --- MakeMaker install section skipped.
 
 # --- MakeMaker force section:
 # Phony target to force checking subdirectories.
@@ -996,20 +793,9 @@ $(FIRST_MAKEFILE) : Makefile.PL $(CONFIGDEP)
 # --- MakeMaker staticmake section:
 
 # --- MakeMaker makeaperl section ---
-MAP_TARGET    = perl
+MAP_TARGET    = ../perl
 FULLPERL      = "/home/jmaslak/perl5/perlbrew/perls/perl-5.26.2/bin/perl"
-MAP_PERLINC   = "-Iblib/arch" "-Iblib/lib" "-I/home/jmaslak/perl5/perlbrew/perls/perl-5.26.2/lib/5.26.2/x86_64-linux" "-I/home/jmaslak/perl5/perlbrew/perls/perl-5.26.2/lib/5.26.2"
-
-$(MAP_TARGET) :: $(MAKE_APERL_FILE)
-	$(MAKE) $(USEMAKEFILE) $(MAKE_APERL_FILE) $@
-
-$(MAKE_APERL_FILE) : static $(FIRST_MAKEFILE) pm_to_blib
-	$(NOECHO) $(ECHO) Writing \"$(MAKE_APERL_FILE)\" for this $(MAP_TARGET)
-	$(NOECHO) $(PERLRUNINST) \
-		Makefile.PL DIR="" \
-		MAKEFILE=$(MAKE_APERL_FILE) LINKTYPE=static \
-		MAKEAPERL=1 NORECURS=1 CCCDLFLAGS= \
-		INSTALLDIRS=site
+MAP_PERLINC   = "-I../blib/arch" "-I../blib/lib" "-I/home/jmaslak/perl5/perlbrew/perls/perl-5.26.2/lib/5.26.2/x86_64-linux" "-I/home/jmaslak/perl5/perlbrew/perls/perl-5.26.2/lib/5.26.2"
 
 
 # --- MakeMaker test section:
@@ -1155,8 +941,8 @@ ppd :
 
 pm_to_blib : $(FIRST_MAKEFILE) $(TO_INST_PM)
 	$(NOECHO) $(ABSPERLRUN) -MExtUtils::Install -e 'pm_to_blib({@ARGV}, '\''$(INST_LIB)/auto'\'', q[$(PM_FILTER)], '\''$(PERM_DIR)'\'')' -- \
-	  'lib/JCM/Boilerplate.pm' 'blib/lib/JCM/Boilerplate.pm' \
-	  'lib/JTM/Boilerplate.pm' 'blib/lib/JTM/Boilerplate.pm' 
+	  'lib/JCM/Boilerplate.pm' '../blib/lib/JCM/Boilerplate.pm' \
+	  'lib/JTM/Boilerplate.pm' '../blib/lib/JTM/Boilerplate.pm' 
 	$(NOECHO) $(TOUCH) pm_to_blib
 
 
