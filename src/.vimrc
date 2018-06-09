@@ -2,11 +2,11 @@
 set encoding=utf-8
 
 " Set proper plugin directories
-if has("win32")
-    set runtimepath^=$USERPROFILE\vimfiles\bundle\vim-ps1
-else
-    set runtimepath^=~/.vim/bundle/vim-ps1
-endif
+" if has("win32")
+"     set runtimepath^=$USERPROFILE\vimfiles\bundle\vim-ps1
+" else
+"     set runtimepath^=~/.vim/bundle/vim-ps1
+" endif
 
 " Some environments don't set the shell right, which causes
 " issues with gitgutter and probably other things that assume
@@ -16,6 +16,8 @@ if !empty(glob("/bin/bash"))
 elseif !empty(glob("/usr/bin/bash"))
     set shell=/usr/bin/bash
 endif
+
+execute pathogen#infect()
 
 " If we are not on Windows *or* if we're running Windows gvim
 if ( ! has("win32") ) || has("gui_running")
@@ -179,12 +181,19 @@ au BufNewFile,BufRead *.less set filetype=css
 au FileType css set sts=2          " Soft Tabs = 2 spaces
 au FileType css set sw=2           " Shift Width = 2 spaces on indenting
 
+" Rust
+au FileType rust setl smarttab autoindent et
+au BufNewFile,BufRead *.rs set filetype=rust
+
 " Haskel
 au FileType haskell setl smarttab autoindent sw=4 sts=4 et
 
 " Perl 5
 " Set "K" to go to perldoc -f
 au FileType perl setl keywordprg=perldoc\ -f
+
+" But not .ep!
+au FileType .ep setl nosmarttab noautoindent
 
 " Spell checking in POD
 let perl_include_pod = 1
@@ -198,6 +207,18 @@ let perl_sync_dist = 250
 " Perl tidy, use :Tidy
 command! -range=% -nargs=* Tidy <line1>,<line2>!
   \perltidy <args>
+
+" Uncrustify
+command! -range=% -nargs=* Uncrustify <line1>,<line2>!
+  \uncrustify -q <args>
+
+" Perl critic, use :Critic
+command! Critic
+    \ execute 'silent !rm -f errors.err'
+    \ | execute 'silent !perlcritic % --quiet --verbose "\%f:\%l:\%m (\%p)\\n" >errors.err'
+    \ | redraw!
+    \ | cf
+" Use cf (first), cn (next), and cp (previous) to go through file
 
 " Make command and errors
 " You can use:
@@ -217,6 +238,7 @@ autocmd FileType perl setl iskeyword+=%
 autocmd FileType perl setl iskeyword+=@-@
 autocmd FileType perl setl iskeyword+=:
 autocmd FileType perl setl iskeyword+=,
+autocmd FileType perl setl errorformat+=%f:%l:%m
 
 " Perl 6
 au BufNewFile,BufRead *.p6,*.pl6,*.pm6,*.t6,*.xt6 set filetype=perl6
@@ -273,6 +295,10 @@ au FileType tex setl tw=72 formatoptions+=t
 " Cool
 au BufNewFile,BufRead *.cl set filetype=cool
 au FileType cool setl nospell
+
+" C++
+au FileType cpp setl cinoptions+=g2
+au FileType cpp setl softtabstop=2 shiftwidth=2 expandtab
 
 " Shell
 " Support syntax highlighting for .bash_aliases & .bash_private

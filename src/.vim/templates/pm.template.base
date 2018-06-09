@@ -1,13 +1,13 @@
 #!/usr/bin/perl
 
 #
-# Copyright (C) 2017 _COPYRIGHT_
+# Copyright (C) 2018 _COPYRIGHT_
 # All Rights Reserved - See License
 #
 
-package <INSERT_NAME_HERE> v0.01.00;
+package <INSERT_NAME_HERE>;
 
-use JCM::Boilerplate 'class';
+use JTM::Boilerplate 'class';
 
 
 __PACKAGE__->meta->make_immutable;

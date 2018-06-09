@@ -15,9 +15,17 @@ fi
 
 # Create my alias for my task manager
 if [ -d ~/tasks ] ; then
-    alias task=~/tasks/task.pl
+    if [ "$SHELL" == "-bash" ] ; then
+        alias task="SHELL=/bin/bash ~/tasks/task.pl"
+    else
+        alias task="SHELL=~/tasks/task.pl"
+    fi
 elif [ -d ~/git/antelope/perl/tasks ] ; then
-    alias task=~/git/antelope/perl/tasks/task.pl
+    if [ "$SHELL" == "-bash" ] ; then
+        alias task="SHELL=/bin/bash ~/git/antelope/perl/tasks/task.pl"
+    else
+        alias task="~/git/antelope/perl/tasks/task.pl"
+    fi
 fi
 
 # Make sqlplus usable

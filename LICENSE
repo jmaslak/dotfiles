@@ -41,6 +41,19 @@ The PowerShell plugin is licensed under the Apache 2.0 license, as
 described below.  The PowerShell plugin is available at:
     https://github.com/PProvost/vim-ps1
 
+The Rust VIM plugin is licensed both under the MIT and Apache license.
+See LICENSE-APACHE and LICENSE-MIT in src/.vim/bundle/rust.vim .  This
+plugin is available at:
+    https://github.com/rust-lang/rust.vim
+
+The TOML VIM plugin is licensed under the MIT license.  See LICENSE in
+src/.vim/bundle/vim-toml .  This plugin is available at:
+    https://github.com/cespare/vim-toml
+
+Pathogen is licensed under the terms of Vim (in VIM, go :help license)
+The plugin is available at:
+    https://github.com/tpope/vim-pathogen
+
 =====
 
 All code added by me is licensed under the Artistic License 2.0,
@@ -48,7 +61,7 @@ included below.
 
                The Artistic License 2.0
 
-         Copyright (c) 2015-2016 Joel C. Maslak
+         Copyright (c) 2015-2016 J. Maslak
 
      Everyone is permitted to copy and distribute verbatim copies
       of this license document, but changing it is not allowed.

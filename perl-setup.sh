@@ -1,20 +1,21 @@
 #!/bin/bash
 
 #
-# Copyright (C) 2015 Joel C. Maslak
+# Copyright (C) 2015 Joelle Maslak
 # All Rights Reserved - See License
 #
 
 doit() {
     if [ "$PERLBREW_HOME" != "" ] ; then
-        cd JCM-Boilerplate
+        cd JTM-Boilerplate
 
-        DIR=$( ls -Fd JCM-Boilerplate-* | grep / | sort | tail -1 )
+        DIR=$( ls -Fd JTM-Boilerplate-* | grep / | sort | tail -1 )
         cd "$DIR"
         if [ $? -ne 0 ] ; then
             echo "SORRY, COULDN'T PROCEED."
             exit 1;
         fi
+        cpan install CPAN
         cpan .
     else
         echo ""
