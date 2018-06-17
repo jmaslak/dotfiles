@@ -195,6 +195,10 @@ au FileType perl setl keywordprg=perldoc\ -f
 " But not .ep!
 au FileType .ep setl nosmarttab noautoindent
 
+" Go
+au FileType go setl noet sts=8 sw=8 listchars=tab:\ \ 
+au FileType go GoInstallBinaries
+
 " Spell checking in POD
 let perl_include_pod = 1
 
