@@ -44,6 +44,7 @@ MAIN: {
     my $fullname  = get_fullname($home);
     my $email     = get_email($home);
 
+    install_git_submodules();
     install_files($rename_old);
     install_vim_templates($copyright);
     install_git_config( $fullname, $email );
@@ -226,6 +227,13 @@ sub install_vim_templates {
 
         print "done\n";
     }
+}
+
+sub install_git_submodules {
+    system("git submodule init");
+    system("git submodule update");
+
+    return;
 }
 
 sub install_git_config {
