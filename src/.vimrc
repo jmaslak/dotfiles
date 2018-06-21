@@ -36,6 +36,7 @@ endif
 " set digraph  " This became quite annoying
 if v:version >= 701
     digraphs ca 128042 " 🐪  - We need this for Perl.  :)
+    digraphs po 128169 " 💩 - Pile of Poo
     digraphs ee 8715   " ∋  - Contains
     digraphs e/ 8716   " ∌  - Does not contain
 endif
