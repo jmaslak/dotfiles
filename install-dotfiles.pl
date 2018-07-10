@@ -243,6 +243,7 @@ sub install_git_config {
     system("git config --global user.name \"$fullname\"");
     system("git config --global log.mailmap true");
     system("git config --global github.user jmaslak");
+    system("git config --global push.recurseSubmodules check");
 
     return;
 }
