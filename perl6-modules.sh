@@ -12,7 +12,7 @@ doit() {
     else
         echo ""
         echo "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!"
-        echo "You should install Rakudo Star (Perl 6)."
+        echo "You should install Perl 6 and zef."
         echo ""
         echo "Not installing Perl 6 modules."
         echo "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!"
@@ -28,9 +28,9 @@ install_modules() {
 
 install_module() {
     MODULE="$1"
-    zef list --installed | egrep "^$MODULE:" >/dev/null
+    zef locate "$MODULE" 2>/dev/null >/dev/null
     if [ $? -ne 0 ] ; then
-        zef install $MODULE
+        zef install "$MODULE"
     else
         echo "$MODULE already installed."
     fi
