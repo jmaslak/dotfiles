@@ -1,12 +1,12 @@
 #!/bin/bash
 
 #
-# Copyright (C) 2016 Joelle Maslak
+# Copyright (C) 2016,2018 Joelle Maslak
 # All Rights Reserved - See License
 #
 
 doit() {
-    which panda >/dev/null
+    which zef >/dev/null
     if [ $? -eq 0 ] ; then
         install_modules
     else
@@ -21,14 +21,16 @@ doit() {
 }
 
 install_modules() {
+    install_module App::Mi6
+    install_module Net::Netmask
     install_module StrictNamedArguments
 }
 
 install_module() {
     MODULE="$1"
-    panda --installed list | egrep "^$MODULE " >/dev/null
+    zef list --installed | egrep "^$MODULE:" >/dev/null
     if [ $? -ne 0 ] ; then
-        panda install $MODULE
+        zef install $MODULE
     else
         echo "$MODULE already installed."
     fi
