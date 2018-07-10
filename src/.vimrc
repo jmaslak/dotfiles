@@ -123,7 +123,7 @@ vmap aa Vgo1G
 
 " backspace, %, C++ options
 set backspace=indent,eol,start      " Let me do anything with backspace!
-if v:version >= 701
+if v:version >= 703
     set matchpairs+=<:>,«:»             " Allow % to bounce between angles
 else
     set matchpairs+=<:>                 " Can't do angles on old vim
@@ -327,8 +327,8 @@ au FileType asterisk syn match asteriskExten "^\s*same\s*=>\?\s*[^,]\+" contains
 " Show hidden characters
 set list
 " Note that the version was 703 for some reason, but I think this should
-" work on 702
-if v:version >= 702
+" work on 703
+if v:version >= 703
     " The next line has a trailing space.
     set listchars=tab:\→\ 
 else
