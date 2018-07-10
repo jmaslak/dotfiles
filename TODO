@@ -1,4 +1,5 @@
 TODOs:
 
  - Auto configure cpan reporter
- - Ancient VIMs don't support vim-go - so don't install if VIM < ???
+ - Ancient VIMs don't support vim-go - so don't install if VIM <
+   7.4.1689
