@@ -6,8 +6,9 @@
 #
 
 doit() {
-    which zef >/dev/null
-    if [ $? -eq 0 ] ; then
+    ZEF="$( which zef )"  # Workaround Solaris which that doesn't
+                          # return a useful value (grrr!)
+    if [ -x "$ZEF" ] ; then
         install_modules
     else
         echo ""
