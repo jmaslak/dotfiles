@@ -12,7 +12,10 @@ doit() {
     else
         echo ""
         echo "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!"
-        echo "You should install Perl 6 and zef."
+        echo "You should install Rakudo (Perl 6) and zef."
+        echo ""
+        echo "Use the perl6-install.sh script in this directory to do"
+        echo "that."
         echo ""
         echo "Not installing Perl 6 modules."
         echo "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!"
