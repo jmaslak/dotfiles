@@ -245,6 +245,16 @@ sub install_git_config {
     system("git config --global github.user jmaslak");
     system("git config --global push.recurseSubmodules check");
 
+    my $ver = `git version`;
+    chomp($ver);
+    if ($ver =~ m/git version 1\.[01234567]\./) {
+        # Version <= 1.7
+        # We do NOT configure the simple
+    } else {
+        # New enough git!
+        system("git config --global push.default simple");
+    }
+
     return;
 }
 
