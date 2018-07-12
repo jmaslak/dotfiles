@@ -26,6 +26,7 @@ doit() {
 
 install_modules() {
     install_module App::Mi6
+    install_module Linenoise            # For REPL
     install_module Net::Netmask
     install_module StrictNamedArguments
 }
