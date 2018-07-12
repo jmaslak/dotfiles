@@ -36,6 +36,7 @@ endif
 " set digraph  " This became quite annoying
 if v:version >= 701
     digraphs ca 128042 " 🐪  - We need this for Perl.  :)
+    digraphs po 128169 " 💩 - Pile of Poo
     digraphs ee 8715   " ∋  - Contains
     digraphs e/ 8716   " ∌  - Does not contain
 endif
@@ -122,7 +123,7 @@ vmap aa Vgo1G
 
 " backspace, %, C++ options
 set backspace=indent,eol,start      " Let me do anything with backspace!
-if v:version >= 701
+if v:version >= 703
     set matchpairs+=<:>,«:»             " Allow % to bounce between angles
 else
     set matchpairs+=<:>                 " Can't do angles on old vim
@@ -194,6 +195,13 @@ au FileType perl setl keywordprg=perldoc\ -f
 
 " But not .ep!
 au FileType .ep setl nosmarttab noautoindent
+
+" Go
+au FileType go setl noet sts=8 sw=8 listchars=tab:\ \ 
+au FileType go GoInstallBinaries
+if v:version < 705 " Don't give go VIM version warnings on old VIMs
+    let g:go_version_warning = 0
+endif
 
 " Spell checking in POD
 let perl_include_pod = 1
@@ -322,8 +330,8 @@ au FileType asterisk syn match asteriskExten "^\s*same\s*=>\?\s*[^,]\+" contains
 " Show hidden characters
 set list
 " Note that the version was 703 for some reason, but I think this should
-" work on 702
-if v:version >= 702
+" work on 703
+if v:version >= 703
     " The next line has a trailing space.
     set listchars=tab:\→\ 
 else

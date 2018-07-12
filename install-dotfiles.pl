@@ -44,6 +44,7 @@ MAIN: {
     my $fullname  = get_fullname($home);
     my $email     = get_email($home);
 
+    install_git_submodules();
     install_files($rename_old);
     install_vim_templates($copyright);
     install_git_config( $fullname, $email );
@@ -228,12 +229,31 @@ sub install_vim_templates {
     }
 }
 
+sub install_git_submodules {
+    system("git submodule init");
+    system("git submodule update");
+
+    return;
+}
+
 sub install_git_config {
     my ( $fullname, $email ) = @_;
 
     system("git config --global user.email \"$email\"");
     system("git config --global user.name \"$fullname\"");
     system("git config --global log.mailmap true");
+    system("git config --global github.user jmaslak");
+    system("git config --global push.recurseSubmodules check");
+
+    my $ver = `git version`;
+    chomp($ver);
+    if ($ver =~ m/git version 1\.[01234567]\./) {
+        # Version <= 1.7
+        # We do NOT configure the simple
+    } else {
+        # New enough git!
+        system("git config --global push.default simple");
+    }
 
     return;
 }
