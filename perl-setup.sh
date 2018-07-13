@@ -7,16 +7,8 @@
 
 doit() {
     if [ "$PERLBREW_HOME" != "" ] ; then
-        cd JTM-Boilerplate
-
-        DIR=$( ls -Fd JTM-Boilerplate-* | grep / | sort | tail -1 )
-        cd "$DIR"
-        if [ $? -ne 0 ] ; then
-            echo "SORRY, COULDN'T PROCEED."
-            exit 1;
-        fi
         cpan install CPAN
-        cpan .
+        cpan install JTM::Boilerplate
     else
         echo ""
         echo "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!"
