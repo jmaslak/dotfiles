@@ -129,6 +129,7 @@ fi
 # Do we have Perl 6's rakudobrew installed?
 if [ -d ~/.rakudobrew ] ; then
     export "PATH=$HOME/.rakudobrew/bin:$PATH"
+    export "PATH=$HOME/.rakudobrew/$(rakudobrew current | awk '{print $3}')/install/share/perl6/site/bin:$PATH"
 fi
 
 # Do we have a Perlbrew?  Prefer local to system perlbrew
