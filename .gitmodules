@@ -4,3 +4,6 @@
 [submodule "src/.vim/bundle/rust.vim"]
 	path = src/.vim/bundle/rust.vim
 	url = https://github.com/rust-lang/rust.vim.git
+[submodule "JTM-Boilerplate"]
+	path = JTM-Bootstrap
+	url = https://github.com/jmaslak/JTM-Bootstrap
