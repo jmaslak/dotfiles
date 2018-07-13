@@ -1,6 +1,3 @@
-[submodule "JTM-Boilerplate"]
-	path = JTM-Bootstrap
-	url = https://github.com/jmaslak/JTM-Bootstrap
 [submodule "src/.vim/bundle/vim-go"]
 	path = src/.vim/bundle/vim-go
 	url = https://github.com/fatih/vim-go.git
