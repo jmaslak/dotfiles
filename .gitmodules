@@ -1,5 +1,5 @@
 [submodule "JTM-Boilerplate"]
-	path = JTM-Boilerplate
+	path = JTM-Bootstrap
 	url = https://github.com/jmaslak/JTM-Bootstrap
 [submodule "src/.vim/bundle/vim-go"]
 	path = src/.vim/bundle/vim-go
