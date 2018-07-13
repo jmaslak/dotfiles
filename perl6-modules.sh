@@ -6,9 +6,11 @@
 #
 
 doit() {
-    ZEF="$( which zef )"  # Workaround Solaris which that doesn't
-                          # return a useful value (grrr!)
-    if [ -x "$ZEF" ] ; then
+    # Workaround Solaris which that doesn't return a useful value (grrr!)
+    ZEF="$( which zef 2>/dev/null )"
+    PERL6="$( which perl6 2>/dev/null )"
+
+    if [ -x "$ZEF" -a -x "$PERL6" ] ; then
         install_modules
     else
         echo ""
