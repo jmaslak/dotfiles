@@ -1,3 +1,4 @@
+#!/usr/bin/env perl
 #
 # Copyright (C) 2015 Joelle Maslak
 # All Rights Reserved - See License
@@ -41,6 +42,7 @@ MAIN: {
             print STDERR "To avoid this check, set \$ENV{DOTFILE_NOGIT}\n";
             print STDERR "\n";
             print STDERR "Aborting.\n";
+            exit 1;
         }
     }
 
