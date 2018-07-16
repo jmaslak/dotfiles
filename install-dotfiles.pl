@@ -34,7 +34,7 @@ MAIN: {
 
     if ( (! -f '~/.dotfile.nogit' ) || ( !exists($ENV{DOTFILE_NOGIT}))) {
         system "git  fetch origin master";
-        my $gitrevs = `git rev-list HEAD..origin/master --count`;
+        my $gitrevs = `git rev-list HEAD..origin/master | wc -l`;
 
         if ($gitrevs > 0) {
             print STDERR "Local directory is not synced with remote, please do a git pull.\n";
