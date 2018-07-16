@@ -33,7 +33,7 @@ MAIN: {
     my $current = getcwd;
 
     if ( (! -f '~/.dotfile.nogit' ) || ( !exists($ENV{DOTFILE_NOGIT}))) {
-        system "git  fetch origin master";
+        system "git fetch origin master >/dev/null 2>/dev/null";
         my $gitrevs = `git rev-list HEAD..origin/master --count`;
 
         if ($gitrevs > 0) {
