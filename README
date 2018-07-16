@@ -1,5 +1,8 @@
 Various "dot files" for Unix utilities, such as bash, vim, and tmux.
 
+I do not expect this to be useful to people not named Joelle Maslak,
+but if I'm wrong, feel free to let me know!
+
 Many of the files in this repo are dot files (as you would expect) and
 thus are not visible to "ls" unless you view hidden files.
 

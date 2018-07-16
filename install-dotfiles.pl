@@ -1,6 +1,6 @@
 #!/usr/bin/env perl
 #
-# Copyright (C) 2015 Joelle Maslak
+# Copyright (C) 2015-2018 Joelle Maslak
 # All Rights Reserved - See License
 #
 
@@ -33,7 +33,7 @@ MAIN: {
     my $current = getcwd;
 
     if ( (! -f '~/.dotfile.nogit' ) || ( !exists($ENV{DOTFILE_NOGIT}))) {
-        system "git  fetch origin master";
+        system "git fetch origin master >/dev/null 2>/dev/null";
         my $gitrevs = `git rev-list HEAD..origin/master | wc -l`;
 
         if ($gitrevs > 0) {
