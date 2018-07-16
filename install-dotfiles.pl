@@ -42,6 +42,7 @@ MAIN: {
             print STDERR "To avoid this check, set \$ENV{DOTFILE_NOGIT}\n";
             print STDERR "\n";
             print STDERR "Aborting.\n";
+            exit 1;
         }
     }
 
