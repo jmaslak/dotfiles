@@ -6,7 +6,7 @@ use v6;
 # All Rights Reserved - See License
 #
 
-MAIN: {
+sub MAIN() {
 
 }
 
