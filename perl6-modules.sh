@@ -31,6 +31,7 @@ install_modules() {
     install_module Linenoise            # For REPL
     install_module Net::Netmask
     install_module StrictNamedArguments
+    install_module p6doc
 }
 
 install_module() {
