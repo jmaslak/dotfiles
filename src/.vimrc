@@ -55,6 +55,7 @@ endif
 "   c0 → copyright ©
 "   ee -> contains as member ∋
 "   e/ -> does not contain as member ∌
+"   th -> thorn þ
 
 " Modelines can be a security risk - know you did this...
 set modeline
