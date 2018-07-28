@@ -132,6 +132,9 @@ if [ -d ~/.rakudobrew ] ; then
     export "PATH=$HOME/.rakudobrew/$(rakudobrew current | awk '{print $3}')/install/share/perl6/site/bin:$PATH"
 fi
 
+# Also want 6prove, an alias to test Perl6 code
+alias 6prove="PERL6LIB=lib prove -e perl6"
+
 # Do we have a Perlbrew?  Prefer local to system perlbrew
 if [ -d ~/perl5/perlbrew ] ; then
     export PERLBREW_ROOT=~/perl5/perlbrew
