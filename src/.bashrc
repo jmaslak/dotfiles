@@ -283,3 +283,15 @@ export GOPATH=~/go
 PATH="$PATH:~/go/bin:/usr/local/go/bin"
 
 export UNCRUSTIFY_CONFIG=${HOME}/.uncrustify
+
+# Add RVM to PATH for scripting. Make sure this is the last PATH
+# variable change.
+if [ -d "$HOME/.rvm/bin" ] ; then
+    export PATH="$PATH:$HOME/.rvm/bin";
+fi
+    
+# Load RVM into shell session *as a function*
+if [ -s "$HOME/.rvm/scripts/rvm" ] ; then
+    source "$HOME/.rvm/scripts/rvm"
+fi
+
