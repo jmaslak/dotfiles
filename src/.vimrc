@@ -52,7 +52,7 @@ endif
 "   00 → infinity ∞
 "   -: → divsiion ÷
 "   p* → pi π
-"   c0 → copyright ©
+"   Co → copyright ©
 "   ee -> contains as member ∋
 "   e/ -> does not contain as member ∌
 "   th -> thorn þ
