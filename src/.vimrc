@@ -271,6 +271,9 @@ function! LooksLikePerl6 ()
   endif
 endfunction
 
+" Enable automatic unicode abbreviations
+let g:perl6_unicode_abbrevs = 1
+
 au BufNewFile,BufRead *.pl,*.pm,*.t,*.xt call LooksLikePerl6()
 " Add keyword characters for Perl6
 autocmd FileType perl6 setl iskeyword+=$
