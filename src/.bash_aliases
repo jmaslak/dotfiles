@@ -14,18 +14,14 @@ if [ -x /usr/bin/dircolors ]; then
 fi
 
 # Create my alias for my task manager
-if [ -d ~/tasks ] ; then
-    if [ "$SHELL" == "-bash" ] ; then
-        alias task="SHELL=/bin/bash ~/tasks/task.pl"
-    else
-        alias task="SHELL=~/tasks/task.pl"
-    fi
-elif [ -d ~/git/antelope/perl/tasks ] ; then
-    if [ "$SHELL" == "-bash" ] ; then
-        alias task="SHELL=/bin/bash ~/git/antelope/perl/tasks/task.pl"
-    else
-        alias task="~/git/antelope/perl/tasks/task.pl"
-    fi
+if [ -f ~/tasks/tasks.pl6 ] ; then
+    alias task="~/tasks/task.pl6"
+elif [ -f ~/tasks/tasks.pl ] ; then
+    alias task="~/tasks/task.pl"
+elif [ -f ~/git/antelope/perl/tasks/task.pl6 ] ; then
+    alias task="~/git/antelope/perl/tasks/task.pl6"
+elif [ -f ~/git/antelope/perl/tasks/task.pl ] ; then
+    alias task="~/git/antelope/perl/tasks/task.pl"
 fi
 
 # Make sqlplus usable
