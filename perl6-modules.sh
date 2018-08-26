@@ -28,9 +28,13 @@ doit() {
 
 install_modules() {
     install_module App::Mi6
+    install_module Digest::SHA1::Native
     install_module Linenoise            # For REPL
     install_module Net::Netmask
+    install_module P5getpriority        # For getppid
+    install_module P5localtime
     install_module StrictNamedArguments
+    install_module Terminal::ANSIColor
     install_module p6doc
 }
 
