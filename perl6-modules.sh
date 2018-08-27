@@ -35,6 +35,8 @@ install_modules() {
     install_module P5localtime
     install_module StrictNamedArguments
     install_module Terminal::ANSIColor
+    install_module Term::ReadKey
+    install_module Term::termios
     install_module p6doc
 }
 
