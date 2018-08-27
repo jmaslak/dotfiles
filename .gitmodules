@@ -4,6 +4,3 @@
 [submodule "src/.vim/bundle/rust.vim"]
 	path = src/.vim/bundle/rust.vim
 	url = https://github.com/rust-lang/rust.vim.git
-[submodule "src/.vim/bundle/vim-perl6"]
-	path = src/.vim/bundle/vim-perl6
-	url = https://github.com/vim-perl/vim-perl6
