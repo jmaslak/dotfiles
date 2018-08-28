@@ -266,6 +266,9 @@ function! LooksLikePerl6 ()
       if getline(i) == 'use v6;'
         set filetype=perl6
         break
+      elseif getline(i) == 'use v6.c;'
+        set filetype=perl6
+        break
       endif
     endfor
   endif
