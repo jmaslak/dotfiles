@@ -14,10 +14,10 @@ if [ -x /usr/bin/dircolors ]; then
 fi
 
 # Create my alias for my task manager
-if [ -f ~/tasks/tasks.pl6 ] ; then
+if [ -f ~/tasks/task.pl6 ] ; then
     export TASKDIR=~/.task
     alias task="~/tasks/task.pl6"
-elif [ -f ~/tasks/tasks.pl ] ; then
+elif [ -f ~/tasks/task.pl ] ; then
     export TASKDIR=~/.task
     alias task="~/tasks/task.pl"
 elif [ -f ~/git/antelope/perl/tasks/task.pl6 ] ; then
