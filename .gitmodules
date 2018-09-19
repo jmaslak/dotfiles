@@ -7,3 +7,6 @@
 [submodule "src/.vim/bundle/vim-perl6"]
 	path = src/.vim/bundle/vim-perl6
 	url = git@github.com:jmaslak/vim-perl6
+[submodule "src/.vim/bundle/vim-lucius"]
+	path = src/.vim/bundle/vim-lucius
+	url = https://github.com/jonathanfilip/vim-lucius

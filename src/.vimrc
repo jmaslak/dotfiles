@@ -21,9 +21,9 @@ execute pathogen#infect()
 
 " If we are not on Windows *or* if we're running Windows gvim
 if ( ! has("win32") ) || has("gui_running")
-    " We use a light solarized theme
+    " We use a light lucius theme
     set background=light            " Light background
-    colorscheme solarized
+    colorscheme lucius
 else
     " We need a dark background because this is being run from
     " a Windows command prompt
@@ -71,7 +71,7 @@ set t_Co=256                        " We do 256 colors
 
 " Set GUI font & turn off bold
 if has("gui_running")
-    let g:solarized_bold=0
+    " let g:solarized_bold=0
     if has("gui_win32")
         set guifont=Consolas:h10:cANSI
     endif
@@ -79,9 +79,9 @@ endif
 
 " If we are not on Windows *or* if we're running Windows gvim
 if ( ! has("win32") ) || has("gui_running")
-    " We use a light solarized theme
+    " We use a light lucius theme
     set background=light            " Light background
-    colorscheme solarized
+    colorscheme lucius
 else
     " We need a dark background because this is being run from
     " a Windows command prompt
