@@ -12,10 +12,10 @@ doit() {
     export PATH="~/.rakudobrew/bin:$PATH"
    
     echo " --->>  Building moar"
-    rakudobrew build moar 2018.06
+    rakudobrew build moar 2018.08
 
     echo " --->>  Switching active moar"
-    rakudobrew switch moar-2018.06
+    rakudobrew switch moar-2018.08
 
     echo " --->>  Building zef"
     rakudobrew build zef
