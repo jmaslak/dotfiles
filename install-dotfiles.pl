@@ -257,6 +257,9 @@ sub install_git_config {
     system("git config --global log.mailmap true");
     system("git config --global github.user jmaslak");
     system("git config --global push.recurseSubmodules check");
+    system("git config --global diff.tool ccdiff");
+    system("git config --global difftool.prompt false");
+    system("git config --global difftool.ccdiff.cmd 'ccdiff --utf-8 -u -r \$LOCAL \$REMOTE'");
 
     my $ver = `git version`;
     chomp($ver);
