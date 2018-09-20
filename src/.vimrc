@@ -497,3 +497,5 @@ function! FilenameToPerlMod (pathname)
 endfunction
 autocmd BufNewFile *.pm exec "1,10s/<INSERT_NAME_HERE>/" . FilenameToPerlMod(expand("%:f")) . "/g"
 
+" Set by default the cursor line
+set cursorline
