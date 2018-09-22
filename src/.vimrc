@@ -499,3 +499,8 @@ autocmd BufNewFile *.pm exec "1,10s/<INSERT_NAME_HERE>/" . FilenameToPerlMod(exp
 
 " Set by default the cursor line
 set cursorline
+
+" Set up printing
+set printfont=Courier:h8
+set printoptions=number:y,paper:letter,duplex:off
+

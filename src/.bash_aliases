@@ -43,6 +43,9 @@ if [ \! -f ~/.perl5d_repl_history ] ; then
 fi
 alias perl5d="rlwrap -i -f ~/.perl5d_repl_history -H ~/.perl5d_repl_history -s 30000 perl -d"
 
+# Vim printing
+alias codeprint="vim -c 'colorscheme default' -c hardcopy -c quit"
+
 # We use vim
 if which vim >/dev/null 2>/dev/null ; then
     alias vi="$( which vim )"
