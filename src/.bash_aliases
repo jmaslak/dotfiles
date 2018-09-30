@@ -17,15 +17,11 @@ fi
 if [ -f ~/tasks/task.pl6 ] ; then
     export TASKDIR=~/.task
     alias task="~/tasks/task.pl6"
-elif [ -f ~/tasks/task.pl ] ; then
-    export TASKDIR=~/.task
-    alias task="~/tasks/task.pl"
 elif [ -f ~/git/antelope/perl/tasks/task.pl6 ] ; then
     export TASKDIR=~/.task
     alias task="~/git/antelope/perl/tasks/task.pl6"
-elif [ -f ~/git/antelope/perl/tasks/task.pl ] ; then
-    export TASKDIR=~/.task
-    alias task="~/git/antelope/perl/tasks/task.pl"
+else
+    alias task=task.pl6
 fi
 
 # Make sqlplus usable
@@ -45,6 +41,7 @@ alias perl5d="rlwrap -i -f ~/.perl5d_repl_history -H ~/.perl5d_repl_history -s 3
 
 # Vim printing
 alias codeprint="vim -c 'colorscheme default' -c hardcopy -c quit"
+alias 4codeprint="vim -c 'colorscheme default' -c 'hardcopy | lpr -o number-up=4' -c quit"
 
 # We use vim
 if which vim >/dev/null 2>/dev/null ; then

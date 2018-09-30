@@ -5,6 +5,8 @@
 # All Rights Reserved - See License
 #
 
+PERLVER=2018.09
+
 doit() {
     echo " --->>  Switching to root directory"
     cd ~
@@ -12,10 +14,10 @@ doit() {
     export PATH="~/.rakudobrew/bin:$PATH"
    
     echo " --->>  Building moar"
-    rakudobrew build moar 2018.08
+    rakudobrew build moar $PERLVER
 
     echo " --->>  Switching active moar"
-    rakudobrew switch moar-2018.08
+    rakudobrew switch moar-$PERLVER
 
     echo " --->>  Building zef"
     rakudobrew build zef
