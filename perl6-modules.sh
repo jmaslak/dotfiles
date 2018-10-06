@@ -37,6 +37,7 @@ install_modules() {
     install_module Terminal::ANSIColor
     install_module Term::ReadKey
     install_module Term::termios
+    install_module YAMLish; 
     install_module p6doc
 }
 
