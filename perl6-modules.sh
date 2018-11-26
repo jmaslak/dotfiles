@@ -32,6 +32,7 @@ install_modules() {
     install_module Linenoise            # For REPL
     install_module IO::Socket::SSL      # p6doc ends up failing without this
     install_module Net::Netmask
+    install_module OO::Monitors
     install_module P5getpriority        # For getppid
     install_module P5localtime
     install_module StrictNamedArguments
