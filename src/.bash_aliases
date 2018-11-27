@@ -17,11 +17,14 @@ fi
 if [ -f ~/tasks/task.pl6 ] ; then
     export TASKDIR=~/.task
     alias task="~/tasks/task.pl6"
+    alias localtask="TASKDIR=data ~/tasks/task.pl6"
 elif [ -f ~/git/antelope/perl/tasks/task.pl6 ] ; then
     export TASKDIR=~/.task
     alias task="~/git/antelope/perl/tasks/task.pl6"
+    alias localtask="TASKDIR=data ~/git/antelope/perl/tasks/task.pl6"
 else
     alias task=task.pl6
+    alias localtask="TASKDIR=data task.pl6"
 fi
 
 # Make sqlplus usable
