@@ -1,11 +1,11 @@
 #!/bin/bash
 
 #
-# Copyright (C) 2018 Joelle Maslak
+# Copyright © 2018 Joelle Maslak
 # All Rights Reserved - See License
 #
 
-PERLVER=2018.09
+PERLVER=2018.11
 
 doit() {
     echo " --->>  Switching to root directory"
