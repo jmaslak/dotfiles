@@ -28,6 +28,7 @@ doit() {
 
 install_modules() {
     install_module App::Mi6
+    install_module DateTime::Monotonic
     install_module Digest::SHA1::Native
     install_module Linenoise            # For REPL
     install_module IO::Socket::SSL      # p6doc ends up failing without this
