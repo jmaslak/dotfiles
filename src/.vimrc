@@ -39,6 +39,13 @@ if v:version >= 701
     digraphs po 128169 " 💩 - Pile of Poo
     digraphs ee 8715   " ∋  - Contains
     digraphs e/ 8716   " ∌  - Does not contain
+    digraphs 4^ 8308   " Superscript 4
+    digraphs 5^ 8309   " Superscript 5
+    digraphs 6^ 8310   " Superscript 6
+    digraphs 7^ 8311   " Superscript 7
+    digraphs 8^ 8312   " Superscript 8
+    digraphs 9^ 8313   " Superscript 9
+    digraphs 0^ 8304   " Superscript 0
 endif
 "
 " Useful digraphs:
