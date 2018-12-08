@@ -32,6 +32,7 @@ install_modules() {
     install_module Digest::SHA1::Native
     install_module Linenoise            # For REPL
     install_module IO::Socket::SSL      # p6doc ends up failing without this
+    install_module NativeHelpers::Blob
     install_module Net::Netmask
     install_module OO::Monitors
     install_module P5getpriority        # For getppid
