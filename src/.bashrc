@@ -130,7 +130,7 @@ fi
 if [ -d ~/.rakudobrew ] ; then
     export "PATH=$HOME/.rakudobrew/bin:$PATH"
     export "PATH=$HOME/.rakudobrew/$(rakudobrew current | awk '{print $3}')/install/share/perl6/site/bin:$PATH"
-    eval "$(/data/home/jmaslak/.rakudobrew/bin/rakudobrew init -)"
+    eval "$(~/.rakudobrew/bin/rakudobrew init -)"
 fi
 
 # Also want 6prove, an alias to test Perl6 code
