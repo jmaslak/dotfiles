@@ -15,6 +15,10 @@ fi
 # If we are on Bash for Linux, we start in the wrong directory.
 if [ $(pwd) == '/mnt/c/Windows/System32' ] ; then
     cd
+fi
+
+# Defensive umask
+if [ $(umask) == '0000' ] ; then
     umask 0002
 fi
 
