@@ -12,6 +12,12 @@ fi
 # If not running interactively, don't do anything
 [ -z "$PS1" ] && return
 
+# If we are on Bash for Linux, we start in the wrong directory.
+if [ $(pwd) == '/mnt/c/Windows/System32' ] ; then
+    cd
+    umask 0002
+fi
+
 # Make sure we are in $HOME, save old dir
 OLDDIR=$PWD
 cd $HOME
