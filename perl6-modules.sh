@@ -6,6 +6,11 @@
 #
 
 doit() {
+    # Defensive umask
+    if [ $(umask) == '0000' ] ; then
+        umask 0002
+    fi
+
     # Workaround Solaris which that doesn't return a useful value (grrr!)
     ZEF="$( which zef 2>/dev/null )"
     PERL6="$( which perl6 2>/dev/null )"

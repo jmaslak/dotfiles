@@ -13,6 +13,11 @@
 #
 
 doit() {
+    # Defensive umask
+    if [ $(umask) == '0000' ] ; then
+        umask 0002
+    fi
+
     if [ "$(uname -o)" != 'Cygwin' ] ; then
         die_error "You do not appear to be executing this from Cygwin"
     fi

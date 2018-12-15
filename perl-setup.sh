@@ -6,6 +6,11 @@
 #
 
 doit() {
+    # Defensive umask
+    if [ $(umask) == '0000' ] ; then
+        umask 0002
+    fi
+
     if [ "$PERLBREW_HOME" != "" ] ; then
         cpan install App::ccdiff
         cpan install CPAN
