@@ -5,11 +5,16 @@
 # All Rights Reserved - See License
 #
 
-CURRENTPERL=perl-5.28.0
+CURRENTPERL=perl-5.28.1
 PERLBREW_MAJOR=0
 PERLBREW_MINOR=84
 
 doit() {
+    # Defensive umask
+    if [ $(umask) == '0000' ] ; then
+        umask 0002
+    fi
+
     if [ ! -d ~/perl5/perlbrew ] ; then
         echo " --->> Installing perlbrew"
         curl -L https://install.perlbrew.pl | bash

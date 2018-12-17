@@ -6,6 +6,11 @@
 #
 
 doit() {
+    # Defensive umask
+    if [ $(umask) == '0000' ] ; then
+        umask 0002
+    fi
+
     yum -y groupinstall 'Development Tools'
     yum -y install libcap-devel
     yum -y install libX11-devel

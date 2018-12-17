@@ -12,6 +12,16 @@ fi
 # If not running interactively, don't do anything
 [ -z "$PS1" ] && return
 
+# If we are on Bash for Linux, we start in the wrong directory.
+if [ $(pwd) == '/mnt/c/Windows/System32' ] ; then
+    cd
+fi
+
+# Defensive umask
+if [ $(umask) == '0000' ] ; then
+    umask 0002
+fi
+
 # Make sure we are in $HOME, save old dir
 OLDDIR=$PWD
 cd $HOME
@@ -130,7 +140,7 @@ fi
 if [ -d ~/.rakudobrew ] ; then
     export "PATH=$HOME/.rakudobrew/bin:$PATH"
     export "PATH=$HOME/.rakudobrew/$(rakudobrew current | awk '{print $3}')/install/share/perl6/site/bin:$PATH"
-    eval "$(/data/home/jmaslak/.rakudobrew/bin/rakudobrew init -)"
+    eval "$(~/.rakudobrew/bin/rakudobrew init -)"
 fi
 
 # Also want 6prove, an alias to test Perl6 code

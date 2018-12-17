@@ -29,6 +29,10 @@ MAIN: {
         die "Please set \$HOME environmental variable";
     }
 
+    if ( umask == 0 ) {
+        umask 0002;  # Defensively set umask
+    }
+
     my $home    = $ENV{HOME};
     my $current = getcwd;
 

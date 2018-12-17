@@ -6,6 +6,11 @@
 #
 
 doit() {
+    # Defensive umask
+    if [ $(umask) == '0000' ] ; then
+        umask 0002
+    fi
+
     # Workaround Solaris which that doesn't return a useful value (grrr!)
     ZEF="$( which zef 2>/dev/null )"
     PERL6="$( which perl6 2>/dev/null )"
@@ -27,6 +32,8 @@ doit() {
 }
 
 install_modules() {
+    install_module_force LWP::Simple    # Does network tests
+
     install_module App::Mi6
     install_module DateTime::Monotonic
     install_module Digest::SHA1::Native
@@ -43,6 +50,16 @@ install_modules() {
     install_module Term::termios
     install_module YAMLish; 
     install_module p6doc
+}
+
+install_module_force() {
+    MODULE="$1"
+    zef locate "$MODULE" 2>/dev/null >/dev/null
+    if [ $? -ne 0 ] ; then
+        zef install --force-test "$MODULE"
+    else
+        echo "$MODULE already installed."
+    fi
 }
 
 install_module() {
