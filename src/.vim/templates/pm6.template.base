@@ -5,8 +5,6 @@ use v6;
 # All Rights Reserved - See License
 #
 
-module <MODULE_NAME>:ver<0.0.1>:auth<cpan:JMASLAK> {
-
-};
+unit class <MODULE_NAME>:ver<0.0.1>:auth<cpan:JMASLAK>;
 
 
