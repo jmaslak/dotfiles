@@ -1,6 +1,6 @@
 #!/usr/bin/env perl
 #
-# Copyright (C) 2015-2018 Joelle Maslak
+# Copyright (C) 2015-2019 Joelle Maslak
 # All Rights Reserved - See License
 #
 
