@@ -1,11 +1,11 @@
 #!/bin/bash
 
 #
-# Copyright © 2018 Joelle Maslak
+# Copyright © 2018-2019 Joelle Maslak
 # All Rights Reserved - See License
 #
 
-PERLVER=2018.11
+PERLVER=2018.12
 
 doit() {
     # Defensive umask
