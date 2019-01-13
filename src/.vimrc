@@ -1,13 +1,6 @@
 " Everything pretty much should be UTF-8 by now
 set encoding=utf-8
 
-" Set proper plugin directories
-" if has("win32")
-"     set runtimepath^=$USERPROFILE\vimfiles\bundle\vim-ps1
-" else
-"     set runtimepath^=~/.vim/bundle/vim-ps1
-" endif
-
 " Some environments don't set the shell right, which causes
 " issues with gitgutter and probably other things that assume
 " the shell is actually bash and not sh.
