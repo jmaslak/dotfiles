@@ -57,9 +57,10 @@ MAIN: {
         $rename_old = undef;
     }
 
-    my $copyright = get_copyright($home);
-    my $fullname  = get_fullname($home);
-    my $email     = get_email($home);
+    my $environment = get_environment($home);
+    my $copyright   = get_copyright($home, $environment);
+    my $fullname    = get_fullname($home, $environment);
+    my $email       = get_email($home, $environment);
 
     install_git_submodules();
     install_files($rename_old);
@@ -76,8 +77,42 @@ MAIN: {
     system "$current/perl6-modules.sh";
 }
 
-sub get_copyright {
+sub get_environment {
     my ($home) = @_;
+
+    my $environment;
+
+    if ( -e "$home/.dotfiles.environment" ) {
+        $environment = slurp("$home/.dotfiles.environment");
+        chomp $environment;
+    }
+
+    while ( !defined($environment) ) {
+        print "Please enter the environment (home/work/other):\n";
+        local $| = 1;
+        print " > ";
+        $environment = <STDIN>;
+        chomp($environment);
+
+        if ( ($environment ne 'home') && ($environment ne 'work') &&
+             ($environment ne 'other') )
+        {
+            # Let's try this again
+            $environment = undef;
+            next;
+        }
+
+        print "Creating $home/.dotfiles.environment ...";
+        spitout( "$home/.dotfiles.environment", $environment);
+        print "\n";
+    }
+
+    return $environment;
+
+}
+
+sub get_copyright {
+    my ($home, $environment) = @_;
 
     my $copyright;
 
@@ -89,11 +124,16 @@ sub get_copyright {
     }
 
     if ( !defined($copyright) ) {
-        print "Please enter the name to use for copyright in templates:\n";
-        local $| = 1;
-        print " > ";
-        $copyright = <STDIN>;
-        chomp($copyright);
+        if ($environment eq 'home')  { $copyright = 'Joelle Maslak' }
+        if ($environment eq 'work')  { $copyright = 'CenturyLink' }
+
+        if ($environment eq 'other') {
+            print "Please enter the name to use for copyright in templates:\n";
+            local $| = 1;
+            print " > ";
+            $copyright = <STDIN>;
+            chomp($copyright);
+        }
 
         print "Creating $home/.dotfiles.copyright ...";
         spitout( "$home/.dotfiles.copyright", $copyright );
@@ -104,7 +144,7 @@ sub get_copyright {
 }
 
 sub get_fullname {
-    my ($home) = @_;
+    my ($home, $environment) = @_;
 
     my $fullname;
 
@@ -116,11 +156,16 @@ sub get_fullname {
     }
 
     if ( !defined($fullname) ) {
-        print "Please enter the full name to use for git in templates:\n";
-        local $| = 1;
-        print " > ";
-        $fullname = <STDIN>;
-        chomp($fullname);
+        if ($environment eq 'home')  { $fullname = 'Joelle Maslak' }
+        if ($environment eq 'work')  { $fullname = 'Joelle Maslak' }
+
+        if ($environment eq 'other') {
+            print "Please enter the full name to use for git in templates:\n";
+            local $| = 1;
+            print " > ";
+            $fullname = <STDIN>;
+            chomp($fullname);
+        }
 
         print "Creating $home/.dotfiles.fullname...";
         spitout( "$home/.dotfiles.fullname", $fullname );
@@ -131,7 +176,7 @@ sub get_fullname {
 }
 
 sub get_email {
-    my ($home) = @_;
+    my ($home, $environment) = @_;
 
     my $email;
 
@@ -143,11 +188,16 @@ sub get_email {
     }
 
     if ( !defined($email) ) {
-        print "Please enter the email address to use for git in templates:\n";
-        local $| = 1;
-        print " > ";
-        $email = <STDIN>;
-        chomp($email);
+        if ($environment eq 'home')  { $email = 'jmaslak@antelope.net' }
+        if ($environment eq 'work')  { $email = 'jmaslak@centurylink.com' }
+
+        if ($environment eq 'other') {
+            print "Please enter the email address to use for git in templates:\n";
+            local $| = 1;
+            print " > ";
+            $email = <STDIN>;
+            chomp($email);
+        }
 
         print "Creating $home/.dotfiles.email...";
         spitout( "$home/.dotfiles.email", $email );
