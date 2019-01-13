@@ -3,5 +3,4 @@ TODOs:
  - Auto configure cpan reporter
  - Ancient VIMs don't support vim-go - so don't install if VIM <
    7.4.1689
- - Check for "@" in full name configure files and give error if found
 

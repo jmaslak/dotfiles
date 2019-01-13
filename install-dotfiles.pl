@@ -130,7 +130,7 @@ sub get_copyright {
         }
     }
 
-    if ( !defined($copyright) ) {
+    while ( !defined($copyright) ) {
         if ( $environment eq 'home' ) { $copyright = 'Joelle Maslak' }
         if ( $environment eq 'work' ) { $copyright = 'CenturyLink' }
 
@@ -140,6 +140,12 @@ sub get_copyright {
             print " > ";
             $copyright = <STDIN>;
             chomp($copyright);
+        }
+
+        if ($copyright =~ m/\@/) {
+            print "ERROR: Do not include an at-sign in this field\n";
+            $copyright = undef;
+            next;
         }
 
         print "Creating $home/.dotfiles.copyright ...";
@@ -162,7 +168,7 @@ sub get_fullname {
         }
     }
 
-    if ( !defined($fullname) ) {
+    while ( !defined($fullname) ) {
         if ( $environment eq 'home' ) { $fullname = 'Joelle Maslak' }
         if ( $environment eq 'work' ) { $fullname = 'Joelle Maslak' }
 
@@ -172,6 +178,12 @@ sub get_fullname {
             print " > ";
             $fullname = <STDIN>;
             chomp($fullname);
+        }
+
+        if ($fullname =~ m/\@/) {
+            print "ERROR: Do not include an at-sign in this field\n";
+            $fullname = undef;
+            next;
         }
 
         print "Creating $home/.dotfiles.fullname...";
