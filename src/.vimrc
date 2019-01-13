@@ -12,18 +12,6 @@ endif
 
 execute pathogen#infect()
 
-" If we are not on Windows *or* if we're running Windows gvim
-if ( ! has("win32") ) || has("gui_running")
-    " We use a light lucius theme
-    set background=light            " Light background
-    colorscheme lucius
-else
-    " We need a dark background because this is being run from
-    " a Windows command prompt
-    set background=dark
-    colorscheme industry  " Always present & readable, albeit ugly
-endif
-
 " Set digraphs - for instance, type » by using > <BS> > instead of
 " just <ctrl-k> > >
 " set digraph  " This became quite annoying
