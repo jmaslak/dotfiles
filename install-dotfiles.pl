@@ -206,7 +206,7 @@ sub get_email {
         }
     }
 
-    if ( !defined($email) ) {
+    while ( !defined($email) ) {
         if ( $environment eq 'home' ) { $email = 'jmaslak@antelope.net' }
         if ( $environment eq 'work' ) { $email = 'jmaslak@centurylink.com' }
 
@@ -216,6 +216,12 @@ sub get_email {
             print " > ";
             $email = <STDIN>;
             chomp($email);
+        }
+
+        if ($email !~ m/\@/) {
+            print "ERROR: Email address must include an at-sign\n";
+            $email = undef;
+            next;
         }
 
         print "Creating $home/.dotfiles.email...";
