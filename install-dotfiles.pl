@@ -384,7 +384,8 @@ sub network_available {
     }
 
     my $ping   = Net::Ping->new();
-    my $result = $ping->ping( '4.2.2.1', 1 );
+    $ping->port_number(80);
+    my $result = $ping->ping( '1.1.1.1', 1 );
 
     if ( !$result ) {
         print("Network not available, skipping functions dependent upon network\n");
