@@ -44,6 +44,7 @@ install_modules() {
     install_module OO::Monitors
     install_module P5getpriority        # For getppid
     install_module P5localtime
+    install_module StrictClass
     install_module StrictNamedArguments
     install_module Terminal::ANSIColor
     install_module Term::ReadKey

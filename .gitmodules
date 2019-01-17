@@ -10,3 +10,6 @@
 [submodule "src/.vim/bundle/vim-lucius"]
 	path = src/.vim/bundle/vim-lucius
 	url = https://github.com/jonathanfilip/vim-lucius
+[submodule "src/.vim/plugin/vim-cisco-ios"]
+	path = src/.vim/plugin/vim-cisco-ios
+	url = https://github.com/CyCoreSystems/vim-cisco-ios

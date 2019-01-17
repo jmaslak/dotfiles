@@ -1,6 +1,6 @@
 #!/usr/bin/env perl
 #
-# Copyright (C) 2015-2018 Joelle Maslak
+# Copyright (C) 2015-2019 Joelle Maslak
 # All Rights Reserved - See License
 #
 
@@ -30,23 +30,27 @@ MAIN: {
     }
 
     if ( umask == 0 ) {
-        umask 0002;  # Defensively set umask
+        umask 0002;    # Defensively set umask
     }
 
     my $home    = $ENV{HOME};
     my $current = getcwd;
 
-    if ( (! -f '~/.dotfile.nogit' ) || ( !exists($ENV{DOTFILE_NOGIT}))) {
-        system "git fetch origin master >/dev/null 2>/dev/null";
-        my $gitrevs = `git rev-list HEAD..origin/master | wc -l`;
+    my $network_available = network_available();
 
-        if ($gitrevs > 0) {
-            print STDERR "Local directory is not synced with remote, please do a git pull.\n";
-            print STDERR "\n";
-            print STDERR "To avoid this check, set \$ENV{DOTFILE_NOGIT}\n";
-            print STDERR "\n";
-            print STDERR "Aborting.\n";
-            exit 1;
+    if ( ( !-f '~/.dotfile.nogit' ) || ( !exists( $ENV{DOTFILE_NOGIT} ) ) ) {
+        if ($network_available) {
+            system "git fetch origin master >/dev/null 2>/dev/null";
+            my $gitrevs = `git rev-list HEAD..origin/master | wc -l`;
+
+            if ( $gitrevs > 0 ) {
+                print STDERR "Local directory is not synced with remote, please do a git pull.\n";
+                print STDERR "\n";
+                print STDERR "To avoid this check, set \$ENV{DOTFILE_NOGIT}\n";
+                print STDERR "\n";
+                print STDERR "Aborting.\n";
+                exit 1;
+            }
         }
     }
 
@@ -57,11 +61,12 @@ MAIN: {
         $rename_old = undef;
     }
 
-    my $copyright = get_copyright($home);
-    my $fullname  = get_fullname($home);
-    my $email     = get_email($home);
+    my $environment = get_environment($home);
+    my $copyright   = get_copyright( $home, $environment );
+    my $fullname    = get_fullname( $home, $environment );
+    my $email       = get_email( $home, $environment );
 
-    install_git_submodules();
+    install_git_submodules() if $network_available;
     install_files($rename_old);
     install_vim_templates($copyright);
     install_git_config( $fullname, $email );
@@ -72,12 +77,49 @@ MAIN: {
         print "\n";
     }
 
-    system "$current/perl-setup.sh";
-    system "$current/perl6-modules.sh";
+    if ($network_available) {
+        system "$current/perl-setup.sh";
+        system "$current/perl6-modules.sh";
+    }
+}
+
+sub get_environment {
+    my ($home) = @_;
+
+    my $environment;
+
+    if ( -e "$home/.dotfiles.environment" ) {
+        $environment = slurp("$home/.dotfiles.environment");
+        chomp $environment;
+    }
+
+    while ( !defined($environment) ) {
+        print "Please enter the environment (home/work/other):\n";
+        local $| = 1;
+        print " > ";
+        $environment = <STDIN>;
+        chomp($environment);
+
+        if (   ( $environment ne 'home' )
+            && ( $environment ne 'work' )
+            && ( $environment ne 'other' ) )
+        {
+            # Let's try this again
+            $environment = undef;
+            next;
+        }
+
+        print "Creating $home/.dotfiles.environment ...";
+        spitout( "$home/.dotfiles.environment", $environment );
+        print "\n";
+    }
+
+    return $environment;
+
 }
 
 sub get_copyright {
-    my ($home) = @_;
+    my ( $home, $environment ) = @_;
 
     my $copyright;
 
@@ -88,12 +130,23 @@ sub get_copyright {
         }
     }
 
-    if ( !defined($copyright) ) {
-        print "Please enter the name to use for copyright in templates:\n";
-        local $| = 1;
-        print " > ";
-        $copyright = <STDIN>;
-        chomp($copyright);
+    while ( !defined($copyright) ) {
+        if ( $environment eq 'home' ) { $copyright = 'Joelle Maslak' }
+        if ( $environment eq 'work' ) { $copyright = 'CenturyLink' }
+
+        if ( $environment eq 'other' ) {
+            print "Please enter the name to use for copyright in templates:\n";
+            local $| = 1;
+            print " > ";
+            $copyright = <STDIN>;
+            chomp($copyright);
+        }
+
+        if ($copyright =~ m/\@/) {
+            print "ERROR: Do not include an at-sign in this field\n";
+            $copyright = undef;
+            next;
+        }
 
         print "Creating $home/.dotfiles.copyright ...";
         spitout( "$home/.dotfiles.copyright", $copyright );
@@ -104,7 +157,7 @@ sub get_copyright {
 }
 
 sub get_fullname {
-    my ($home) = @_;
+    my ( $home, $environment ) = @_;
 
     my $fullname;
 
@@ -115,12 +168,23 @@ sub get_fullname {
         }
     }
 
-    if ( !defined($fullname) ) {
-        print "Please enter the full name to use for git in templates:\n";
-        local $| = 1;
-        print " > ";
-        $fullname = <STDIN>;
-        chomp($fullname);
+    while ( !defined($fullname) ) {
+        if ( $environment eq 'home' ) { $fullname = 'Joelle Maslak' }
+        if ( $environment eq 'work' ) { $fullname = 'Joelle Maslak' }
+
+        if ( $environment eq 'other' ) {
+            print "Please enter the full name to use for git in templates:\n";
+            local $| = 1;
+            print " > ";
+            $fullname = <STDIN>;
+            chomp($fullname);
+        }
+
+        if ($fullname =~ m/\@/) {
+            print "ERROR: Do not include an at-sign in this field\n";
+            $fullname = undef;
+            next;
+        }
 
         print "Creating $home/.dotfiles.fullname...";
         spitout( "$home/.dotfiles.fullname", $fullname );
@@ -131,7 +195,7 @@ sub get_fullname {
 }
 
 sub get_email {
-    my ($home) = @_;
+    my ( $home, $environment ) = @_;
 
     my $email;
 
@@ -142,12 +206,23 @@ sub get_email {
         }
     }
 
-    if ( !defined($email) ) {
-        print "Please enter the email address to use for git in templates:\n";
-        local $| = 1;
-        print " > ";
-        $email = <STDIN>;
-        chomp($email);
+    while ( !defined($email) ) {
+        if ( $environment eq 'home' ) { $email = 'jmaslak@antelope.net' }
+        if ( $environment eq 'work' ) { $email = 'jmaslak@centurylink.com' }
+
+        if ( $environment eq 'other' ) {
+            print "Please enter the email address to use for git in templates:\n";
+            local $| = 1;
+            print " > ";
+            $email = <STDIN>;
+            chomp($email);
+        }
+
+        if ($email !~ m/\@/) {
+            print "ERROR: Email address must include an at-sign\n";
+            $email = undef;
+            next;
+        }
 
         print "Creating $home/.dotfiles.email...";
         spitout( "$home/.dotfiles.email", $email );
@@ -267,7 +342,7 @@ sub install_git_config {
 
     my $ver = `git version`;
     chomp($ver);
-    if ($ver =~ m/git version 1\.[01234567]\./) {
+    if ( $ver =~ m/git version 1\.[01234567]\./ ) {
         # Version <= 1.7
         # We do NOT configure the simple
     } else {
@@ -300,3 +375,17 @@ sub spitout {
     print $fh $val or die($!);
     close($fh);
 }
+
+sub network_available {
+    eval { require Net::Ping } or return 1;    # We can't guarante N:P installed.
+
+    my $ping   = Net::Ping->new();
+    my $result = $ping->ping( '4.2.2.1', 1 );
+
+    if ( !$result ) {
+        print("Network not available, skipping functions dependent upon network\n");
+    }
+
+    return !!$result;
+}
+
