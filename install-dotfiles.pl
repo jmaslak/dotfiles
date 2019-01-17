@@ -377,7 +377,11 @@ sub spitout {
 }
 
 sub network_available {
-    eval { require Net::Ping } or return 1;    # We can't guarante N:P installed.
+    my $ret = eval { require Net::Ping };
+    if (!$ret) {
+        warn "Net::Ping not installed.";
+        return 1;    # We can't guarante N:P installed.
+    }
 
     my $ping   = Net::Ping->new();
     my $result = $ping->ping( '4.2.2.1', 1 );
