@@ -306,3 +306,6 @@ if [ -s "$HOME/.rvm/scripts/rvm" ] ; then
     source "$HOME/.rvm/scripts/rvm"
 fi
 
+# We want to default to understanding ANSI color codes in less
+export LESS="-r"
+

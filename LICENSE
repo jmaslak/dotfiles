@@ -56,6 +56,10 @@ The plugin is available at:
 
 I could not locate a license for the vim-perl6 bundle.
 
+I could not locate a language for the cisco.vim plugin.  The original is
+available at:
+    https://github.com/CyCoreSystems/vim-cisco-ios
+
 =====
 
 All code added by me is licensed under the Artistic License 2.0,

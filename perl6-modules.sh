@@ -44,11 +44,13 @@ install_modules() {
     install_module OO::Monitors
     install_module P5getpriority        # For getppid
     install_module P5localtime
-    install_module StrictNamedArguments
+    install_module StrictClass
+    # install_module StrictNamedArguments # Doesn't work in 6.d
     install_module Terminal::ANSIColor
     install_module Term::ReadKey
     install_module Term::termios
-    install_module YAMLish; 
+    install_module YAMLish
+    install_module if
     install_module p6doc
 }
 

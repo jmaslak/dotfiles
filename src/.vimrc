@@ -1,13 +1,6 @@
 " Everything pretty much should be UTF-8 by now
 set encoding=utf-8
 
-" Set proper plugin directories
-" if has("win32")
-"     set runtimepath^=$USERPROFILE\vimfiles\bundle\vim-ps1
-" else
-"     set runtimepath^=~/.vim/bundle/vim-ps1
-" endif
-
 " Some environments don't set the shell right, which causes
 " issues with gitgutter and probably other things that assume
 " the shell is actually bash and not sh.
@@ -18,18 +11,6 @@ elseif !empty(glob("/usr/bin/bash"))
 endif
 
 execute pathogen#infect()
-
-" If we are not on Windows *or* if we're running Windows gvim
-if ( ! has("win32") ) || has("gui_running")
-    " We use a light lucius theme
-    set background=light            " Light background
-    colorscheme lucius
-else
-    " We need a dark background because this is being run from
-    " a Windows command prompt
-    set background=dark
-    colorscheme industry  " Always present & readable, albeit ugly
-endif
 
 " Set digraphs - for instance, type » by using > <BS> > instead of
 " just <ctrl-k> > >

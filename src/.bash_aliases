@@ -178,3 +178,6 @@ function ipmi {
 
     ipmitool -I lanplus -H "$HOST" -U ADMIN -P "$(cat ~/.ipmi_pw)" "$@"
 }
+
+# BGP development
+alias bgp="cd ~/git/antelope/perl6/Perl6-Net-BGP"

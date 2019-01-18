@@ -1,12 +1,10 @@
 use v6;
 
 #
-# Copyright © 2018 _COPYRIGHT_
+# Copyright © 2019 _COPYRIGHT_
 # All Rights Reserved - See License
 #
 
-module <MODULE_NAME>:ver<0.0.1>:auth<cpan:JMASLAK> {
-
-};
+unit class <MODULE_NAME>:ver<0.0.1>:auth<cpan:JMASLAK>;
 
 
