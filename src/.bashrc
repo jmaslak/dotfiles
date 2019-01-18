@@ -143,9 +143,6 @@ if [ -d ~/.rakudobrew ] ; then
     eval "$(~/.rakudobrew/bin/rakudobrew init -)"
 fi
 
-# Also want 6prove, an alias to test Perl6 code
-alias 6prove="PERL6LIB=lib prove -e perl6"
-
 # Do we have a Perlbrew?  Prefer local to system perlbrew
 if [ -d ~/perl5/perlbrew ] ; then
     export PERLBREW_ROOT=~/perl5/perlbrew

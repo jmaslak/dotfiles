@@ -181,3 +181,7 @@ function ipmi {
 
 # BGP development
 alias bgp="cd ~/git/antelope/perl6/Perl6-Net-BGP"
+
+# Also want 6prove, an alias to test Perl6 code
+alias 6prove="PERL6LIB=lib prove -e perl6"
+
