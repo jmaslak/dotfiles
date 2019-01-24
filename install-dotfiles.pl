@@ -80,6 +80,7 @@ MAIN: {
     if ($network_available) {
         system "$current/perl-setup.sh";
         system "$current/perl6-modules.sh";
+        system "$current/python-modules.sh";
     }
 }
 

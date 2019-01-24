@@ -306,3 +306,10 @@ fi
 # We want to default to understanding ANSI color codes in less
 export LESS="-r"
 
+# Python
+if [ -d "$HOME/.pyenv" ] ; then
+    export PYENV_ROOT="$HOME/.pyenv"
+    export PATH="$PYENV_ROOT/bin:$PATH"
+    eval "$(pyenv init -)"
+fi
+
