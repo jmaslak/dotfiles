@@ -133,7 +133,7 @@ sub get_copyright {
 
     while ( !defined($copyright) ) {
         if ( $environment eq 'home' ) { $copyright = 'Joelle Maslak' }
-        if ( $environment eq 'work' ) { $copyright = 'CenturyLink' }
+        if ( $environment eq 'work' ) { $copyright = 'Netflix' }
 
         if ( $environment eq 'other' ) {
             print "Please enter the name to use for copyright in templates:\n";
@@ -209,7 +209,7 @@ sub get_email {
 
     while ( !defined($email) ) {
         if ( $environment eq 'home' ) { $email = 'jmaslak@antelope.net' }
-        if ( $environment eq 'work' ) { $email = 'jmaslak@centurylink.com' }
+        if ( $environment eq 'work' ) { $email = 'jmaslak@netflix.com' }
 
         if ( $environment eq 'other' ) {
             print "Please enter the email address to use for git in templates:\n";
