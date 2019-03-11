@@ -8,8 +8,7 @@
 # Install some packages needed for other tasks (such as building Perl)
 
 doit() {
-    sudo apt-get install build-essential
-    sudo apt-get install libssl-dev
+    sudo apt-get install build-essential libssl-dev curl tmux vim
 }
 
 doit "$@"
