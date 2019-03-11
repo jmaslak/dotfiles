@@ -14,6 +14,19 @@ doit() {
     if [ $(umask) == '0000' ] ; then
         umask 0002
     fi
+    
+    # Check for installation of curl
+    which curl 2>/dev/null >/dev/null
+    if [ $? -ne 0 ] ; then
+        echo "" >&2
+        echo "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!" >&2
+        echo "Please install curl first" >&2
+        echo "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!" >&2
+        echo "" >&2
+
+        exit 1
+    fi
+
 
     if [ ! -d ~/perl5/perlbrew ] ; then
         echo " --->> Installing perlbrew"
