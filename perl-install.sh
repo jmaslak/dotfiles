@@ -52,6 +52,9 @@ doit() {
     if [ ! -d ~/perl5/perlbrew/perls/$CURRENTPERL ] ; then
         echo " --->> Installing perl"
         perlbrew install $CURRENTPERL -Accflags=-fPIC -j 8
+
+        echo " --->> Activating perl"
+        perlbrew switch $CURRENTPERL
     fi
 
 }
