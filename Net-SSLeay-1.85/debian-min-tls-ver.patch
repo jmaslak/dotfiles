@@ -1,0 +1,22 @@
+Description: hardcode the minimal protocol version in 09_ctx_new.t
+ This is a follow up of
+ Adapt-CTX_get_min_proto_version-tests-to-system-wide.patch
+ .
+ That patch adjusts the minimal protocol version according to a system-wide
+ configuration file. This file is not present in Debian, where a compile-time
+ setting is used. So we need a hard-coded value, which will be subject to
+ change in the future.
+Author: Damyan Ivanov <dmn@debian.org>
+Forwarded: not-needed
+
+--- a/t/local/09_ctx_new.t
++++ b/t/local/09_ctx_new.t
+@@ -109,7 +109,7 @@ else
+ # Having TLS_method() does not necessarily that proto getters are available
+ if ($ctx_tls && exists &Net::SSLeay::CTX_get_min_proto_version)
+ {
+-    my $min_ver = 0;
++    my $min_ver = &Net::SSLeay::OPENSSL_VERSION_NUMBER >= 0x10101009 ? 0x0303 : 0;
+     # Adjust minimal version to system-wide crypto policy
+     if (open(my $f, '<', '/etc/crypto-policies/back-ends/opensslcnf.config')) {
+         while(<$f>) {

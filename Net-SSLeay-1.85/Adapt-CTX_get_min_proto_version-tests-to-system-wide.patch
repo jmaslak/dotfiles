@@ -1,0 +1,63 @@
+From a00a70b7195438c543191b69382ff20e452548bf Mon Sep 17 00:00:00 2001
+From: =?UTF-8?q?Petr=20P=C3=ADsa=C5=99?= <ppisar@redhat.com>
+Date: Mon, 13 Aug 2018 12:33:58 +0200
+Subject: [PATCH] Adapt CTX_get_min_proto_version tests to system-wide policy
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+
+In our distribution, /etc/crypto-policies/back-ends/opensslcnf.config
+can override default minimal SSL/TLS protocol version. If it does,
+t/local/09_ctx_new.t test will fail because OpenSSL will return
+different then 0 value.
+
+This patch parses the configuration file and adjusts expect values in
+the test.
+
+Signed-off-by: Petr Písař <ppisar@redhat.com>
+---
+ t/local/09_ctx_new.t | 22 ++++++++++++++++++++--
+ 1 file changed, 20 insertions(+), 2 deletions(-)
+
+diff --git a/t/local/09_ctx_new.t b/t/local/09_ctx_new.t
+index 6d06f21..c584856 100644
+--- a/t/local/09_ctx_new.t
++++ b/t/local/09_ctx_new.t
+@@ -109,14 +109,32 @@ else
+ # Having TLS_method() does not necessarily that proto getters are available
+ if ($ctx_tls && exists &Net::SSLeay::CTX_get_min_proto_version)
+ {
++    my $min_ver = 0;
++    # Adjust minimal version to system-wide crypto policy
++    if (open(my $f, '<', '/etc/crypto-policies/back-ends/opensslcnf.config')) {
++        while(<$f>) {
++            if (/^MinProtocol = ([\w.]+)\b/) {
++                if ($1 eq 'TLSv1') {
++                    $min_ver = 0x0301;
++                } elsif ($1 eq 'TLSv1.1') {
++                    $min_ver = 0x0302;
++                } elsif ($1 eq 'TLSv1.2') {
++                    $min_ver = 0x0303;
++                } elsif ($1 eq 'TLSv1.3') {
++                    $min_ver = 0x0304;
++                }
++            }
++        }
++        close($f);
++    }
+     my $ver;
+     $ver = Net::SSLeay::CTX_get_min_proto_version($ctx_tls);
+-    is($ver, 0, 'TLS_method CTX has automatic minimum version');
++    is($ver, $min_ver, 'TLS_method CTX has automatic minimum version');
+     $ver = Net::SSLeay::CTX_get_max_proto_version($ctx_tls);
+     is($ver, 0, 'TLS_method CTX has automatic maximum version');
+ 
+     $ver = Net::SSLeay::get_min_proto_version($ssl_tls);
+-    is($ver, 0, 'SSL from TLS_method CTX has automatic minimum version');
++    is($ver, $min_ver, 'SSL from TLS_method CTX has automatic minimum version');
+     $ver = Net::SSLeay::get_max_proto_version($ssl_tls);
+     is($ver, 0, 'SSL from TLS_method CTX has automatic maximum version');
+ 
+-- 
+2.14.4
+

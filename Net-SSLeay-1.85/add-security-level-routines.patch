@@ -1,0 +1,146 @@
+Description: add set_security_level() routines
+ This patch adds SSL_[CTX_](set|get)_security_level() routines
+ .
+ They are needed at least by the tests that use certificates with 1024-bit keys
+ in environments with openssl with default security level of 2, which requires
+ at least 2048-bit key sizes
+Author: Damyan Ivanov <dmn@debian.org>
+Forwarded: https://rt.cpan.org/Ticket/Display.html?id=126986
+Bug: https://rt.cpan.org/Ticket/Display.html?id=126986
+
+--- a/SSLeay.xs
++++ b/SSLeay.xs
+@@ -1900,6 +1900,16 @@ SSL_CTX_set_verify(ctx,mode,callback=&PL
+         SSL_CTX_set_verify(ctx, mode, &ssleay_verify_callback_invoke);
+     }
+ 
++#if OPENSSL_VERSION_NUMBER >= 0x10100001L
++
++void
++SSL_CTX_set_security_level(SSL_CTX * ctx, int level)
++
++int
++SSL_CTX_get_security_level(SSL_CTX * ctx)
++
++#endif
++
+ int
+ SSL_get_error(s,ret)
+      SSL *              s
+@@ -2576,6 +2586,16 @@ SSL_set_default_passwd_cb_userdata(ssl,d
+ #endif /* !LibreSSL */
+ #endif /* >= 1.1.0f */
+ 
++#if OPENSSL_VERSION_NUMBER >= 0x10100001L
++
++void
++SSL_set_security_level(SSL * ssl, int level)
++
++int
++SSL_get_security_level(SSL * ssl)
++
++#endif
++
+ const BIO_METHOD *
+ BIO_f_ssl()
+ 
+--- /dev/null
++++ b/t/local/65_security_level.t
+@@ -0,0 +1,41 @@
++#!/usr/bin/perl
++
++use strict;
++use warnings;
++use Test::More;
++use Net::SSLeay;
++
++plan skip_all => 'openssl-1.1.0 required' unless Net::SSLeay::SSLeay >= 0x10100001;
++
++plan tests => 20;
++
++
++my $ctx = Net::SSLeay::CTX_new();
++ok( defined Net::SSLeay::CTX_get_security_level($ctx),
++    "CTX_get_security_context() returns a value"
++);
++
++ok( Net::SSLeay::CTX_get_security_level($ctx) >= 0,
++    "CTX_get_security_context() is non-negative"
++);
++
++for (0..7) {
++    Net::SSLeay::CTX_set_security_level($ctx, $_);
++    is( Net::SSLeay::CTX_get_security_level($ctx),
++        $_, "CTX_get_security_level() matches CTX_set_security_level($_)" );
++}
++
++my $ssl = Net::SSLeay::new($ctx);
++ok( defined Net::SSLeay::get_security_level($ssl),
++    "get_security_context() returns a value"
++);
++
++ok( Net::SSLeay::get_security_level($ssl) >= 0,
++    "get_security_context() is non-negative"
++);
++
++for (0..7) {
++    Net::SSLeay::set_security_level($ssl, $_);
++    is( Net::SSLeay::get_security_level($ssl),
++        $_, "get_security_level() matches set_security_level($_)" );
++}
+--- a/lib/Net/SSLeay.pod
++++ b/lib/Net/SSLeay.pod
+@@ -3187,6 +3187,26 @@ Loads the first certificate stored in $f
+ 
+ Check openssl doc L<http://www.openssl.org/docs/ssl/SSL_CTX_use_certificate.html|http://www.openssl.org/docs/ssl/SSL_CTX_use_certificate.html>
+ 
++=item * CTX_get_security_level
++
++B<COMPATIBILITY:> available in openssl-1.1.0 and later.
++
++Returns the security level associated with $ctx.
++
++ my $level = Net::SSLeay::CTX_get_security_level($ctx);
++
++Check openssl doc L<https://www.openssl.org/docs/manmaster/man3/SSL_CTX_get_security_level.html|https://www.openssl.org/docs/manmaster/man3/SSL_CTX_get_security_level.html>
++
++=item * CTX_set_security_level
++
++B<COMPATIBILITY:> available in openssl-1.1.0 and later.
++
++Sets the security level associated with $ctx to $level.
++
++ Net::SSLeay::CTX_set_security_level($ctx, $level);
++
++Check openssl doc L<https://www.openssl.org/docs/manmaster/man3/SSL_CTX_set_security_level.html|https://www.openssl.org/docs/manmaster/man3/SSL_CTX_set_security_level.html>
++
+ =back
+ 
+ =head3 Low level API: SSL_* related functions
+@@ -3706,6 +3726,26 @@ Check openssl doc L<http://www.openssl.o
+  #
+  # returns: the original read_ahead value
+ 
++=item * get_security_level
++
++B<COMPATIBILITY:> available in openssl-1.1.0 and later.
++
++Returns the security level associated with $ssl.
++
++ my $level = Net::SSLeay::get_security_level($ssl);
++
++Check openssl doc L<https://www.openssl.org/docs/manmaster/man3/SSL_get_security_level.html|https://www.openssl.org/docs/manmaster/man3/SSL_get_security_level.html>
++
++=item * set_security_level
++
++B<COMPATIBILITY:> available in openssl-1.1.0 and later.
++
++Sets the security level associated with $ssl to $level.
++
++ Net::SSLeay::set_security_level($ssl, $level);
++
++Check openssl doc L<https://www.openssl.org/docs/manmaster/man3/SSL_set_security_level.html|https://www.openssl.org/docs/manmaster/man3/SSL_set_security_level.html>
++
+ =item * get_server_random
+ 
+ Returns internal SSLv3 server_random value.

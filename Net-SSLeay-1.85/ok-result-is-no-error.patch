@@ -1,0 +1,28 @@
+Description: set_cert_and_key() should return error only when some of the underlying routines does
+ Currently set_cert_and_key() returns an error condition when the libssl error
+ stack contains errors, even if the CTX_use_PrivateKey_file() and
+ CTX_use_certificat_file() both return success.
+ .
+ The error stack contents are bogus and should not matter when the return codes
+ indicate success.
+Author: Damyan Ivanov <dmn@debian.org>
+Forwarded: https://rt.cpan.org/Ticket/Display.html?id=126988
+Bug: https://rt.cpan.org/Ticket/Display.html?id=126988
+
+--- a/lib/Net/SSLeay.pm
++++ b/lib/Net/SSLeay.pm
+@@ -1286,10 +1286,10 @@ sub set_cert_and_key ($$$) {
+     my ($ctx, $cert_path, $key_path) = @_;
+     my $errs = '';
+     # Following will ask password unless private key is not encrypted
+-    CTX_use_PrivateKey_file ($ctx, $key_path, &FILETYPE_PEM);
+-    $errs .= print_errs("private key `$key_path' ($!)");
+-    CTX_use_certificate_file ($ctx, $cert_path, &FILETYPE_PEM);
+-    $errs .= print_errs("certificate `$cert_path' ($!)");
++    CTX_use_PrivateKey_file( $ctx, $key_path, &FILETYPE_PEM ) == 1
++        or $errs .= print_errs("private key `$key_path' ($!)");
++    CTX_use_certificate_file ($ctx, $cert_path, &FILETYPE_PEM) == 1
++        or $errs .= print_errs("certificate `$cert_path' ($!)");
+     return wantarray ? (undef, $errs) : ($errs eq '');
+ }
+ 

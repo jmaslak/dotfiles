@@ -1,0 +1,11 @@
+Adapt-to-OpenSSL-1.1.1.patch
+Adapt-CTX_get_min_proto_version-tests-to-system-wide.patch
+Avoid-SIGPIPE-in-t-local-36_verify.t.patch
+Move-SSL_ERROR_WANT_READ-SSL_ERROR_WANT_WRITE-retry-.patch
+Move-SSL_ERROR_WANT_READ-SSL_ERROR_WANT_WRITE-retry-from_write_partial.patch
+20no-stray-libz-link.patch
+add-security-level-routines.patch
+test-with-security-level-1.patch
+ok-result-is-no-error.patch
+set_num_tickets-min-version.patch
+debian-min-tls-ver.patch
