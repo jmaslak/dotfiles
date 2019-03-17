@@ -5,7 +5,8 @@
 # All Rights Reserved - See License
 #
 
-PYVER=3.7.2
+PYTHON2=2.7.16
+PYTHON3=3.7.2
 
 doit() {
     # Defensive umask
@@ -24,17 +25,27 @@ doit() {
         eval "$(pyenv init -)"
     fi
 
-    # Install python
-    pyenv versions 2>/dev/null | grep " $PYVER " >/dev/null
-    if [ $? -ne 0 ] ; then
-        PYTHON_CONFIGURE_OPTS="--enable-shared" pyenv install "$PYVER"
-        pyenv global "$PYVER"
-        pyenv rehash
-    fi
+    install $PYTHON2
+    install $PYTHON3
+
+    echo "Setting Python version to $PYTHON3"    
+    pyenv global "$PYTHON3"
+    pyenv rehash
 
     cd "$CWD"
 }
 
-doit "$@"
+install() {
+    PYVER="$1"
 
+    PYVERREGEX=${PYVER//./\\.}
+
+    # Install python
+    pyenv versions 2>/dev/null | grep -P " $PYVERREGEX(\s.*)?$" >/dev/null
+    if [ $? -ne 0 ] ; then
+        PYTHON_CONFIGURE_OPTS="--enable-shared" pyenv install "$PYVER"
+    fi
+}
+
+doit "$@"
 
