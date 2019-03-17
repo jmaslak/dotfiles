@@ -11,7 +11,11 @@ doit() {
     sudo apt-get install \
         build-essential \
         curl \
+        libbz2-dev \
+        libffi-dev \
         libncurses-dev \
+        libreadline-dev \
+        libsqlite3-dev \
         libssl-dev \
         tmux \
         vim \
