@@ -25,6 +25,12 @@ doit() {
         eval "$(pyenv init -)"
     fi
 
+    # Install pyenv-virtualenv
+    if [ ! -d "$HOME/.pyenv/plugins/pyenv-virtualenv" ] ; then
+        cd "$HOME/.pyenv/plugins"
+        git clone git://github.com/yyuu/pyenv-virtualenv.git pyenv-virtualenv
+    fi    
+
     install $PYTHON2
     install $PYTHON3
 
