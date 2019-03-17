@@ -330,7 +330,7 @@ sub install_git_submodules {
 }
 
 sub install_git_config {
-    my ( $fullname, $email ) = @_;
+    my ( $fullname, $email, $cannonical_email ) = @_;
 
     system("git config --global user.email \"$email\"");
     system("git config --global user.name \"$fullname\"");
@@ -340,6 +340,9 @@ sub install_git_config {
     system("git config --global diff.tool ccdiff");
     system("git config --global difftool.prompt false");
     system("git config --global difftool.ccdiff.cmd 'ccdiff --bg=black --old=bright_red --utf-8 -u -r \$LOCAL \$REMOTE'");
+
+    # Also set this repo's email
+    system("git config --local  user.email \"${cannonical_email}\"");
 
     my $ver = `git version`;
     chomp($ver);
