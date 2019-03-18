@@ -11,10 +11,11 @@ doit() {
         umask 0002
     fi
 
-    which pip3 2>/dev/null >/dev/null
+    which pip 2>/dev/null >/dev/null
     if [ $? -eq 0 ] ; then  # Installed
-        pip3 install google-api-python-client
-        pip3 install oauth2client
+        pip install --upgrade pip
+        pip install google-api-python-client
+        pip install oauth2client
     else
         echo ""
         echo "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!"
