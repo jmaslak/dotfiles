@@ -313,3 +313,5 @@ if [ -d "$HOME/.pyenv" ] ; then
     eval "$(pyenv init -)"
 fi
 
+# Remind programs we ahve a light background
+export TERM_BACKGROUND=light
