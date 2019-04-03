@@ -317,7 +317,7 @@ fi
 export TERM_BACKGROUND=light
 
 # And now we install work stuff.
-if [ -n '$HOME/.bashrc.work' ] ; then
+if [ -f '$HOME/.bashrc.work' ] ; then
     source "$HOME/.bashrc.work"
 fi
 
