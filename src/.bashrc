@@ -316,8 +316,14 @@ fi
 # Remind programs we ahve a light background
 export TERM_BACKGROUND=light
 
+# Add OpenSSL if it's installed locally
+if [ -d "$HOME/openssl" ] ; then
+    export PATH="$HOME/openssl/bin:$PATH"
+    export LD_LIBRARY_PATH="$HOME/openssl/lib:$LD_LIBRARY_PATH"
+fi
+
 # And now we install work stuff.
-if [ -f '$HOME/.bashrc.work' ] ; then
+if [ -f "$HOME/.bashrc.work" ] ; then
     source "$HOME/.bashrc.work"
 fi
 
