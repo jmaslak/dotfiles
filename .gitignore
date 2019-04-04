@@ -2,8 +2,11 @@ errors.err
 Net-SSLeay-1.85/MYMETA.json
 Net-SSLeay-1.85/MYMETA.yml
 Net-SSLeay-1.85/Makefile
+Net-SSLeay-1.85/Makefile.old
 Net-SSLeay-1.85/SSLeay.bs
 Net-SSLeay-1.85/SSLeay.c
+Net-SSLeay-1.85/SSLeay.o
 Net-SSLeay-1.85/blib/
 Net-SSLeay-1.85/pm_to_blib
 openssl-1.*
+
