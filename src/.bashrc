@@ -320,6 +320,16 @@ export TERM_BACKGROUND=light
 if [ -d "$HOME/openssl" ] ; then
     export PATH="$HOME/openssl/bin:$PATH"
     export LD_LIBRARY_PATH="$HOME/openssl/lib:$LD_LIBRARY_PATH"
+    if [ "LIBRARY_PATH"z != ""z ] ; then
+        export LIBRARY_PATH="$HOME/openssl/lib:$LIBRARY_PATH"
+    else
+        export LIBRARY_PATH="$HOME/openssl/lib"
+    fi
+    if [ "$CPATH"z != ""z ] ; then
+        export CPATH="$HOME/openssl/include:$CPATH"
+    else
+        export CPATH="$HOME/openssl/include"
+    fi
 fi
 
 # And now we install work stuff.
