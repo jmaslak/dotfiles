@@ -1,0 +1,30 @@
+Description: adjust minimum openssl version for set_num_tickets() support
+ SSL_CTX_set_num_tickets() & co are available since 0x10101009
+ .
+ Requires Adapt-to-OpenSSL-1.1.1.patch
+Author: Damyan Ivanov <dmn@debian.org>
+Forwarded: https://rt.cpan.org/Ticket/Display.html?id=126989
+Bug: https://rt.cpan.org/Ticket/Display.html?id=126989
+
+--- a/SSLeay.xs
++++ b/SSLeay.xs
+@@ -6983,7 +6983,7 @@ SSL_export_keying_material(ssl, outlen,
+ 
+ #endif
+ 
+-#if OPENSSL_VERSION_NUMBER >= 0x1010100fL
++#if OPENSSL_VERSION_NUMBER >= 0x10101009L
+ 
+ int
+ SSL_CTX_set_num_tickets(SSL_CTX *ctx,size_t num_tickets)
+--- a/t/local/07_sslecho.t
++++ b/t/local/07_sslecho.t
+@@ -65,7 +65,7 @@ Net::SSLeay::library_init();
+     ok($errs eq '', "set_cert_and_key: $errs");
+     SKIP: {
+         skip 'Disabling session tickets requires OpenSSL >= 1.1.1', 1
+-            unless (&Net::SSLeay::OPENSSL_VERSION_NUMBER >= 0x1010100f);
++            unless (&Net::SSLeay::OPENSSL_VERSION_NUMBER >= 0x10101009);
+         # TLS 1.3 server sends session tickets after a handhake as part of
+         # the SSL_accept(). If a client finishes all its job including closing
+         # TCP connectino before a server sends the tickets, SSL_accept() fails

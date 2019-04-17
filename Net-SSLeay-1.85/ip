@@ -1,0 +1,37 @@
+--- 09_ctx_new.t
++++ 09_ctx_new.t
+@@ -109,14 +109,32 @@ else
+ # Having TLS_method() does not necessarily that proto getters are available
+ if ($ctx_tls && exists &Net::SSLeay::CTX_get_min_proto_version)
+ {
++    my $min_ver = 0;
++    # Adjust minimal version to system-wide crypto policy
++    if (open(my $f, '<', '/etc/crypto-policies/back-ends/opensslcnf.config')) {
++        while(<$f>) {
++            if (/^MinProtocol = ([\w.]+)\b/) {
++                if ($1 eq 'TLSv1') {
++                    $min_ver = 0x0301;
++                } elsif ($1 eq 'TLSv1.1') {
++                    $min_ver = 0x0302;
++                } elsif ($1 eq 'TLSv1.2') {
++                    $min_ver = 0x0303;
++                } elsif ($1 eq 'TLSv1.3') {
++                    $min_ver = 0x0304;
++                }
++            }
++        }
++        close($f);
++    }
+     my $ver;
+     $ver = Net::SSLeay::CTX_get_min_proto_version($ctx_tls);
+-    is($ver, 0, 'TLS_method CTX has automatic minimum version');
++    is($ver, $min_ver, 'TLS_method CTX has automatic minimum version');
+     $ver = Net::SSLeay::CTX_get_max_proto_version($ctx_tls);
+     is($ver, 0, 'TLS_method CTX has automatic maximum version');
+ 
+     $ver = Net::SSLeay::get_min_proto_version($ssl_tls);
+-    is($ver, 0, 'SSL from TLS_method CTX has automatic minimum version');
++    is($ver, $min_ver, 'SSL from TLS_method CTX has automatic minimum version');
+     $ver = Net::SSLeay::get_max_proto_version($ssl_tls);
+     is($ver, 0, 'SSL from TLS_method CTX has automatic maximum version');
+ 

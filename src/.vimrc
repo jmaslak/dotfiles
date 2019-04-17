@@ -492,3 +492,7 @@ set cursorline
 set printfont=Courier:h8
 set printoptions=number:y,paper:letter,duplex:off
 
+if filereadable(glob("~/.vimrc.local"))
+    source ~/.vimrc.local
+endif
+

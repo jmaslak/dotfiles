@@ -5,7 +5,7 @@
 # All Rights Reserved - See License
 #
 
-PERLVER=2018.12
+PERLVER=2019.03.1
 
 doit() {
     # Defensive umask

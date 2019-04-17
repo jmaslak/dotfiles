@@ -1,0 +1,74 @@
+Description: set security level to 1 in tests working with keys less than 2048 bits long
+ When openssl is built with default security level of 2 and above, all
+ operations with RSA keys under 2048 bits are rejected. Setting the security
+ level to 1 makes the test pass with the smaller keys.
+ .
+ Requires the patch adding security_level() routines.
+Author: Damyan Ivanov <dmn@debian.org>
+Forwarded: https://rt.cpan.org/Ticket/Display.html?id=126987
+Bug: https://rt.cpan.org/Ticket/Display.html?id=126987
+
+--- a/t/local/36_verify.t
++++ b/t/local/36_verify.t
+@@ -233,6 +233,7 @@ sub client {
+     {
+ 	$ctx = Net::SSLeay::CTX_new();
+ 	is(Net::SSLeay::CTX_load_verify_locations($ctx, $ca_pem, $ca_dir), 1, "load_verify_locations($ca_pem $ca_dir)");
++	Net::SSLeay::CTX_set_security_level($ctx, 1) if exists &Net::SSLeay::CTX_set_security_level;
+ 
+ 	$cl = IO::Socket::INET->new($server_addr) or BAIL_OUT("failed to connect to server: $!");
+ 
+--- a/t/local/07_sslecho.t
++++ b/t/local/07_sslecho.t
+@@ -59,6 +59,7 @@ Net::SSLeay::library_init();
+ 
+     my $ctx = Net::SSLeay::CTX_new();
+     ok($ctx, 'CTX_new');
++    Net::SSLeay::CTX_set_security_level($ctx, 1) if exists &Net::SSLeay::CTX_set_security_level;
+     ok(Net::SSLeay::CTX_set_cipher_list($ctx, 'ALL'), 'CTX_set_cipher_list');
+     my ($dummy, $errs) = Net::SSLeay::set_cert_and_key($ctx, $cert_pem, $key_pem);
+     ok($errs eq '', "set_cert_and_key: $errs");
+@@ -86,6 +87,7 @@ Net::SSLeay::library_init();
+ 
+             my $ssl = Net::SSLeay::new($ctx);
+             ok($ssl, 'new');
++            Net::SSLeay::set_security_level($ssl, 1) if exists &Net::SSLeay::set_security_level;
+ 
+             ok(Net::SSLeay::set_fd($ssl, fileno($ns)), 'set_fd using fileno');
+             ok(Net::SSLeay::accept($ssl), 'accept');
+--- a/t/local/64_ticket_sharing.t
++++ b/t/local/64_ticket_sharing.t
+@@ -178,6 +178,7 @@ sub _handshake {
+ 	my $ctx = Net::SSLeay::CTX_tlsv1_new();
+ 	Net::SSLeay::CTX_set_options($ctx,Net::SSLeay::OP_ALL());
+ 	Net::SSLeay::CTX_set_cipher_list($ctx,'AES128-SHA');
++	Net::SSLeay::CTX_set_security_level($ctx, 1) if exists &Net::SSLeay::CTX_set_security_level;
+ 	my $id = 'client';
+ 	if ($args{cert}) {
+ 	    my ($cert,$key) = @{ delete $args{cert} };
+@@ -240,6 +241,7 @@ sub _handshake {
+     sub _reset {
+ 	my $self = shift;
+ 	my $ssl = Net::SSLeay::new($self->{ctx});
++	Net::SSLeay::set_security_level($ssl, 1) if exists &Net::SSLeay::set_security_level;
+ 	my @bio = (
+ 	    Net::SSLeay::BIO_new(Net::SSLeay::BIO_s_mem()),
+ 	    Net::SSLeay::BIO_new(Net::SSLeay::BIO_s_mem()),
+--- a/t/local/08_pipe.t
++++ b/t/local/08_pipe.t
+@@ -44,6 +44,7 @@ die unless defined $pid;
+ 
+ if ($pid == 0) {
+     my $ctx = Net::SSLeay::CTX_new();
++    Net::SSLeay::CTX_set_security_level($ctx, 1) if exists &Net::SSLeay::CTX_set_security_level;
+     Net::SSLeay::set_server_cert_and_key($ctx, $cert, $key);
+ 
+     my $ssl = Net::SSLeay::new($ctx);
+@@ -68,6 +69,7 @@ if ($pid == 0) {
+ my @results;
+ {
+     my $ctx = Net::SSLeay::CTX_new();
++    Net::SSLeay::CTX_set_security_level($ctx, 1) if exists &Net::SSLeay::CTX_set_security_level;
+     my $ssl = Net::SSLeay::new($ctx);
+ 
+     my $rc_handle = IO::Handle->new_from_fd( fileno($rc), 'r' );

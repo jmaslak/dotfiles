@@ -313,3 +313,27 @@ if [ -d "$HOME/.pyenv" ] ; then
     eval "$(pyenv init -)"
 fi
 
+# Remind programs we ahve a light background
+export TERM_BACKGROUND=light
+
+# Add OpenSSL if it's installed locally
+if [ -d "$HOME/openssl" ] ; then
+    export PATH="$HOME/openssl/bin:$PATH"
+    export LD_LIBRARY_PATH="$HOME/openssl/lib:$LD_LIBRARY_PATH"
+    if [ "LIBRARY_PATH"z != ""z ] ; then
+        export LIBRARY_PATH="$HOME/openssl/lib:$LIBRARY_PATH"
+    else
+        export LIBRARY_PATH="$HOME/openssl/lib"
+    fi
+    if [ "$CPATH"z != ""z ] ; then
+        export CPATH="$HOME/openssl/include:$CPATH"
+    else
+        export CPATH="$HOME/openssl/include"
+    fi
+fi
+
+# And now we install work stuff.
+if [ -f "$HOME/.bashrc.work" ] ; then
+    source "$HOME/.bashrc.work"
+fi
+

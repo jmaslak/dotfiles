@@ -33,6 +33,33 @@ MAIN: {
         umask 0002;    # Defensively set umask
     }
 
+    # Get options
+    my %options;
+    foreach my $arg (@ARGV) {
+        if ( $arg =~ m/^--..*\=/ms ) {
+            my ( $name, $val ) = $arg =~ m/^--(..*)\=(.*)$/ms;
+            $options{ lc($name) } = $val;
+        } elsif ( $arg =~ m/^--..*$/ms ) {
+            my ($name) = $arg =~ m/^--(..*)$/ms;
+            $options{ lc($name) } = 1;
+        } else {
+            print STDERR "$arg is an unknown option format\n";
+            print STDERR "\n";
+            print STDERR "Aborting.\n";
+            exit 3;
+        }
+    }
+    # Validate options
+    my (%valid) = map { $_, 1 } ( 'skipperl', 'skippython' );
+    foreach my $arg ( sort keys %options ) {
+        if ( !exists( $valid{$arg} ) ) {
+            print STDERR "$arg is an unknown option\n";
+            print STDERR "\n";
+            print STDERR "Aborting.\n";
+            exit 2;
+        }
+    }
+
     my $home    = $ENV{HOME};
     my $current = getcwd;
 
@@ -61,15 +88,16 @@ MAIN: {
         $rename_old = undef;
     }
 
-    my $environment = get_environment($home);
-    my $copyright   = get_copyright( $home, $environment );
-    my $fullname    = get_fullname( $home, $environment );
-    my $email       = get_email( $home, $environment );
+    my $environment    = get_environment($home);
+    my $copyright      = get_copyright( $home, $environment );
+    my $fullname       = get_fullname( $home, $environment );
+    my $email          = get_email( $home, $environment );
+    my $personal_email = get_personal_email( $home, $environment );
 
     install_git_submodules() if $network_available;
-    install_files($rename_old);
+    install_files( $rename_old, $environment );
     install_vim_templates($copyright);
-    install_git_config( $fullname, $email );
+    install_git_config( $fullname, $email, $personal_email );
 
     if ( !-d "$home/tmp" ) {
         print "Creating temporary directory...";
@@ -78,9 +106,9 @@ MAIN: {
     }
 
     if ($network_available) {
-        system "$current/perl-setup.sh";
-        system "$current/perl6-modules.sh";
-        system "$current/python-modules.sh";
+        system "$current/perl-setup.sh"     unless exists $options{skipperl};
+        system "$current/perl6-modules.sh"  unless exists $options{skipperl};
+        system "$current/python-modules.sh" unless exists $options{skippython};
     }
 }
 
@@ -133,7 +161,7 @@ sub get_copyright {
 
     while ( !defined($copyright) ) {
         if ( $environment eq 'home' ) { $copyright = 'Joelle Maslak' }
-        if ( $environment eq 'work' ) { $copyright = 'CenturyLink' }
+        if ( $environment eq 'work' ) { $copyright = 'Netflix' }
 
         if ( $environment eq 'other' ) {
             print "Please enter the name to use for copyright in templates:\n";
@@ -143,7 +171,7 @@ sub get_copyright {
             chomp($copyright);
         }
 
-        if ($copyright =~ m/\@/) {
+        if ( $copyright =~ m/\@/ ) {
             print "ERROR: Do not include an at-sign in this field\n";
             $copyright = undef;
             next;
@@ -181,7 +209,7 @@ sub get_fullname {
             chomp($fullname);
         }
 
-        if ($fullname =~ m/\@/) {
+        if ( $fullname =~ m/\@/ ) {
             print "ERROR: Do not include an at-sign in this field\n";
             $fullname = undef;
             next;
@@ -209,7 +237,7 @@ sub get_email {
 
     while ( !defined($email) ) {
         if ( $environment eq 'home' ) { $email = 'jmaslak@antelope.net' }
-        if ( $environment eq 'work' ) { $email = 'jmaslak@centurylink.com' }
+        if ( $environment eq 'work' ) { $email = 'jmaslak@netflix.com' }
 
         if ( $environment eq 'other' ) {
             print "Please enter the email address to use for git in templates:\n";
@@ -219,7 +247,7 @@ sub get_email {
             chomp($email);
         }
 
-        if ($email !~ m/\@/) {
+        if ( $email !~ m/\@/ ) {
             print "ERROR: Email address must include an at-sign\n";
             $email = undef;
             next;
@@ -233,14 +261,55 @@ sub get_email {
     return $email;
 }
 
+sub get_personal_email {
+    my ( $home, $environment ) = @_;
+
+    my $email;
+
+    if ( -e "$home/.dotfiles.personal_email" ) {
+        $email = slurp("$home/.dotfiles.personal_email");
+    }
+
+    while ( !defined($email) ) {
+        $email = 'jmaslak@antelope.net';
+
+        if ( $email !~ m/\@/ ) {
+            print "ERROR: Email address must include an at-sign\n";
+            $email = undef;
+            next;
+        }
+
+        print "Creating $home/.dotfiles.personal_email...";
+        spitout( "$home/.dotfiles.personal_email", $email );
+        print "\n";
+    }
+
+    return $email;
+}
+
 sub install_files {
-    if ( scalar(@_) != 1 ) { confess 'invalid call'; }
-    my $rename_old = shift;
+    if ( scalar(@_) != 2 ) { confess 'invalid call'; }
+    my $rename_old  = shift;
+    my $environment = shift;
 
-    my $home    = $ENV{HOME};
     my $current = getcwd;
+    my $workdir = Cwd::abs_path("$current/../../netflix/dotfiles");
 
-    opendir( my $dh, "$current/src" );
+    install_files_dir( $rename_old, $environment, $current );
+    install_files_dir( $rename_old, $environment, $workdir ) if ( $environment eq 'work' );
+}
+
+sub install_files_dir {
+    if ( scalar(@_) != 3 ) { confess 'invalid call'; }
+    my $rename_old  = shift;
+    my $environment = shift;
+    my $dir         = shift;
+
+    my $home = $ENV{HOME};
+
+    print "Processing $dir\n";
+
+    opendir( my $dh, "$dir/src" );
     my @files = sort readdir($dh);
     closedir $dh;
 
@@ -269,7 +338,7 @@ sub install_files {
         }
 
         print "symlinking ... ";
-        symlink( "$current/src/$file", "$home/$file" );
+        symlink( "$dir/src/$file", "$home/$file" );
 
         print "done\n";
     }
@@ -330,7 +399,7 @@ sub install_git_submodules {
 }
 
 sub install_git_config {
-    my ( $fullname, $email ) = @_;
+    my ( $fullname, $email, $personal_email ) = @_;
 
     system("git config --global user.email \"$email\"");
     system("git config --global user.name \"$fullname\"");
@@ -339,7 +408,12 @@ sub install_git_config {
     system("git config --global push.recurseSubmodules check");
     system("git config --global diff.tool ccdiff");
     system("git config --global difftool.prompt false");
-    system("git config --global difftool.ccdiff.cmd 'ccdiff --bg=black --old=bright_red --utf-8 -u -r \$LOCAL \$REMOTE'");
+    system(
+"git config --global difftool.ccdiff.cmd 'ccdiff --bg=black --old=bright_red --utf-8 -u -r \$LOCAL \$REMOTE'"
+    );
+
+    # Also set this repo's email
+    system("git config --local  user.email \"${personal_email}\"");
 
     my $ver = `git version`;
     chomp($ver);
@@ -379,12 +453,12 @@ sub spitout {
 
 sub network_available {
     my $ret = eval { require Net::Ping };
-    if (!$ret) {
+    if ( !$ret ) {
         warn "Net::Ping not installed.";
         return 1;    # We can't guarante N:P installed.
     }
 
-    my $ping   = Net::Ping->new();
+    my $ping = Net::Ping->new();
     $ping->port_number(80);
     my $result = $ping->ping( '1.1.1.1', 1 );
 

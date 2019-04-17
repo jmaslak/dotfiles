@@ -5,15 +5,8 @@
 # All Rights Reserved - See License
 #
 
-PYVER=3.7.2
-
-pkginstall() {
-    dpkg -l "$1" >/dev/null 2>/dev/null
-    if [ $? -ne 0 ] ; then
-        echo "Package $1 not found.  Installing with root privileges."
-        sudo apt-get install -y "$1"
-    fi
-}
+PYTHON2=2.7.16
+PYTHON3=3.7.2
 
 doit() {
     # Defensive umask
@@ -22,16 +15,6 @@ doit() {
     fi
 
     CWD=$(pwd)
-
-    # Install packages
-    which apt-get 2>/dev/null >/dev/null
-    if [ $? -eq 0 ] ; then
-        pkginstall zlib1g-dev
-        pkginstall libffi-dev
-        pkginstall libbz2-dev
-        pkginstall libreadline-dev
-        pkginstall libsqlite3-dev
-    fi
 
     # Install pyenv
     if [ ! -d "$HOME/.pyenv" ] ; then
@@ -42,17 +25,33 @@ doit() {
         eval "$(pyenv init -)"
     fi
 
-    # Install python
-    pyenv versions 2>/dev/null | grep " $PYVER " >/dev/null
-    if [ $? -ne 0 ] ; then
-        PYTHON_CONFIGURE_OPTS="--enable-shared" pyenv install "$PYVER"
-        pyenv global "$PYVER"
-        pyenv rehash
-    fi
+    # Install pyenv-virtualenv
+    if [ ! -d "$HOME/.pyenv/plugins/pyenv-virtualenv" ] ; then
+        cd "$HOME/.pyenv/plugins"
+        git clone git://github.com/yyuu/pyenv-virtualenv.git pyenv-virtualenv
+    fi    
+
+    install $PYTHON2
+    install $PYTHON3
+
+    echo "Setting Python version to $PYTHON3"    
+    pyenv global "$PYTHON3"
+    pyenv rehash
 
     cd "$CWD"
 }
 
-doit "$@"
+install() {
+    PYVER="$1"
 
+    PYVERREGEX=${PYVER//./\\.}
+
+    # Install python
+    pyenv versions 2>/dev/null | grep -P " $PYVERREGEX(\s.*)?$" >/dev/null
+    if [ $? -ne 0 ] ; then
+        PYTHON_CONFIGURE_OPTS="--enable-shared" pyenv install "$PYVER"
+    fi
+}
+
+doit "$@"
 
