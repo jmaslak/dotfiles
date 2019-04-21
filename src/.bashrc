@@ -316,9 +316,9 @@ if [ -d "$HOME/.pyenv" ] ; then
     eval "$(pyenv init -)"
 fi
 
-<<<<<<< HEAD
+# Set config directory
 XDG_CONFIG_HOME=$HOME/.config
-=======
+
 # Remind programs we ahve a light background
 export TERM_BACKGROUND=light
 
@@ -342,5 +342,4 @@ fi
 if [ -f "$HOME/.bashrc.work" ] ; then
     source "$HOME/.bashrc.work"
 fi
->>>>>>> 5d412bf9090b1d51d202e27da9a790e49616fa24
 
