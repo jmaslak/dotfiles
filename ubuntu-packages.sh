@@ -18,6 +18,7 @@ doit() {
         libreadline-dev \
         libsqlite3-dev \
         libssl-dev \
+        neovim \
         tmux \
         vim \
         zlib1g-dev
