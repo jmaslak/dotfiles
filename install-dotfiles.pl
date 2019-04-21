@@ -33,6 +33,33 @@ MAIN: {
         umask 0002;    # Defensively set umask
     }
 
+    # Get options
+    my %options;
+    foreach my $arg (@ARGV) {
+        if ( $arg =~ m/^--..*\=/ms ) {
+            my ( $name, $val ) = $arg =~ m/^--(..*)\=(.*)$/ms;
+            $options{ lc($name) } = $val;
+        } elsif ( $arg =~ m/^--..*$/ms ) {
+            my ($name) = $arg =~ m/^--(..*)$/ms;
+            $options{ lc($name) } = 1;
+        } else {
+            print STDERR "$arg is an unknown option format\n";
+            print STDERR "\n";
+            print STDERR "Aborting.\n";
+            exit 3;
+        }
+    }
+    # Validate options
+    my (%valid) = map { $_, 1 } ( 'skipperl', 'skippython' );
+    foreach my $arg ( sort keys %options ) {
+        if ( !exists( $valid{$arg} ) ) {
+            print STDERR "$arg is an unknown option\n";
+            print STDERR "\n";
+            print STDERR "Aborting.\n";
+            exit 2;
+        }
+    }
+
     my $home    = $ENV{HOME};
     my $current = getcwd;
 
@@ -61,16 +88,17 @@ MAIN: {
         $rename_old = undef;
     }
 
-    my $environment = get_environment($home);
-    my $copyright   = get_copyright( $home, $environment );
-    my $fullname    = get_fullname( $home, $environment );
-    my $email       = get_email( $home, $environment );
+    my $environment    = get_environment($home);
+    my $copyright      = get_copyright( $home, $environment );
+    my $fullname       = get_fullname( $home, $environment );
+    my $email          = get_email( $home, $environment );
+    my $personal_email = get_personal_email( $home, $environment );
 
     install_git_submodules() if $network_available;
-    install_files( $rename_old, '',        'src',         ['.config'] );
-    install_files( $rename_old, '.config', 'src/.config', [] );
+    install_files( $rename_old, $environment, '',        'src',         ['.config'] );
+    install_files( $rename_old, $environment, '.config', 'src/.config', [], );
     install_vim_templates($copyright);
-    install_git_config( $fullname, $email );
+    install_git_config( $fullname, $email, $personal_email );
 
     if ( !-d "$home/tmp" ) {
         print "Creating temporary directory...";
@@ -79,9 +107,9 @@ MAIN: {
     }
 
     if ($network_available) {
-        system "$current/perl-setup.sh";
-        system "$current/perl6-modules.sh";
-        system "$current/python-modules.sh";
+        system "$current/perl-setup.sh"     unless exists $options{skipperl};
+        system "$current/perl6-modules.sh"  unless exists $options{skipperl};
+        system "$current/python-modules.sh" unless exists $options{skippython};
     }
 }
 
@@ -234,15 +262,42 @@ sub get_email {
     return $email;
 }
 
-sub install_files {
-    if ( scalar(@_) != 4 ) { confess 'invalid call'; }
-    my $rename_old = shift;
-    my $newdir     = shift;
-    my $directory  = shift;
-    my $exclude    = shift;
+sub get_personal_email {
+    my ( $home, $environment ) = @_;
 
-    my $home    = $ENV{HOME};
+    my $email;
+
+    if ( -e "$home/.dotfiles.personal_email" ) {
+        $email = slurp("$home/.dotfiles.personal_email");
+    }
+
+    while ( !defined($email) ) {
+        $email = 'jmaslak@antelope.net';
+
+        if ( $email !~ m/\@/ ) {
+            print "ERROR: Email address must include an at-sign\n";
+            $email = undef;
+            next;
+        }
+
+        print "Creating $home/.dotfiles.personal_email...";
+        spitout( "$home/.dotfiles.personal_email", $email );
+        print "\n";
+    }
+
+    return $email;
+}
+
+sub install_files {
+    if ( scalar(@_) != 5 ) { confess 'invalid call'; }
+    my $rename_old  = shift;
+    my $environment = shift;
+    my $newdir      = shift;
+    my $directory   = shift;
+    my $exclude     = shift;
+
     my $current = getcwd;
+    my $home    = $ENV{HOME};
     my $dstdir  = $home;
 
     if ( $newdir ne '' ) {
@@ -251,6 +306,33 @@ sub install_files {
     }
 
     opendir( my $dh, "$current/$directory" );
+
+    my (@dirs);
+    push @dirs, "$current/$directory";
+
+    my $workdir = Cwd::abs_path("$current/../../netflix/dotfiles/$directory");
+    push @dirs, $workdir if ( $environment eq 'work' );
+
+    for my $dir (@dirs) {
+        install_files_dir( $rename_old, $environment, $dstdir, $dir, $exclude );
+    }
+
+    return;
+}
+
+sub install_files_dir {
+    if ( scalar(@_) != 3 ) { confess 'invalid call'; }
+    my $rename_old  = shift;
+    my $environment = shift;
+    my $dstdir      = shift;
+    my $srcdir      = shift;
+    my $exclude     = shift;
+
+    my $home = $ENV{HOME};
+
+    print "Processing $srcdir\n";
+
+    opendir( my $dh, "$srcdir/src" );
     my @files = sort readdir($dh);
     closedir $dh;
 
@@ -283,7 +365,7 @@ sub install_files {
         }
 
         print "symlinking ... ";
-        symlink( "$current/src/$file", "$dstdir/$file" );
+        symlink( "$srcdir/$file", "$dstdir/$file" );
 
         print "done\n";
     }
@@ -348,7 +430,7 @@ sub install_git_submodules {
 }
 
 sub install_git_config {
-    my ( $fullname, $email, $cannonical_email ) = @_;
+    my ( $fullname, $email, $personal_email ) = @_;
 
     system("git config --global user.email \"$email\"");
     system("git config --global user.name \"$fullname\"");
@@ -362,7 +444,7 @@ sub install_git_config {
     );
 
     # Also set this repo's email
-    system("git config --local  user.email \"${cannonical_email}\"");
+    system("git config --local  user.email \"${personal_email}\"");
 
     my $ver = `git version`;
     chomp($ver);

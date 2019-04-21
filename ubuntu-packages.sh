@@ -11,6 +11,7 @@ doit() {
     sudo apt-get install \
         build-essential \
         curl \
+        emacs25-nox \
         libbz2-dev \
         libffi-dev \
         libncurses-dev \
