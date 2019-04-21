@@ -105,7 +105,10 @@ if [ -f /etc/bash_completion ] && ! shopt -oq posix; then
 fi
 
 # Standard editor
-if which vim >/dev/null 2>/dev/null ; then
+if which nvim >/dev/null 2>/dev/null ; then
+    export VISUAL=$( which nvim )
+    export EDITOR=$( which nvim )
+elif which vim >/dev/null 2>/dev/null ; then
     export VISUAL=$( which vim )
     export EDITOR=$( which vim )
 fi
@@ -312,4 +315,6 @@ if [ -d "$HOME/.pyenv" ] ; then
     export PATH="$PYENV_ROOT/bin:$PATH"
     eval "$(pyenv init -)"
 fi
+
+XDG_CONFIG_HOME=$HOME/.config
 

@@ -67,7 +67,8 @@ MAIN: {
     my $email       = get_email( $home, $environment );
 
     install_git_submodules() if $network_available;
-    install_files($rename_old);
+    install_files( $rename_old, '',        'src',         ['.config'] );
+    install_files( $rename_old, '.config', 'src/.config', [] );
     install_vim_templates($copyright);
     install_git_config( $fullname, $email );
 
@@ -143,7 +144,7 @@ sub get_copyright {
             chomp($copyright);
         }
 
-        if ($copyright =~ m/\@/) {
+        if ( $copyright =~ m/\@/ ) {
             print "ERROR: Do not include an at-sign in this field\n";
             $copyright = undef;
             next;
@@ -181,7 +182,7 @@ sub get_fullname {
             chomp($fullname);
         }
 
-        if ($fullname =~ m/\@/) {
+        if ( $fullname =~ m/\@/ ) {
             print "ERROR: Do not include an at-sign in this field\n";
             $fullname = undef;
             next;
@@ -219,7 +220,7 @@ sub get_email {
             chomp($email);
         }
 
-        if ($email !~ m/\@/) {
+        if ( $email !~ m/\@/ ) {
             print "ERROR: Email address must include an at-sign\n";
             $email = undef;
             next;
@@ -234,13 +235,22 @@ sub get_email {
 }
 
 sub install_files {
-    if ( scalar(@_) != 1 ) { confess 'invalid call'; }
+    if ( scalar(@_) != 4 ) { confess 'invalid call'; }
     my $rename_old = shift;
+    my $newdir     = shift;
+    my $directory  = shift;
+    my $exclude    = shift;
 
     my $home    = $ENV{HOME};
     my $current = getcwd;
+    my $dstdir  = $home;
 
-    opendir( my $dh, "$current/src" );
+    if ( $newdir ne '' ) {
+        $dstdir = "$home/$newdir";
+        mkdir $dstdir unless ( -d $dstdir );
+    }
+
+    opendir( my $dh, "$current/$directory" );
     my @files = sort readdir($dh);
     closedir $dh;
 
@@ -251,6 +261,10 @@ sub install_files {
             print "ignoring\n";
             next;
         }
+        if ( scalar( grep { $_ eq $file } @$exclude ) ) {
+            print "excluded\n";
+            next LOOP;
+        }
         foreach my $suffix ( keys %IGNORE_SUFFIX ) {
             if ( $file =~ m/${suffix}$/ ) {
                 print "ignoring\n";
@@ -258,10 +272,10 @@ sub install_files {
             }
         }
 
-        if ( -e "$home/$file" ) {
+        if ( -e "$dstdir/$file" ) {
             if ($rename_old) {
                 print "backing up old file ... ";
-                move( "$home/$file", "$home/$file.bak" );
+                move( "$dstdir/$file", "$dstdir/$file.bak" );
             } else {
                 print "file already exists, skipping\n";
                 next;
@@ -269,10 +283,12 @@ sub install_files {
         }
 
         print "symlinking ... ";
-        symlink( "$current/src/$file", "$home/$file" );
+        symlink( "$current/src/$file", "$dstdir/$file" );
 
         print "done\n";
     }
+
+    return;
 }
 
 sub install_vim_templates {
@@ -320,6 +336,8 @@ sub install_vim_templates {
 
         print "done\n";
     }
+
+    return;
 }
 
 sub install_git_submodules {
@@ -339,7 +357,9 @@ sub install_git_config {
     system("git config --global push.recurseSubmodules check");
     system("git config --global diff.tool ccdiff");
     system("git config --global difftool.prompt false");
-    system("git config --global difftool.ccdiff.cmd 'ccdiff --bg=black --old=bright_red --utf-8 -u -r \$LOCAL \$REMOTE'");
+    system(
+"git config --global difftool.ccdiff.cmd 'ccdiff --bg=black --old=bright_red --utf-8 -u -r \$LOCAL \$REMOTE'"
+    );
 
     # Also set this repo's email
     system("git config --local  user.email \"${cannonical_email}\"");
@@ -378,16 +398,18 @@ sub spitout {
     open( $fh, '>', $fn ) or die("Couldn't create $fn - $!\n");
     print $fh $val or die($!);
     close($fh);
+
+    return;
 }
 
 sub network_available {
     my $ret = eval { require Net::Ping };
-    if (!$ret) {
+    if ( !$ret ) {
         warn "Net::Ping not installed.";
         return 1;    # We can't guarante N:P installed.
     }
 
-    my $ping   = Net::Ping->new();
+    my $ping = Net::Ping->new();
     $ping->port_number(80);
     my $result = $ping->ping( '1.1.1.1', 1 );
 

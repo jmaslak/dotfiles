@@ -47,7 +47,9 @@ alias codeprint="vim -c 'colorscheme default' -c hardcopy -c quit"
 alias 4codeprint="vim -c 'colorscheme default' -c 'hardcopy | lpr -o number-up=4' -c quit"
 
 # We use vim
-if which vim >/dev/null 2>/dev/null ; then
+if which nvim >/dev/null 2>/dev/null ; then
+    alias vi="$( which nvim )"
+elif which vim >/dev/null 2>/dev/null ; then
     alias vi="$( which vim )"
 fi
 
