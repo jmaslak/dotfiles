@@ -321,7 +321,7 @@ sub install_files {
 }
 
 sub install_files_dir {
-    if ( scalar(@_) != 3 ) { confess 'invalid call'; }
+    if ( scalar(@_) != 5 ) { confess 'invalid call'; }
     my $rename_old  = shift;
     my $environment = shift;
     my $dstdir      = shift;
@@ -332,7 +332,7 @@ sub install_files_dir {
 
     print "Processing $srcdir\n";
 
-    opendir( my $dh, "$srcdir/src" );
+    opendir( my $dh, "$srcdir" );
     my @files = sort readdir($dh);
     closedir $dh;
 
