@@ -19,6 +19,7 @@ doit() {
         libsqlite3-dev \
         libssl-dev \
         neovim \
+        sqlite3 \
         tmux \
         vim \
         zlib1g-dev
