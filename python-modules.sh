@@ -16,6 +16,7 @@ doit() {
         pip install --upgrade pip
         pip install google-api-python-client
         pip install oauth2client
+        pip install PyYAML
         pip install virtualenv
     else
         echo ""
