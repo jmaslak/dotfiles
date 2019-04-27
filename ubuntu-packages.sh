@@ -12,6 +12,7 @@ doit() {
         build-essential \
         curl \
         emacs25-nox \
+        iptools-ping \
         libbz2-dev \
         libffi-dev \
         libncurses-dev \
@@ -21,6 +22,7 @@ doit() {
         neovim \
         sqlite3 \
         tmux \
+        traceroute \
         vim \
         zlib1g-dev
 }
