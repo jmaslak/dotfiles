@@ -24,6 +24,7 @@ doit() {
         tmux \
         traceroute \
         vim \
+        whois \
         zlib1g-dev
 }
 
