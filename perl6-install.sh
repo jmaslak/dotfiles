@@ -17,6 +17,7 @@ doit() {
     cd ~
     git clone https://github.com/tadzik/rakudobrew ~/.rakudobrew
     export PATH="~/.rakudobrew/bin:$PATH"
+    eval "$(~/.rakudobrew/bin/rakudobrew init Bash)"
    
     echo " --->>  Building moar"
     rakudobrew build moar $PERLVER
