@@ -9,10 +9,11 @@
 
 doit() {
     sudo apt-get install \
+        bc \
         build-essential \
         curl \
         emacs25-nox \
-        iptools-ping \
+        iputils-ping \
         libbz2-dev \
         libffi-dev \
         libncurses-dev \
