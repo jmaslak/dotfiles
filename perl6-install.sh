@@ -5,7 +5,13 @@
 # All Rights Reserved - See License
 #
 
-PERLVER=2019.03.1
+# Specify PERLVER if you want to override.  For instance, you can do
+# something like:
+#   ./perl6-install.sh blead
+#
+if [ $PERLVER = "" ] ; then
+    PERLVER=2019.03.1
+fi
 
 doit() {
     # Defensive umask
