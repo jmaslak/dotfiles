@@ -20,6 +20,7 @@ doit() {
         libreadline-dev \
         libsqlite3-dev \
         libssl-dev \
+        netcat \
         neovim \
         sqlite3 \
         tmux \
