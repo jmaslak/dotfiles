@@ -5,9 +5,9 @@
 # All Rights Reserved - See License
 #
 
-CURRENTPERL=perl-5.28.1
+CURRENTPERL=perl-5.30.0
 PERLBREW_MAJOR=0
-PERLBREW_MINOR=84
+PERLBREW_MINOR=86
 
 doit() {
     # Defensive umask
