@@ -55,6 +55,8 @@ doit() {
 
         echo " --->> Activating perl"
         perlbrew switch $CURRENTPERL
+
+        echo " !!!>> You will need to log out and back in to switch versions"
     fi
 
 }
