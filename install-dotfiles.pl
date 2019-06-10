@@ -311,7 +311,7 @@ sub install_files {
     push @dirs, "$current/$directory";
 
     my $workdir = Cwd::abs_path("$current/../../netflix/dotfiles/$directory");
-    push @dirs, $workdir if ( $environment eq 'work' );
+    push @dirs, $workdir if ( $environment eq 'work' and defined $workdir );
 
     for my $dir (@dirs) {
         install_files_dir( $rename_old, $environment, $dstdir, $dir, $exclude );
