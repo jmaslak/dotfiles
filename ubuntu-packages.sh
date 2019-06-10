@@ -1,13 +1,14 @@
 #!/bin/bash
 
 #
-# Copyright (C) 2018 Joelle Maslak
+# Copyright (C) 2018-2019 Joelle Maslak
 # All Rights Reserved - See License
 #
 
 # Install some packages needed for other tasks (such as building Perl)
 
 doit() {
+    sudo apt-get update
     sudo apt-get install \
         bc \
         build-essential \
