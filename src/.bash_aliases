@@ -187,3 +187,12 @@ alias bgp="cd ~/git/antelope/perl6/Perl6-Net-BGP"
 # Also want 6prove, an alias to test Perl6 code
 alias 6prove="PERL6LIB=lib prove -e perl6 --ext .t --ext .t6"
 
+# Docker bash shell
+function dockerbash {
+    DIR="$(basename $(pwd))"
+    if [ $(docker ps | grep "$DIR:latest" | wc -l) -ne 1 ] ; then
+        echo "Couldn't locate image" >&2
+        return;
+    fi
+    docker exec -it `docker ps | grep "$DIR:latest" | awk '{print $1}'` /bin/bash
+}
