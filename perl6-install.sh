@@ -5,7 +5,13 @@
 # All Rights Reserved - See License
 #
 
-PERLVER=2019.03.1
+# Specify PERLVER if you want to override.  For instance, you can do
+# something like:
+#   ./perl6-install.sh blead
+#
+if [ $PERLVER = "" ] ; then
+    PERLVER=2019.03.1
+fi
 
 doit() {
     # Defensive umask
@@ -17,6 +23,7 @@ doit() {
     cd ~
     git clone https://github.com/tadzik/rakudobrew ~/.rakudobrew
     export PATH="~/.rakudobrew/bin:$PATH"
+    eval "$(~/.rakudobrew/bin/rakudobrew init Bash)"
    
     echo " --->>  Building moar"
     rakudobrew build moar $PERLVER

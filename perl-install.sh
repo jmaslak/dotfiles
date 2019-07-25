@@ -5,9 +5,9 @@
 # All Rights Reserved - See License
 #
 
-CURRENTPERL=perl-5.28.1
+CURRENTPERL=perl-5.30.0
 PERLBREW_MAJOR=0
-PERLBREW_MINOR=84
+PERLBREW_MINOR=86
 
 doit() {
     # Defensive umask
@@ -51,7 +51,7 @@ doit() {
 
     if [ ! -d ~/perl5/perlbrew/perls/$CURRENTPERL ] ; then
         echo " --->> Installing perl"
-        perlbrew install $CURRENTPERL -Accflags=-fPIC -j 8
+        perlbrew install --notest $CURRENTPERL -Accflags=-fPIC -j 8
 
         echo " --->> Activating perl"
         perlbrew switch $CURRENTPERL
