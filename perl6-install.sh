@@ -9,8 +9,8 @@
 # something like:
 #   ./perl6-install.sh blead
 #
-if [ $PERLVER = "" ] ; then
-    PERLVER=2019.03.1
+if [ "$PERLVER" = "" ] ; then
+    PERLVER=2019.07.1
 fi
 
 doit() {
