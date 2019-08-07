@@ -13,6 +13,7 @@ doit() {
         bc \
         build-essential \
         curl \
+        docker-io \
         emacs25-nox \
         iputils-ping \
         libbz2-dev \
