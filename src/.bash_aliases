@@ -188,3 +188,12 @@ alias bgp="cd ~/git/antelope/perl6/Perl6-Net-BGP"
 alias 6prove="PERL6LIB=lib prove -e perl6 --ext .t --ext .t6"
 alias venv="source venv/bin/activate"
 
+# Docker bash shell
+function dockerbash {
+    DIR="$(basename $(pwd))"
+    if [ $(docker ps | grep "$DIR:latest" | wc -l) -ne 1 ] ; then
+        echo "Couldn't locate image" >&2
+        return;
+    fi
+    docker exec -it `docker ps | grep "$DIR:latest" | awk '{print $1}'` /bin/bash
+}
