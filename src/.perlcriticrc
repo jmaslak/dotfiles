@@ -33,6 +33,6 @@ severity = 4
 
 # Testing for found words
 [BadStrings]
-words = Joel Maslak || Joel C. Maslak || Level 3 || LVLT || level3 || J. Maslak || level3.com || L3
+words = Joel Maslak || Joel C. Maslak || Level 3 || LVLT || level3 || J. Maslak || level3.com || L3 || Gender Identity Center
 severity = 4
 
