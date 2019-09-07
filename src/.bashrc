@@ -141,7 +141,7 @@ fi
 
 # Do we have Perl 6's rakudobrew installed?
 if [ -d ~/.rakudobrew ] ; then
-    eval "$(~/.rakudobrew/bin/rakudobrew init -)"
+    eval "$(~/.rakudobrew/bin/rakudobrew init Bash)"
     export "PATH=$HOME/.rakudobrew/bin:$PATH"
     export "PATH=$HOME/.rakudobrew/$(rakudobrew current | awk '{print $3}')/install/share/perl6/site/bin:$PATH"
 fi
