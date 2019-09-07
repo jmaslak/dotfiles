@@ -21,7 +21,14 @@ doit() {
 
     echo " --->>  Switching to root directory"
     cd ~
-    git clone https://github.com/tadzik/rakudobrew ~/.rakudobrew
+    if [ ! -d .rakudobrew ] ; then
+        git clone https://github.com/tadzik/rakudobrew ~/.rakudobrew
+    fi
+
+    cd .rakudobrew
+    git pull
+    cd ..
+
     export PATH="~/.rakudobrew/bin:$PATH"
     eval "$(~/.rakudobrew/bin/rakudobrew init Bash)"
    
