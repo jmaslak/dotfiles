@@ -13,8 +13,9 @@ fi
 [ -z "$PS1" ] && return
 
 # If we are on Bash for Linux, we start in the wrong directory.
-if [ $(pwd) == '/mnt/c/Windows/System32' ] ; then
-    cd
+pwd=$(pwd)
+if [ ${pwd,,} == '/mnt/c/windows/system32' ] ; then
+    cd ~
 fi
 
 # Defensive umask
