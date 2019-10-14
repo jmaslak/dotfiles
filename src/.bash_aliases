@@ -30,6 +30,14 @@ fi
 # Make sqlplus usable
 alias sqlplus="rlwrap -i -f ~/.sqlplus_history -H ~/.sqlplus_history -s 30000 sqlplus"
 
+# Raku alias
+if which raku >/dev/null 2>/dev/null ; then
+    # No alias needed
+    true
+else
+    alias raku=perl6
+fi
+
 # REPL for Perl6
 if [ \! -f ~/.perl6repl_history ] ; then
     touch ~/.perl6repl_history
