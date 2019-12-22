@@ -23,6 +23,7 @@ doit() {
         libsqlite3-dev \
         libssl-dev \
         netcat \
+        rsync \
         sqlite3 \
         tmux \
         traceroute \
