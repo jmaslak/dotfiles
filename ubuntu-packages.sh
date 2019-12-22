@@ -14,7 +14,7 @@ doit() {
         build-essential \
         curl \
         docker.io \
-        emacs25-nox \
+        git \
         iputils-ping \
         libbz2-dev \
         libffi-dev \
@@ -23,13 +23,16 @@ doit() {
         libsqlite3-dev \
         libssl-dev \
         netcat \
-        neovim \
         sqlite3 \
         tmux \
         traceroute \
+        ubuntu-release-upgrader-core \
         vim \
         whois \
         zlib1g-dev
+    sudo apt-get install \
+        neovim \
+        emacs25-nox
 }
 
 doit "$@"
