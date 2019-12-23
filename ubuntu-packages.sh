@@ -22,6 +22,7 @@ doit() {
         libreadline-dev \
         libsqlite3-dev \
         libssl-dev \
+        man \
         netcat \
         rsync \
         sqlite3 \
