@@ -24,6 +24,7 @@ doit() {
         libssl-dev \
         man \
         netcat \
+        python-autopep8 \
         rsync \
         sqlite3 \
         tmux \
