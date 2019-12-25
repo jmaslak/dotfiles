@@ -426,6 +426,9 @@ let g:gitgutter_sign_columns_always=1 " Always provide space for the signs,
 let g:gitgutter_max_signs=50000       " We can edit a big file, allow up to
                                       "  50,000 lines to change.
 
+" vim-go doesn't like neovim < 0.3.2
+let g:go_version_warning = 0
+
 " set persistent undo
 if has('persistent_undo')
     if !has("win32")
