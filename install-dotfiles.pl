@@ -109,7 +109,7 @@ MAIN: {
     if ($network_available) {
         system "$current/perl-setup.sh"     unless exists $options{skipperl};
         system "$current/perl6-modules.sh"  unless exists $options{skipperl};
-        system "$current/python-modules.sh" unless exists $options{skippython};
+        # XXX system "$current/python-modules.sh" unless exists $options{skippython};
     }
 }
 
