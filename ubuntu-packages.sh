@@ -30,6 +30,7 @@ doit() {
         traceroute \
         ubuntu-release-upgrader-core \
         vim \
+        virtualenv \
         whois \
         zlib1g-dev
     sudo apt-get install \
