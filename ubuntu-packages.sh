@@ -24,6 +24,7 @@ doit() {
         libssl-dev \
         man \
         netcat \
+        net-tools \
         python-autopep8 \
         rsync \
         sqlite3 \
