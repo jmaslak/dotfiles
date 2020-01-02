@@ -196,6 +196,10 @@ alias bgp="cd ~/git/antelope/perl6/Perl6-Net-BGP"
 alias 6prove="PERL6LIB=lib prove -e perl6 --ext .t --ext .t6"
 alias venv="source venv/bin/activate"
 
+# Swap escape
+alias swap-escape="setxkbmap -option caps:swapescape"
+alias unswap-escape="setxkbmap -option"
+
 # Docker bash shell
 function dockerbash {
     DIR="$(basename $(pwd))"
