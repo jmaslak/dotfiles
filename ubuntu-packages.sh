@@ -13,6 +13,7 @@ doit() {
         bc \
         build-essential \
         curl \
+        dnsutils \
         docker.io \
         emacs25-nox \
         iputils-ping \
