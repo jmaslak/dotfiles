@@ -13,9 +13,14 @@ fi
 [ -z "$PS1" ] && return
 
 # If we are on Bash for Linux, we start in the wrong directory.
-pwd=$(pwd)
-if [ ${pwd,,} == '/mnt/c/windows/system32' ] ; then
-    cd ~
+bash --version 2>/dev/null | grep 'version 3' >/dev/null
+if [ $? -ne 0 ] ; then
+    # We know we're dealing with BASH 4+ (I'm assuming nobody is running
+    # <= 2); But we don't want this firing off on MacOS running old BASH
+    pwd=$(pwd)
+    if [ ${pwd,,} == '/mnt/c/windows/system32' ] ; then
+        cd ~
+    fi
 fi
 
 # Defensive umask

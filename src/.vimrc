@@ -238,7 +238,7 @@ autocmd FileType perl setl iskeyword+=,
 autocmd FileType perl setl errorformat+=%f:%l:%m
 
 " Perl 6
-au BufNewFile,BufRead *.p6,*.pl6,*.pm6,*.t6,*.xt6 set filetype=perl6
+au BufNewFile,BufRead *.p6,*.pl6,*.pm6,*.t6,*.xt6,*.raku,*.rakumod,*.rakutest set filetype=perl6
 
 " check for Perl 6 code
 " Modified from original David Færrel article at
@@ -248,6 +248,8 @@ au BufNewFile,BufRead *.p6,*.pl6,*.pm6,*.t6,*.xt6 set filetype=perl6
 "
 function! LooksLikePerl6 ()
   if getline(1) =~# '^#!.*perl6'
+    set filetype=perl6
+  elseif getline(1) =~# '^#!.*raku'
     set filetype=perl6
   else
     for i in [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20]
@@ -423,6 +425,9 @@ let g:gitgutter_sign_columns_always=1 " Always provide space for the signs,
                                       "  so that windows line up better
 let g:gitgutter_max_signs=50000       " We can edit a big file, allow up to
                                       "  50,000 lines to change.
+
+" vim-go doesn't like neovim < 0.3.2
+let g:go_version_warning = 0
 
 " set persistent undo
 if has('persistent_undo')

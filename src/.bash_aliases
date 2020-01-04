@@ -30,6 +30,14 @@ fi
 # Make sqlplus usable
 alias sqlplus="rlwrap -i -f ~/.sqlplus_history -H ~/.sqlplus_history -s 30000 sqlplus"
 
+# Raku alias
+if which raku >/dev/null 2>/dev/null ; then
+    # No alias needed
+    true
+else
+    alias raku=perl6
+fi
+
 # REPL for Perl6
 if [ \! -f ~/.perl6repl_history ] ; then
     touch ~/.perl6repl_history
@@ -187,6 +195,10 @@ alias bgp="cd ~/git/antelope/perl6/Perl6-Net-BGP"
 # Also want 6prove, an alias to test Perl6 code
 alias 6prove="PERL6LIB=lib prove -e perl6 --ext .t --ext .t6"
 alias venv="source venv/bin/activate"
+
+# Swap escape
+alias swap-escape="setxkbmap -option caps:swapescape"
+alias unswap-escape="setxkbmap -option"
 
 # Docker bash shell
 function dockerbash {

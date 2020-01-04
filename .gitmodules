@@ -13,3 +13,7 @@
 [submodule "src/.vim/plugin/vim-cisco-ios"]
 	path = src/.vim/plugin/vim-cisco-ios
 	url = https://github.com/CyCoreSystems/vim-cisco-ios
+[submodule "src/.vim/bundle/vim-autopep8"]
+	path = src/.vim/bundle/vim-autopep8
+	url = https://github.com/tell-k/vim-autopep8.git
+	branch = master

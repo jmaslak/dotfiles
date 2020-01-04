@@ -15,7 +15,7 @@ doit() {
         curl \
         dnsutils \
         docker.io \
-        emacs25-nox \
+        git \
         iputils-ping \
         libbz2-dev \
         libffi-dev \
@@ -23,14 +23,22 @@ doit() {
         libreadline-dev \
         libsqlite3-dev \
         libssl-dev \
+        man \
         netcat \
-        neovim \
+        net-tools \
+        python-autopep8 \
+        rsync \
         sqlite3 \
         tmux \
         traceroute \
+        ubuntu-release-upgrader-core \
         vim \
+        virtualenv \
         whois \
         zlib1g-dev
+    sudo apt-get install \
+        neovim \
+        emacs25-nox
 }
 
 doit "$@"
