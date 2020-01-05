@@ -14,7 +14,6 @@ doit() {
         build-essential \
         curl \
         dnsutils \
-        docker.io \
         git \
         iputils-ping \
         libbz2-dev \
@@ -31,7 +30,6 @@ doit() {
         sqlite3 \
         tmux \
         traceroute \
-        ubuntu-release-upgrader-core \
         vim \
         virtualenv \
         whois \
@@ -39,6 +37,8 @@ doit() {
     sudo apt-get install \
         neovim \
         emacs25-nox
+    sudo apt-get install docker.io
+    sudo apt-get install ubuntu-release-upgrader-core
 }
 
 doit "$@"
