@@ -10,6 +10,7 @@
 doit() {
     sudo apt-get update
     sudo apt-get install \
+        bash-completion \
         bc \
         build-essential \
         curl \
@@ -32,6 +33,7 @@ doit() {
         ubuntu-release-upgrader-core \
         vim \
         virtualenv \
+        wget \
         whois \
         zlib1g-dev
     sudo apt-get install \
