@@ -14,7 +14,7 @@ doit() {
         bc \
         build-essential \
         curl \
-        docker.io \
+        dnsutils \
         git \
         iputils-ping \
         libbz2-dev \
@@ -25,12 +25,12 @@ doit() {
         libssl-dev \
         man \
         netcat \
+        net-tools \
         python-autopep8 \
         rsync \
         sqlite3 \
         tmux \
         traceroute \
-        ubuntu-release-upgrader-core \
         vim \
         virtualenv \
         wget \
@@ -39,6 +39,8 @@ doit() {
     sudo apt-get install \
         neovim \
         emacs25-nox
+    sudo apt-get install docker.io
+    sudo apt-get install ubuntu-release-upgrader-core
 }
 
 doit "$@"
