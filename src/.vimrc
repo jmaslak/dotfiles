@@ -65,11 +65,16 @@ if has("gui_running")
     endif
 endif
 
+syntax enable                 " Set syntax highlighting
+
 " If we are not on Windows *or* if we're running Windows gvim
 if ( ! has("win32") ) || has("gui_running")
     " We use a light lucius theme
-    set background=light            " Light background
-    colorscheme lucius
+    " set background=light            " Light background
+    " colorscheme lucius
+    set background=dark
+    colorscheme desert256
+    highlight CursorLine cterm=NONE ctermbg=235
 else
     " We need a dark background because this is being run from
     " a Windows command prompt
@@ -145,7 +150,6 @@ else
 endif
 
 filetype plugin indent on
-syntax enable                 " Set syntax highlighting
 
 "
 " Filetype setup
