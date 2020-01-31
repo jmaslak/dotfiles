@@ -374,6 +374,7 @@ endif
 " Wrapping
 if v:version >= 703
     set colorcolumn=80  " Set 80th column as a colored column
+    highlight ColorColumn ctermbg=52
 endif
 set textwidth=72    " Wrap at 72 columns
 
