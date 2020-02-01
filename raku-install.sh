@@ -1,13 +1,13 @@
 #!/bin/bash
 
 #
-# Copyright © 2018-2019 Joelle Maslak
+# Copyright © 2018-2020 Joelle Maslak
 # All Rights Reserved - See License
 #
 
 # Specify PERLVER if you want to override.  For instance, you can do
 # something like:
-#   ./perl6-install.sh blead
+#   ./raku-install.sh blead
 #
 if [ "$PERLVER" = "" ] ; then
     PERLVER=2020.01

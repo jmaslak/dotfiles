@@ -1,7 +1,7 @@
 #!/bin/bash
 
 #
-# Copyright (C) 2016,2018 Joelle Maslak
+# Copyright (C) 2016-2020 Joelle Maslak
 # All Rights Reserved - See License
 #
 
@@ -13,16 +13,16 @@ doit() {
 
     # Workaround Solaris which that doesn't return a useful value (grrr!)
     ZEF="$( which zef 2>/dev/null )"
-    PERL6="$( which perl6 2>/dev/null )"
+    RAKU="$( which perl6 2>/dev/null )"
 
-    if [ -x "$ZEF" -a -x "$PERL6" ] ; then
+    if [ -x "$ZEF" -a -x "$RAKU" ] ; then
         install_modules
     else
         echo ""
         echo "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!"
-        echo "You should install Rakudo (Perl 6) and zef."
+        echo "You should install Rakudo (Raku) and zef."
         echo ""
-        echo "Use the perl6-install.sh script in this directory to do"
+        echo "Use the raku-install.sh script in this directory to do"
         echo "that."
         echo ""
         echo "Not installing Perl 6 modules."
