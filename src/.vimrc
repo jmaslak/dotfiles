@@ -242,7 +242,7 @@ autocmd FileType perl setl iskeyword+=,
 autocmd FileType perl setl errorformat+=%f:%l:%m
 
 " Perl 6
-au BufNewFile,BufRead *.p6,*.pl6,*.pm6,*.t6,*.xt6,*.raku,*.rakumod,*.rakutest set filetype=perl6
+au BufNewFile,BufRead *.p6,*.pl6,*.pm6,*.t6,*.xt6,*.raku,*.rakumod,*.rakutest set filetype=raku
 
 " check for Raku code
 " Modified from original David Færrel article at
@@ -252,19 +252,22 @@ au BufNewFile,BufRead *.p6,*.pl6,*.pm6,*.t6,*.xt6,*.raku,*.rakumod,*.rakutest se
 "
 function! LooksLikeRaku()
   if getline(1) =~# '^#!.*perl6'
-    set filetype=perl6
+    set filetype=raku
   elseif getline(1) =~# '^#!.*raku'
-    set filetype=perl6
+    set filetype=raku
   else
     for i in [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20]
       if getline(i) == 'use v6;'
-        set filetype=perl6
+        set filetype=raku
         break
       elseif getline(i) == 'use v6.c;'
-        set filetype=perl6
+        set filetype=raku
         break
       elseif getline(i) == 'use v6.d;'
-        set filetype=perl6
+        set filetype=raku
+        break
+      elseif getline(i) == 'use v6.e;'
+        set filetype=raku
         break
       endif
     endfor
@@ -272,15 +275,15 @@ function! LooksLikeRaku()
 endfunction
 
 " Enable automatic unicode abbreviations
-let g:perl6_unicode_abbrevs = 1
+let g:raku_unicode_abbrevs = 1
 
 au BufNewFile,BufRead *.pl,*.pm,*.t,*.xt call LooksLikeRaku()
 " Add keyword characters for Raku
-autocmd FileType perl6 setl iskeyword+=$
-autocmd FileType perl6 setl iskeyword+=%
-autocmd FileType perl6 setl iskeyword+=@-@
-autocmd FileType perl6 setl iskeyword+=:
-autocmd FileType perl6 setl iskeyword+=,
+autocmd FileType raku setl iskeyword+=$
+autocmd FileType raku setl iskeyword+=%
+autocmd FileType raku setl iskeyword+=@-@
+autocmd FileType raku setl iskeyword+=:
+autocmd FileType raku setl iskeyword+=,
 
 " Apache
 " Preserve indent levels
