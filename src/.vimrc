@@ -266,6 +266,9 @@ function! LooksLikeRaku()
       elseif getline(i) == 'use v6.d;'
         set filetype=raku
         break
+      elseif getline(i) == 'use v6.e;'
+        set filetype=raku
+        break
       endif
     endfor
   endif
