@@ -38,5 +38,3 @@ if [ -d "$HOME/bin" ] ; then
 fi
 
 eval "$(/home/jmaslak/.rakudobrew/bin/rakudobrew init -)"
-eval "$(/home/jmaslak/.rakudobrew/bin/rakudobrew init -)"
-eval "$(/home/jmaslak/.rakudobrew/bin/rakudobrew init -)"
