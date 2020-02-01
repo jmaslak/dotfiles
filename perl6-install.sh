@@ -10,7 +10,7 @@
 #   ./perl6-install.sh blead
 #
 if [ "$PERLVER" = "" ] ; then
-    PERLVER=2019.11
+    PERLVER=2020.01
 fi
 
 doit() {
