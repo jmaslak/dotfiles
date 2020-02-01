@@ -37,3 +37,6 @@ if [ -d "$HOME/bin" ] ; then
     PATH="$HOME/bin:$PATH"
 fi
 
+eval "$(/home/jmaslak/.rakudobrew/bin/rakudobrew init -)"
+eval "$(/home/jmaslak/.rakudobrew/bin/rakudobrew init -)"
+eval "$(/home/jmaslak/.rakudobrew/bin/rakudobrew init -)"
