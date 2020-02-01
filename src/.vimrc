@@ -512,3 +512,7 @@ if filereadable(glob("~/.vimrc.local"))
     source ~/.vimrc.local
 endif
 
+" Set up cursor
+if has('nvim')
+    set guicursor=n-v-c:blinkon1,i-ci-ve:ver25-Cursor2/lCursor2,r-cr:hor20,o:hor50
+endif
