@@ -244,13 +244,13 @@ autocmd FileType perl setl errorformat+=%f:%l:%m
 " Perl 6
 au BufNewFile,BufRead *.p6,*.pl6,*.pm6,*.t6,*.xt6,*.raku,*.rakumod,*.rakutest set filetype=perl6
 
-" check for Perl 6 code
+" check for Raku code
 " Modified from original David Færrel article at
 "   http://perltricks.com/article/194/2015/9/22/Activating-Perl-6-syntax-highlighting-in-Vim/
 "
-" This allows us to check possibly-not-perl6-files for perl6 hints
+" This allows us to check possibly-not-raku-files for raku hints
 "
-function! LooksLikePerl6 ()
+function! LooksLikeRaku()
   if getline(1) =~# '^#!.*perl6'
     set filetype=perl6
   elseif getline(1) =~# '^#!.*raku'
@@ -263,6 +263,9 @@ function! LooksLikePerl6 ()
       elseif getline(i) == 'use v6.c;'
         set filetype=perl6
         break
+      elseif getline(i) == 'use v6.d;'
+        set filetype=perl6
+        break
       endif
     endfor
   endif
@@ -271,8 +274,8 @@ endfunction
 " Enable automatic unicode abbreviations
 let g:perl6_unicode_abbrevs = 1
 
-au BufNewFile,BufRead *.pl,*.pm,*.t,*.xt call LooksLikePerl6()
-" Add keyword characters for Perl6
+au BufNewFile,BufRead *.pl,*.pm,*.t,*.xt call LooksLikeRaku()
+" Add keyword characters for Raku
 autocmd FileType perl6 setl iskeyword+=$
 autocmd FileType perl6 setl iskeyword+=%
 autocmd FileType perl6 setl iskeyword+=@-@
