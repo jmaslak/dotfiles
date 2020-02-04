@@ -46,6 +46,7 @@ install_modules() {
     install_module P5localtime
     install_module StrictClass
     # install_module StrictNamedArguments # Doesn't work in 6.d
+    install_module TCP::LowLevel
     install_module Terminal::ANSIColor
     install_module Term::ReadKey
     install_module Term::termios
