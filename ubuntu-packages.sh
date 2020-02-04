@@ -10,11 +10,12 @@
 doit() {
     sudo apt-get update
     sudo apt-get install \
+        bash-completion \
         bc \
         build-essential \
         curl \
-        docker.io \
-        emacs25-nox \
+        dnsutils \
+        git \
         iputils-ping \
         libbz2-dev \
         libffi-dev \
@@ -22,14 +23,24 @@ doit() {
         libreadline-dev \
         libsqlite3-dev \
         libssl-dev \
+        man \
         netcat \
-        neovim \
+        net-tools \
+        python-autopep8 \
+        rsync \
         sqlite3 \
         tmux \
         traceroute \
         vim \
+        virtualenv \
+        wget \
         whois \
         zlib1g-dev
+    sudo apt-get install \
+        neovim \
+        emacs25-nox
+    sudo apt-get install docker.io
+    sudo apt-get install ubuntu-release-upgrader-core
 }
 
 doit "$@"

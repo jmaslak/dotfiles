@@ -65,11 +65,16 @@ if has("gui_running")
     endif
 endif
 
+syntax enable                 " Set syntax highlighting
+
 " If we are not on Windows *or* if we're running Windows gvim
 if ( ! has("win32") ) || has("gui_running")
     " We use a light lucius theme
-    set background=light            " Light background
-    colorscheme lucius
+    " set background=light            " Light background
+    " colorscheme lucius
+    set background=dark
+    colorscheme desert256
+    highlight CursorLine cterm=NONE ctermbg=235
 else
     " We need a dark background because this is being run from
     " a Windows command prompt
@@ -145,7 +150,6 @@ else
 endif
 
 filetype plugin indent on
-syntax enable                 " Set syntax highlighting
 
 "
 " Filetype setup
@@ -238,26 +242,32 @@ autocmd FileType perl setl iskeyword+=,
 autocmd FileType perl setl errorformat+=%f:%l:%m
 
 " Perl 6
-au BufNewFile,BufRead *.p6,*.pl6,*.pm6,*.t6,*.xt6,*.raku,*.rakumod,*.rakutest set filetype=perl6
+au BufNewFile,BufRead *.p6,*.pl6,*.pm6,*.t6,*.xt6,*.raku,*.rakumod,*.rakutest set filetype=raku
 
-" check for Perl 6 code
+" check for Raku code
 " Modified from original David Færrel article at
 "   http://perltricks.com/article/194/2015/9/22/Activating-Perl-6-syntax-highlighting-in-Vim/
 "
-" This allows us to check possibly-not-perl6-files for perl6 hints
+" This allows us to check possibly-not-raku-files for raku hints
 "
-function! LooksLikePerl6 ()
+function! LooksLikeRaku()
   if getline(1) =~# '^#!.*perl6'
-    set filetype=perl6
+    set filetype=raku
   elseif getline(1) =~# '^#!.*raku'
-    set filetype=perl6
+    set filetype=raku
   else
     for i in [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20]
       if getline(i) == 'use v6;'
-        set filetype=perl6
+        set filetype=raku
         break
       elseif getline(i) == 'use v6.c;'
-        set filetype=perl6
+        set filetype=raku
+        break
+      elseif getline(i) == 'use v6.d;'
+        set filetype=raku
+        break
+      elseif getline(i) == 'use v6.e;'
+        set filetype=raku
         break
       endif
     endfor
@@ -265,15 +275,15 @@ function! LooksLikePerl6 ()
 endfunction
 
 " Enable automatic unicode abbreviations
-let g:perl6_unicode_abbrevs = 1
+let g:raku_unicode_abbrevs = 1
 
-au BufNewFile,BufRead *.pl,*.pm,*.t,*.xt call LooksLikePerl6()
-" Add keyword characters for Perl6
-autocmd FileType perl6 setl iskeyword+=$
-autocmd FileType perl6 setl iskeyword+=%
-autocmd FileType perl6 setl iskeyword+=@-@
-autocmd FileType perl6 setl iskeyword+=:
-autocmd FileType perl6 setl iskeyword+=,
+au BufNewFile,BufRead *.pl,*.pm,*.t,*.xt call LooksLikeRaku()
+" Add keyword characters for Raku
+autocmd FileType raku setl iskeyword+=$
+autocmd FileType raku setl iskeyword+=%
+autocmd FileType raku setl iskeyword+=@-@
+autocmd FileType raku setl iskeyword+=:
+autocmd FileType raku setl iskeyword+=,
 
 " Apache
 " Preserve indent levels
@@ -370,6 +380,7 @@ endif
 " Wrapping
 if v:version >= 703
     set colorcolumn=80  " Set 80th column as a colored column
+    highlight ColorColumn ctermbg=52
 endif
 set textwidth=72    " Wrap at 72 columns
 
@@ -425,6 +436,9 @@ let g:gitgutter_sign_columns_always=1 " Always provide space for the signs,
                                       "  so that windows line up better
 let g:gitgutter_max_signs=50000       " We can edit a big file, allow up to
                                       "  50,000 lines to change.
+
+" vim-go doesn't like neovim < 0.3.2
+let g:go_version_warning = 0
 
 " set persistent undo
 if has('persistent_undo')
@@ -498,3 +512,8 @@ if filereadable(glob("~/.vimrc.local"))
     source ~/.vimrc.local
 endif
 
+" Set up cursor
+if has('nvim')
+    set guicursor=n-v-c:blinkon1,i-ci-ve:ver25-Cursor2/lCursor2,r-cr:hor20,o:hor50
+    au VimLeave * set guicursor=a:ver25
+endif

@@ -1,15 +1,16 @@
-[submodule "src/.vim/bundle/vim-go"]
-	path = src/.vim/bundle/vim-go
-	url = https://github.com/fatih/vim-go.git
 [submodule "src/.vim/bundle/rust.vim"]
 	path = src/.vim/bundle/rust.vim
 	url = https://github.com/rust-lang/rust.vim.git
-[submodule "src/.vim/bundle/vim-perl6"]
-	path = src/.vim/bundle/vim-perl6
-	url = https://github.com/jmaslak/vim-perl6
 [submodule "src/.vim/bundle/vim-lucius"]
 	path = src/.vim/bundle/vim-lucius
 	url = https://github.com/jonathanfilip/vim-lucius
 [submodule "src/.vim/plugin/vim-cisco-ios"]
 	path = src/.vim/plugin/vim-cisco-ios
 	url = https://github.com/CyCoreSystems/vim-cisco-ios
+[submodule "src/.vim/bundle/vim-autopep8"]
+	path = src/.vim/bundle/vim-autopep8
+	url = https://github.com/tell-k/vim-autopep8.git
+	branch = master
+[submodule "src/.vim/bundle/vim-raku"]
+	path = src/.vim/bundle/vim-raku
+	url = https://github.com/raku/vim-raku

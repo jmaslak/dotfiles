@@ -1,6 +1,6 @@
 #!/usr/bin/env perl
 #
-# Copyright (C) 2015-2019 Joelle Maslak
+# Copyright (C) 2015-2020 Joelle Maslak
 # All Rights Reserved - See License
 #
 
@@ -108,8 +108,8 @@ MAIN: {
 
     if ($network_available) {
         system "$current/perl-setup.sh"     unless exists $options{skipperl};
-        system "$current/perl6-modules.sh"  unless exists $options{skipperl};
-        system "$current/python-modules.sh" unless exists $options{skippython};
+        system "$current/raku-modules.sh"  unless exists $options{skipraku};
+        # XXX system "$current/python-modules.sh" unless exists $options{skippython};
     }
 }
 
