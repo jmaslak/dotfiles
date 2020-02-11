@@ -9,7 +9,7 @@ load_tmux_conf() {
     tmux_home=~/.tmux
     tmux_version="$(tmux -V | awk '{print $2}')"
     tmux_major=$(echo $tmux_version | cut -d. -f1)
-    tmux_minor=$(echo $tmux_version | cut -d. -f2)
+    tmux_minor=$(echo $tmux_version | cut -d. -f2 | sed -e 's/[^0-9]//g')
 
     if (( $tmux_major < 2 )) ; then
         tmux source-file "$tmux_home/tmux_pre_2_1.conf"
