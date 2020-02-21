@@ -92,10 +92,14 @@ esac
 export SHELL="$0"
 # If shell is set to "-su", reset it to bash
 if [ "$SHELL" == "-su" ] ; then
-    SHELL="-bash"
+    SHELL="$(which bash)"
 fi
 # If shell is just "bash", set it to path
 if [ "$SHELL" == "bash" ] ; then
+    SHELL="$(which bash)"
+fi
+# If shell is "-bash", set it to path
+if [ "$SHELL" == "-bash" ] ; then
     SHELL="$(which bash)"
 fi
 
