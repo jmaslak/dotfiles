@@ -15,3 +15,4 @@ BackgroundColour=238,238,238
 CursorColour=220,50,47
 CursorType=block
 CursorBlinks=no
+ThemeFile=flat-ui

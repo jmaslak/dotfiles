@@ -209,3 +209,8 @@ function dockerbash {
     fi
     docker exec -it `docker ps | grep "$DIR:latest" | awk '{print $1}'` /bin/bash
 }
+
+# Tmux shell
+function tmuxsh {
+    ssh -t $1 tmux attach \|\| tmux
+}
