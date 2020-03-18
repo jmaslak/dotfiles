@@ -5,7 +5,7 @@
 # All Rights Reserved - See License
 #
 
-CURRENTPERL=perl-5.30.0
+CURRENTPERL=perl-5.30.2
 PERLBREW_MAJOR=0
 PERLBREW_MINOR=86
 

@@ -5,12 +5,12 @@
 # All Rights Reserved - See License
 #
 
-# Specify PERLVER if you want to override.  For instance, you can do
+# Specify RAKUVER if you want to override.  For instance, you can do
 # something like:
 #   ./raku-install.sh blead
 #
-if [ "$PERLVER" = "" ] ; then
-    PERLVER=2020.01
+if [ "$RAKUVER" = "" ] ; then
+    RAKUVER=2020.01
 fi
 
 doit() {
@@ -33,10 +33,12 @@ doit() {
     eval "$(~/.rakudobrew/bin/rakudobrew init Bash)"
    
     echo " --->>  Building moar"
-    rakudobrew build moar $PERLVER
+    rakudobrew build moar $RAKUVER
 
-    echo " --->>  Switching active moar"
-    rakudobrew switch moar-$PERLVER
+    if [ "SKIPSWITCH" == "" ] ; then
+        echo " --->>  Switching active moar"
+        rakudobrew switch moar-$RAKUVER
+    fi
 
     echo " --->>  Building zef"
     rakudobrew build zef
