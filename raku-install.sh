@@ -35,7 +35,7 @@ doit() {
     echo " --->>  Building moar"
     rakudobrew build moar $RAKUVER
 
-    if [ "SKIPSWITCH" == "" ] ; then
+    if [ "$SKIPSWITCH" == "" ] ; then
         echo " --->>  Switching active moar"
         rakudobrew switch moar-$RAKUVER
     fi
