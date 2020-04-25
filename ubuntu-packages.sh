@@ -9,7 +9,7 @@
 
 doit() {
     sudo apt-get update
-    sudo apt-get install \
+    sudo apt-get install -y \
         bash-completion \
         bc \
         build-essential \
@@ -36,11 +36,12 @@ doit() {
         wget \
         whois \
         zlib1g-dev
-    sudo apt-get install \
+    sudo apt-get install -y \
         neovim \
         emacs25-nox
-    sudo apt-get install docker.io
-    sudo apt-get install ubuntu-release-upgrader-core
+    sudo apt-get install -y docker.io
+    sudo apt-get install -y ubuntu-release-upgrader-core
+    sudo apt-get install -y libfindbin-libs-perl
 }
 
 doit "$@"
