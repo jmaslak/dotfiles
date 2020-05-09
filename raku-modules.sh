@@ -13,7 +13,7 @@ doit() {
 
     # Workaround Solaris which that doesn't return a useful value (grrr!)
     ZEF="$( which zef 2>/dev/null )"
-    RAKU="$( which perl6 2>/dev/null )"
+    RAKU="$( which raku 2>/dev/null )"
 
     if [ -x "$ZEF" -a -x "$RAKU" ] ; then
         install_modules

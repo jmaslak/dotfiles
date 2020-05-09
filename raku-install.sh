@@ -10,7 +10,7 @@
 #   ./raku-install.sh blead
 #
 if [ "$RAKUVER" = "" ] ; then
-    RAKUVER=2020.01
+    RAKUVER=2020.05
 fi
 
 doit() {
@@ -21,27 +21,28 @@ doit() {
 
     echo " --->>  Switching to root directory"
     cd ~
-    if [ ! -d .rakudobrew ] ; then
-        git clone https://github.com/tadzik/rakudobrew ~/.rakudobrew
+    if [ ! -d .rakubrew ] ; then
+        mkdir .rakubrew
+        cd .rakubrew
+        # This works for Linux.  For MacOS replace "perl" with "macos"
+        curl https://rakubrew.org/perl/rakubrew >rakubrew
+        chmod a+x rakubrew
+        cd ..
     fi
 
-    cd .rakudobrew
-    git pull
-    cd ..
-
-    export PATH="~/.rakudobrew/bin:$PATH"
-    eval "$(~/.rakudobrew/bin/rakudobrew init Bash)"
+    export PATH="~/.rakubrew:$PATH"
+    eval "$(~/.rakubrew/rakubrew init Bash)"
    
     echo " --->>  Building moar"
-    rakudobrew build moar $RAKUVER
+    rakubrew build $RAKUVER
 
     if [ "$SKIPSWITCH" == "" ] ; then
         echo " --->>  Switching active moar"
-        rakudobrew switch moar-$RAKUVER
+        rakubrew switch moar-$RAKUVER
     fi
 
     echo " --->>  Building zef"
-    rakudobrew build zef
+    rakubrew build zef
 }
 
 doit

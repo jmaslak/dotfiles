@@ -31,18 +31,13 @@ fi
 alias sqlplus="rlwrap -i -f ~/.sqlplus_history -H ~/.sqlplus_history -s 30000 sqlplus"
 
 # Raku alias
-if which raku >/dev/null 2>/dev/null ; then
-    # No alias needed
-    true
-else
-    alias raku=perl6
-fi
+alias perl6=raku
 
-# REPL for Perl6
-if [ \! -f ~/.perl6repl_history ] ; then
-    touch ~/.perl6repl_history
+# REPL for Raku
+if [ \! -f ~/.rakurepl_history ] ; then
+    touch ~/.rakurepl_history
 fi
-alias perl6repl="rlwrap -i -f ~/.perl6repl_history -H ~/.perl6repl_history -s 30000 perl6"
+alias rakurepl="rlwrap -i -f ~/.rakurepl_history -H ~/.rakurepl_history -s 30000 raku"
 
 # REPL for Perl5 Debugger
 if [ \! -f ~/.perl5d_repl_history ] ; then
@@ -192,8 +187,8 @@ function ipmi {
 # BGP development
 alias bgp="cd ~/git/antelope/perl6/Perl6-Net-BGP"
 
-# Also want 6prove, an alias to test Perl6 code
-alias 6prove="PERL6LIB=lib prove -e perl6 --ext .t --ext .t6"
+# Also want 6prove, an alias to test Raku code
+alias 6prove="RAKULIB=lib prove -e raku --ext .t --ext .t6"
 alias venv="source venv/bin/activate"
 
 # Swap escape
