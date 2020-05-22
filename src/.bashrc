@@ -10,7 +10,7 @@ if [ ! -z "$SYSTEMROOT" ] ; then
 fi
 
 # If not running interactively, don't do anything
-[ -z "$PS1" ] && return
+[ -z "$PS1" ] && exit
 
 # If we are on Bash for Linux, we start in the wrong directory.
 bash --version 2>/dev/null | grep 'version 3' >/dev/null
@@ -351,4 +351,3 @@ fi
 if [ -f "$HOME/.bashrc.work" ] ; then
     source "$HOME/.bashrc.work"
 fi
-
