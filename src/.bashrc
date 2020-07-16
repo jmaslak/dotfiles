@@ -1,5 +1,4 @@
 # Modified from base Unbutu .bashrc
-
 # ~/.bashrc: executed by bash(1) for non-login shells.
 # see /usr/share/doc/bash/examples/startup-files (in the package bash-doc)
 # for examples
@@ -10,7 +9,7 @@ if [ ! -z "$SYSTEMROOT" ] ; then
 fi
 
 # If not running interactively, don't do anything
-[ -z "$PS1" ] && exit
+[ -z "$PS1" ] && return
 
 # If we are on Bash for Linux, we start in the wrong directory.
 bash --version 2>/dev/null | grep 'version 3' >/dev/null
