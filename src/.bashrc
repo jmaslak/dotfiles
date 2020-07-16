@@ -11,7 +11,7 @@ fi
 # If not running interactively, don't do anything
 [ -z "$PS1" ] && return
 
-# If we are on Bash for Linux, we start in the wrong directory.
+# If we are on Bash for Windows, we start in the wrong directory.
 bash --version 2>/dev/null | grep 'version 3' >/dev/null
 if [ $? -ne 0 ] ; then
     # We know we're dealing with BASH 4+ (I'm assuming nobody is running
