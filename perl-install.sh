@@ -1,11 +1,11 @@
 #!/bin/bash
 
 #
-# Copyright (C) 2018 Joelle Maslak
+# Copyright (C) 2018-2020 Joelle Maslak
 # All Rights Reserved - See License
 #
 
-CURRENTPERL=perl-5.30.2
+CURRENTPERL=perl-5.32.0
 PERLBREW_MAJOR=0
 PERLBREW_MINOR=86
 
