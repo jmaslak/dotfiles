@@ -31,6 +31,7 @@ doit() {
         sqlite3 \
         tmux \
         traceroute \
+        unzip \
         vim \
         virtualenv \
         wget \
