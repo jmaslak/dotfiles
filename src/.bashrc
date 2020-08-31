@@ -350,3 +350,8 @@ fi
 if [ -f "$HOME/.bashrc.work" ] ; then
     source "$HOME/.bashrc.work"
 fi
+
+# And now local overrides
+if [ -f "$HOME/.bashrc.local" ] ; then
+    source "$HOME/.bashrc.local"
+fi
