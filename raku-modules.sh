@@ -35,6 +35,7 @@ install_modules() {
     install_module_force LWP::Simple    # Does network tests
 
     install_module App::Mi6
+    install_module cro
     install_module DateTime::Monotonic
     install_module Digest::SHA1::Native
     install_module Linenoise            # For REPL
