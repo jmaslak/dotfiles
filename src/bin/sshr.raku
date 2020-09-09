@@ -71,7 +71,6 @@ sub MAIN() {
         last if $msg.command eq 'QUIT';
     }
     
-    say ‘Program finished’;
     $*IN.close;
 
 }
@@ -83,7 +82,7 @@ sub parse-line(Str:D $str is copy -->Str:D) {
     my $preamble = $0 // "";
 
     # Arista prompt (should this be in the Arista parse-line?)
-    $str ~~ s/ ( \x1b "[3m --More-- " .* ) //;
+    $str ~~ s/ ( \s* [ \x1b "[3m --More-- " .* ]? ) $//;
     my $trailer = $0 // "";
 
     $str = parse-line-arista($str);
@@ -96,7 +95,7 @@ sub parse-line-arista(Str:D $str is copy -->Str:D) {
     my regex num { [ "-" ]? <[0..9\.]>+ }
 
     #
-    # ARISTA
+    # Arista & Cisco
     #
 
     # BGP
@@ -112,13 +111,25 @@ sub parse-line-arista(Str:D $str is copy -->Str:D) {
 
     $str ~~ s/^ ( "     0 runts, 0 giants"                 ) $/{colored($0.Str, $green)}/;
     $str ~~ s/^ ( "     " <num> " runts, " <num> " giants" ) $/{colored($0.Str, $red)}/;
+    $str ~~ s/^ ( "     0 runts, 0 giants, 0 throttles"                        ) $/{colored($0.Str, $green)}/;
+    $str ~~ s/^ ( "     " <num> " runts, " <num> " giants, " <num> "throttles" ) $/{colored($0.Str, $red)}/;
     $str ~~ s/^ ( "     0 input errors, 0 CRC, 0 alignment, 0 symbol, 0 input discards"                                         ) $/{colored($0.Str, $green)}/;
     $str ~~ s/^ ( "     " <num> " input errors, " <num> " CRC, " <num> " alignment, " <num> " symbol, " <num> " input discards" ) $/{colored($0.Str, $red)}/;
+    $str ~~ s/^ ( "     0 input errors, 0 CRC, 0 frame, 0 overrun, 0 ignored"                                         ) $/{colored($0.Str, $green)}/;
+    $str ~~ s/^ ( "     " <num> " input errors, " <num> " CRC, " <num> " frame, " <num> " overrun, " <num> " ignored" ) $/{colored($0.Str, $red)}/;
 
     $str ~~ s/^ ( "     0 output errors, 0 collisions"                 ) $/{colored($0.Str, $green)}/;
     $str ~~ s/^ ( "     " <num> " output errors, " <num> " collisions" ) $/{colored($0.Str, $red)}/;
+    $str ~~ s/^ ( "     0 unknown protocol drops"         ) $/{colored($0.Str, $green)}/;
+    $str ~~ s/^ ( "     " <num> " unknown protocol drops" ) $/{colored($0.Str, $red)}/;
+    $str ~~ s/^ ( "     0 output errors, 0 collisions, " <num> " interface resets"                 ) $/{colored($0.Str, $green)}/;
+    $str ~~ s/^ ( "     " <num> " output errors, " <num> " collisions, " <num> " interface resets" ) $/{colored($0.Str, $red)}/;
+    $str ~~ s/^ ( "     0 output errors, " <num> " interface resets"         ) $/{colored($0.Str, $green)}/;
+    $str ~~ s/^ ( "     " <num> " output errors, " <num> " interface resets" ) $/{colored($0.Str, $red)}/;
     $str ~~ s/^ ( "     0 late collision, 0 deferred, 0 output discards"                         ) $/{colored($0.Str, $green)}/;
     $str ~~ s/^ ( "     " <num> " late collision, " <num> " deferred, " <num> " output discards" ) $/{colored($0.Str, $red)}/;
+    $str ~~ s/^ ( "     0 babbles, 0 late collision, 0 deferred"                         ) $/{colored($0.Str, $green)}/;
+    $str ~~ s/^ ( "     " <num> " babbles, " <num> " late collision, " <num> " deferred" ) $/{colored($0.Str, $red)}/;
 
     $str ~~ s/^ ( <[A..Z]> \S+ " is up, line protocol is up (connected)" ) $/{colored($0.Str, $green)}/;
     $str ~~ s/^ ( <[A..Z]> \S+ " is administratively down," \N+          ) $/{colored($0.Str, $orange)}/;
@@ -139,9 +150,9 @@ sub parse-line-arista(Str:D $str is copy -->Str:D) {
 
     # Interfaces ("show int description")
 
-    $str ~~ s/^ ( <[A..Z]><[a..z]><[0..9]> \S* \s+ "up"         \s+ "up" \s+ \N+ ) $/{colored($0.Str, $green)}/;
-    $str ~~ s/^ ( <[A..Z]><[a..z]><[0..9]> \S* \s+ "admin down" \s+ \S+  \s+ \N+ ) $/{colored($0.Str, $orange)}/;
-    $str ~~ s/^ ( <[A..Z]><[a..z]><[0..9]> \S* \s+ " down"      \s+ \S+  \s+ \N+ ) $/{colored($0.Str, $red)}/;
+    $str ~~ s/^ ( <[A..Z]><[a..z]><[0..9]> \S* \s+ "up"         \s+ "up" [ \s+ \N+ ]? ) $/{colored($0.Str, $green)}/;
+    $str ~~ s/^ ( <[A..Z]><[a..z]><[0..9]> \S* \s+ "admin down" \s+ \S+  [ \s+ \N+ ]? ) $/{colored($0.Str, $orange)}/;
+    $str ~~ s/^ ( <[A..Z]><[a..z]><[0..9]> \S* \s+ " down"      \s+ \S+  [ \s+ \N+ ]? ) $/{colored($0.Str, $red)}/;
     
     # Interfaces ("show int transceiver")
     my regex lowlight { [ "-30." <[0..9]>**2 ] || [ "-2" <[5..9]> "." <[0..9]>**2 ] };
