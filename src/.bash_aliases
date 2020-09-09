@@ -209,3 +209,52 @@ function dockerbash {
 function tmuxsh {
     ssh -t $1 tmux attach \|\| tmux
 }
+
+# SSH w/ color
+echo | ~/bin/sshr.raku 2>/dev/null >/dev/null
+if [ $? -eq 0 ] ; then
+    SSHR_WORKS=yes
+else
+    SSHR_WORKS=no
+fi
+ssh() {
+    SSH=$(which ssh)
+
+    ROUTER=no
+    RE=" [aceo]s[0-9][0-9].[a-z][a-z][a-z][0-9][0-9][0-9] "
+    if [[ " $* " =~ $RE ]] ; then
+        ROUTER=yes
+    fi
+    RE=" dcr[0-9][0-9].[a-z][a-z][a-z][0-9][0-9][0-9] "
+    if [[ " $* " =~ $RE ]] ; then
+        ROUTER=yes
+    fi
+    RE=" wdm[0-9][0-9].[a-z][a-z][a-z][0-9][0-9][0-9] "
+    if [[ " $* " =~ $RE ]] ; then
+        ROUTER=yes
+    fi
+    RE=" edge[0-9]"
+    if [[ " $* " =~ $RE ]] ; then
+        ROUTER=yes
+    fi
+    RE=" fw[0-9]"
+    if [[ " $* " =~ $RE ]] ; then
+        ROUTER=yes
+    fi
+    RE=" rtr[0-9]"
+    if [[ " $* " =~ $RE ]] ; then
+        ROUTER=yes
+    fi
+    RE=" sw[0-9]"
+    if [[ " $* " =~ $RE ]] ; then
+        ROUTER=yes
+    fi
+
+    if [ "$SSHR_WORKS $ROUTER" == "yes yes" ] ; then
+        # SSHR works good
+        $SSH "$@" | ~/bin/sshr.raku
+    else
+        # No SSHR
+        $SSH "$@"
+    fi
+}

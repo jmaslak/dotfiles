@@ -25,7 +25,7 @@ sub MAIN() {
         my $timer;
         while $*IN.read -> $buffer {
             $timer = 0;
-            if $buffer.bytes > 40 {
+            if $buffer.bytes > 0 {
                 $channel.send: message.new(:command("LARGECHARS"), :payload($buffer));
                 $timer = Promise.in(.05).then: {
                     $channel.send: message.new(:command("TICK"));
