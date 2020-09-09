@@ -211,13 +211,14 @@ function tmuxsh {
 }
 
 # SSH w/ color
-echo | ~/bin/sshr.raku 2>/dev/null >/dev/null
-if [ $? -eq 0 ] ; then
-    SSHR_WORKS=yes
-else
-    SSHR_WORKS=no
-fi
 ssh() {
+    echo | raku ~/bin/sshr.raku 2>/dev/null >/dev/null
+    if [ $? -eq 0 ] ; then
+        SSHR_WORKS=yes
+    else
+        SSHR_WORKS=no
+    fi
+
     SSH=$(which ssh)
 
     ROUTER=no
