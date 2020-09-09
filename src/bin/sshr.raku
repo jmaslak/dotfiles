@@ -1,17 +1,16 @@
 #!/usr/bin/env raku
-use v6.d;
+use v6.c;
 
 #
 # Copyright © 2020 Joelle Maslak
 # All Rights Reserved - See License
 #
 
-use Terminal::ANSIColor;
-
-my $green       = "green";
-my $red         = "bold red";
-my $orange      = "yellow";
-my $info        = "cyan";
+my $green       = "\e[32m";     # Green ANSI code
+my $red         = "\e[1;31m";   # Bold + Red ANSI code
+my $orange      = "\e[33m";     # Orange
+my $info        = "\e[36m";     # Cyan
+my $reset       = "\e[0m";
 
 class message {
     has $.command;
@@ -206,5 +205,9 @@ sub numerify(Str:D() $num is copy -->Str:D) {
 }
 
 sub highlight(Str:D $str --> Str:D) {
-    return UNDERLINE() ~ $str ~ UNDERLINE_OFF();
+    return "\e[4m" ~ $str ~ "\e[24m"; # Underline
+}
+
+sub colored(Str:D $str, Str:D $color --> Str:D) {
+    return $color ~ $str ~ $reset;
 }
