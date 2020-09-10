@@ -61,10 +61,10 @@ sub MAIN() {
         # Remove trailing space/backspace.
         # $str ~~ s:g/ " " \x8 //;
         
-        $str ~~ s:g/<st> ( \N+ ) $$ /{parse-line($0.Str)}/;
+        $str ~~ s:g/<st> ( \N+ ) $$ /{parse-line($0)}/;
 
         # Numbers
-        $str ~~ s:g/<!after <[:\.0..9]>> (<[0..9]>+) <!before <[:0..9]>> /{numerify($0.Str)}/;
+        $str ~~ s:g/<!after <[:\.0..9]>> (<[0..9]>+) <!before <[:0..9]>> /{numerify($0)}/;
 
         print $str;
         last if $msg.command eq 'QUIT';
@@ -74,7 +74,7 @@ sub MAIN() {
 
 }
 
-sub parse-line(Str:D $str is copy -->Str:D) {
+sub parse-line(Str:D() $str is copy -->Str:D) {
     # We want to strip out the control characters at the start of line.
     # This is kind of black magic...
     $str ~~ s/^ (.* <!after \x1b '[23m'> \x1b [ "[K" || "M" ])//;
@@ -99,67 +99,67 @@ sub parse-line-arista(Str:D $str is copy -->Str:D) {
 
     # BGP
 
-    $str ~~ s/^ ( "  BGP state is " <!before "Established"> \N* ) $/{colored($0.Str, $red)}/;
-    $str ~~ s/^ ( "  BGP state is Established"              \N* ) $/{colored($0.Str, $green)}/;
+    $str ~~ s/^ ( "  BGP state is " <!before "Established"> \N* ) $/{colored($0, $red)}/;
+    $str ~~ s/^ ( "  BGP state is Established"              \N* ) $/{colored($0, $green)}/;
 
-    $str ~~ s/^ ( "BGP neighbor is " \N+       ) $/{colored($0.Str, $info)}/;
-    $str ~~ s/^ ( "Local TCP address is " \N+  ) $/{colored($0.Str, $info)}/;
-    $str ~~ s/^ ( "Remote TCP address is " \N+ ) $/{colored($0.Str, $info)}/;
+    $str ~~ s/^ ( "BGP neighbor is " \N+       ) $/{colored($0, $info)}/;
+    $str ~~ s/^ ( "Local TCP address is " \N+  ) $/{colored($0, $info)}/;
+    $str ~~ s/^ ( "Remote TCP address is " \N+ ) $/{colored($0, $info)}/;
 
     # Interfaces ("show int et1")
 
-    $str ~~ s/^ ( "     0 runts, 0 giants"                 ) $/{colored($0.Str, $green)}/;
-    $str ~~ s/^ ( "     " <num> " runts, " <num> " giants" ) $/{colored($0.Str, $red)}/;
-    $str ~~ s/^ ( "     0 runts, 0 giants, 0 throttles"                        ) $/{colored($0.Str, $green)}/;
-    $str ~~ s/^ ( "     " <num> " runts, " <num> " giants, " <num> "throttles" ) $/{colored($0.Str, $red)}/;
-    $str ~~ s/^ ( "     0 input errors, 0 CRC, 0 alignment, 0 symbol, 0 input discards"                                         ) $/{colored($0.Str, $green)}/;
-    $str ~~ s/^ ( "     " <num> " input errors, " <num> " CRC, " <num> " alignment, " <num> " symbol, " <num> " input discards" ) $/{colored($0.Str, $red)}/;
-    $str ~~ s/^ ( "     0 input errors, 0 CRC, 0 frame, 0 overrun, 0 ignored"                                         ) $/{colored($0.Str, $green)}/;
-    $str ~~ s/^ ( "     " <num> " input errors, " <num> " CRC, " <num> " frame, " <num> " overrun, " <num> " ignored" ) $/{colored($0.Str, $red)}/;
+    $str ~~ s/^ ( "     0 runts, 0 giants"                 ) $/{colored($0, $green)}/;
+    $str ~~ s/^ ( "     " <num> " runts, " <num> " giants" ) $/{colored($0, $red)}/;
+    $str ~~ s/^ ( "     0 runts, 0 giants, 0 throttles"                        ) $/{colored($0, $green)}/;
+    $str ~~ s/^ ( "     " <num> " runts, " <num> " giants, " <num> "throttles" ) $/{colored($0, $red)}/;
+    $str ~~ s/^ ( "     0 input errors, 0 CRC, 0 alignment, 0 symbol, 0 input discards"                                         ) $/{colored($0, $green)}/;
+    $str ~~ s/^ ( "     " <num> " input errors, " <num> " CRC, " <num> " alignment, " <num> " symbol, " <num> " input discards" ) $/{colored($0, $red)}/;
+    $str ~~ s/^ ( "     0 input errors, 0 CRC, 0 frame, 0 overrun, 0 ignored"                                         ) $/{colored($0, $green)}/;
+    $str ~~ s/^ ( "     " <num> " input errors, " <num> " CRC, " <num> " frame, " <num> " overrun, " <num> " ignored" ) $/{colored($0, $red)}/;
 
-    $str ~~ s/^ ( "     0 output errors, 0 collisions"                 ) $/{colored($0.Str, $green)}/;
-    $str ~~ s/^ ( "     " <num> " output errors, " <num> " collisions" ) $/{colored($0.Str, $red)}/;
-    $str ~~ s/^ ( "     0 unknown protocol drops"         ) $/{colored($0.Str, $green)}/;
-    $str ~~ s/^ ( "     " <num> " unknown protocol drops" ) $/{colored($0.Str, $red)}/;
-    $str ~~ s/^ ( "     0 output errors, 0 collisions, " <num> " interface resets"                 ) $/{colored($0.Str, $green)}/;
-    $str ~~ s/^ ( "     " <num> " output errors, " <num> " collisions, " <num> " interface resets" ) $/{colored($0.Str, $red)}/;
-    $str ~~ s/^ ( "     0 output errors, " <num> " interface resets"         ) $/{colored($0.Str, $green)}/;
-    $str ~~ s/^ ( "     " <num> " output errors, " <num> " interface resets" ) $/{colored($0.Str, $red)}/;
-    $str ~~ s/^ ( "     0 late collision, 0 deferred, 0 output discards"                         ) $/{colored($0.Str, $green)}/;
-    $str ~~ s/^ ( "     " <num> " late collision, " <num> " deferred, " <num> " output discards" ) $/{colored($0.Str, $red)}/;
-    $str ~~ s/^ ( "     0 babbles, 0 late collision, 0 deferred"                         ) $/{colored($0.Str, $green)}/;
-    $str ~~ s/^ ( "     " <num> " babbles, " <num> " late collision, " <num> " deferred" ) $/{colored($0.Str, $red)}/;
+    $str ~~ s/^ ( "     0 output errors, 0 collisions"                 ) $/{colored($0, $green)}/;
+    $str ~~ s/^ ( "     " <num> " output errors, " <num> " collisions" ) $/{colored($0, $red)}/;
+    $str ~~ s/^ ( "     0 unknown protocol drops"         ) $/{colored($0, $green)}/;
+    $str ~~ s/^ ( "     " <num> " unknown protocol drops" ) $/{colored($0, $red)}/;
+    $str ~~ s/^ ( "     0 output errors, 0 collisions, " <num> " interface resets"                 ) $/{colored($0, $green)}/;
+    $str ~~ s/^ ( "     " <num> " output errors, " <num> " collisions, " <num> " interface resets" ) $/{colored($0, $red)}/;
+    $str ~~ s/^ ( "     0 output errors, " <num> " interface resets"         ) $/{colored($0, $green)}/;
+    $str ~~ s/^ ( "     " <num> " output errors, " <num> " interface resets" ) $/{colored($0, $red)}/;
+    $str ~~ s/^ ( "     0 late collision, 0 deferred, 0 output discards"                         ) $/{colored($0, $green)}/;
+    $str ~~ s/^ ( "     " <num> " late collision, " <num> " deferred, " <num> " output discards" ) $/{colored($0, $red)}/;
+    $str ~~ s/^ ( "     0 babbles, 0 late collision, 0 deferred"                         ) $/{colored($0, $green)}/;
+    $str ~~ s/^ ( "     " <num> " babbles, " <num> " late collision, " <num> " deferred" ) $/{colored($0, $red)}/;
 
-    $str ~~ s/^ ( <[A..Z]> \S+ " is up, line protocol is up (connected)" ) $/{colored($0.Str, $green)}/;
-    $str ~~ s/^ ( <[A..Z]> \S+ " is administratively down," \N+          ) $/{colored($0.Str, $orange)}/;
-    $str ~~ s/^ ( <[A..Z]> \S+ " is " \N+ ", line protocol is " \N+      ) $/{colored($0.Str, $red)}/;
+    $str ~~ s/^ ( <[A..Z]> \S+ " is up, line protocol is up (connected)" ) $/{colored($0, $green)}/;
+    $str ~~ s/^ ( <[A..Z]> \S+ " is administratively down," \N+          ) $/{colored($0, $orange)}/;
+    $str ~~ s/^ ( <[A..Z]> \S+ " is " \N+ ", line protocol is " \N+      ) $/{colored($0, $red)}/;
 
-    $str ~~ s/^ ( "  Up " \N+   ) $/{colored($0.Str, $green)}/;
-    $str ~~ s/^ ( "  Down " \N+ ) $/{colored($0.Str, $red)}/;
+    $str ~~ s/^ ( "  Up " \N+   ) $/{colored($0, $green)}/;
+    $str ~~ s/^ ( "  Down " \N+ ) $/{colored($0, $red)}/;
 
-    $str ~~ s/^ ( "  " <num> " " \w+ " input rate " <num> " " \N+  ) $/{colored($0.Str, $info)}/;
-    $str ~~ s/^ ( "  " <num> " " \w+ " output rate " <num> " " \N+ ) $/{colored($0.Str, $info)}/;
+    $str ~~ s/^ ( "  " <num> " " \w+ " input rate " <num> " " \N+  ) $/{colored($0, $info)}/;
+    $str ~~ s/^ ( "  " <num> " " \w+ " output rate " <num> " " \N+ ) $/{colored($0, $info)}/;
 
     # Interfaces ("show int status")
 
-    $str ~~ s/^ ( <[A..Z]><[a..z]><[0..9]> \N+ " connected "   \N+ ) $/{colored($0.Str, $green)}/;
-    $str ~~ s/^ ( <[A..Z]><[a..z]><[0..9]> \N+ " disabled "    \N+ ) $/{colored($0.Str, $orange)}/;
-    $str ~~ s/^ ( <[A..Z]><[a..z]><[0..9]> \N+ " errdisabled " \N+ ) $/{colored($0.Str, $red)}/;
-    $str ~~ s/^ ( <[A..Z]><[a..z]><[0..9]> \N+ " notconnect "  \N+ ) $/{colored($0.Str, $red)}/;
+    $str ~~ s/^ ( <[A..Z]><[a..z]><[0..9]> \N+ " connected "   \N+ ) $/{colored($0, $green)}/;
+    $str ~~ s/^ ( <[A..Z]><[a..z]><[0..9]> \N+ " disabled "    \N+ ) $/{colored($0, $orange)}/;
+    $str ~~ s/^ ( <[A..Z]><[a..z]><[0..9]> \N+ " errdisabled " \N+ ) $/{colored($0, $red)}/;
+    $str ~~ s/^ ( <[A..Z]><[a..z]><[0..9]> \N+ " notconnect "  \N+ ) $/{colored($0, $red)}/;
 
     # Interfaces ("show int description")
 
-    $str ~~ s/^ ( <[A..Z]><[a..z]><[0..9]> \S* \s+ "up"         \s+ "up" [ \s+ \N+ ]? ) $/{colored($0.Str, $green)}/;
-    $str ~~ s/^ ( <[A..Z]><[a..z]><[0..9]> \S* \s+ "admin down" \s+ \S+  [ \s+ \N+ ]? ) $/{colored($0.Str, $orange)}/;
-    $str ~~ s/^ ( <[A..Z]><[a..z]><[0..9]> \S* \s+ " down"      \s+ \S+  [ \s+ \N+ ]? ) $/{colored($0.Str, $red)}/;
+    $str ~~ s/^ ( <[A..Z]><[a..z]><[0..9]> \S* \s+ "up"         \s+ "up" [ \s+ \N+ ]? ) $/{colored($0, $green)}/;
+    $str ~~ s/^ ( <[A..Z]><[a..z]><[0..9]> \S* \s+ "admin down" \s+ \S+  [ \s+ \N+ ]? ) $/{colored($0, $orange)}/;
+    $str ~~ s/^ ( <[A..Z]><[a..z]><[0..9]> \S* \s+ " down"      \s+ \S+  [ \s+ \N+ ]? ) $/{colored($0, $red)}/;
     
     # Interfaces ("show int transceiver")
     my regex lowlight { [ "-30." <[0..9]>**2 ] || [ "-2" <[5..9]> "." <[0..9]>**2 ] };
     my regex light    { "N/A" || <num> };
 
-    $str ~~ s/^ ( <[A..Z]><[a..z]><[0..9]> \S* [ \s+ <light> ]**4 \s+ <lowlight> \s+ \S+ " ago" ) $ /{colored($0.Str, $red)}/;
-    $str ~~ s/^ ( <[A..Z]><[a..z]><[0..9]> \S* [ \s+ <light> ]**5                \s+ \S+ " ago" ) $ /{colored($0.Str, $info)}/;
-    $str ~~ s/^ ( <[A..Z]><[a..z]><[0..9]> \S* [ \s+ 'N/A' ]**6 \s*                             ) $ /{colored($0.Str, $orange)}/;
+    $str ~~ s/^ ( <[A..Z]><[a..z]><[0..9]> \S* [ \s+ <light> ]**4 \s+ <lowlight> \s+ \S+ " ago" ) $ /{colored($0, $red)}/;
+    $str ~~ s/^ ( <[A..Z]><[a..z]><[0..9]> \S* [ \s+ <light> ]**5                \s+ \S+ " ago" ) $ /{colored($0, $info)}/;
+    $str ~~ s/^ ( <[A..Z]><[a..z]><[0..9]> \S* [ \s+ 'N/A' ]**6 \s*                             ) $ /{colored($0, $orange)}/;
 
     return $str;
 }
@@ -170,17 +170,17 @@ sub parse-line-junos(Str:D $str is copy -->Str:D) {
     #
     # JunOS
     #
-    $str ~~ s/^ ( "Physical interface: " \S* " Enabled, Physical link is Up" )   $/{colored($0.Str, $green)}/;
-    $str ~~ s/^ ( "Physical interface: " \S* " Enabled, Physical link is Down" ) $/{colored($0.Str, $red)}/;
-    $str ~~ s/^ ( "Physical interface: " \S* " " \S+ " Physical link is Down" )  $/{colored($0.Str, $orange)}/;
+    $str ~~ s/^ ( "Physical interface: " \S* " Enabled, Physical link is Up" )   $/{colored($0, $green)}/;
+    $str ~~ s/^ ( "Physical interface: " \S* " Enabled, Physical link is Down" ) $/{colored($0, $red)}/;
+    $str ~~ s/^ ( "Physical interface: " \S* " " \S+ " Physical link is Down" )  $/{colored($0, $orange)}/;
 
-    $str ~~ s/^ ( "  Input rate     : " <num> \N+ ) $/{colored($0.Str, $info)}/;
-    $str ~~ s/^ ( "  Output rate    : " <num> \N+ ) $/{colored($0.Str, $info)}/;
+    $str ~~ s/^ ( "  Input rate     : " <num> \N+ ) $/{colored($0, $info)}/;
+    $str ~~ s/^ ( "  Output rate    : " <num> \N+ ) $/{colored($0, $info)}/;
 
-    $str ~~ s/^ ( "  Active alarms  : None"                  ) $/{colored($0.Str, $green)}/;
-    $str ~~ s/^ ( "  Active alarms  : " <!before "None"> \N+ ) $/{colored($0.Str, $red)}/;
-    $str ~~ s/^ ( "  Active defects : None"                  ) $/{colored($0.Str, $green)}/;
-    $str ~~ s/^ ( "  Active defects : " <!before "None"> \N+ ) $/{colored($0.Str, $red)}/;
+    $str ~~ s/^ ( "  Active alarms  : None"                  ) $/{colored($0, $green)}/;
+    $str ~~ s/^ ( "  Active alarms  : " <!before "None"> \N+ ) $/{colored($0, $red)}/;
+    $str ~~ s/^ ( "  Active defects : None"                  ) $/{colored($0, $green)}/;
+    $str ~~ s/^ ( "  Active defects : " <!before "None"> \N+ ) $/{colored($0, $red)}/;
 
     return $str;
 }
@@ -208,6 +208,6 @@ sub highlight(Str:D $str --> Str:D) {
     return "\e[4m" ~ $str ~ "\e[24m"; # Underline
 }
 
-sub colored(Str:D $str, Str:D $color --> Str:D) {
+sub colored(Str:D() $str, Str:D $color --> Str:D) {
     return $color ~ $str ~ $reset;
 }
