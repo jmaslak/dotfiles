@@ -102,6 +102,32 @@ sub parse-line-arista(Str:D $str is copy -->Str:D) {
     $str ~~ s/^ ( "  BGP state is " <!before "Established"> \N* ) $/{colored($0, $red)}/;
     $str ~~ s/^ ( "  BGP state is Established"              \N* ) $/{colored($0, $green)}/;
 
+    $str ~~ s/^ ( "  Last " [ "sent" || "rcvd" ] " " [ "socket-error" || "notification" ] ":" \N+ ) $/{colored($0, $info)}/;
+
+    # Display errors
+    $str ~~ s/^
+        (
+            "    "
+            [
+                "AS path loop detection"
+                || "Enforced First AS"
+                || "Malformed MPBGP routes"
+                || "Originator ID matches local router ID"
+                || "Nexthop matches local IP address"
+                || "Resulting in removal of all paths in update (treat as withdraw)"
+                || "Resulting in AFI/SAFI disable"
+                || "Resulting in attribute ignore"
+                || "Disabled AFI/SAFIs" # Fix VIM highlighting --> "
+                || "IPv4 labeled-unicast NLRIs dropped due to excessive labels"
+                || "IPv6 labeled-unicast NLRIs dropped due to excessive labels"
+                || "IPv4 local address not available"
+                || "IPv6 local address not available"
+            ]
+            ": "
+            <!before "0">  # We aren't interested in errors
+            <num>
+        ) $ /{colored($0, $red)}/;
+
     $str ~~ s/^ ( "BGP neighbor is " \N+       ) $/{colored($0, $info)}/;
     $str ~~ s/^ ( "Local TCP address is " \N+  ) $/{colored($0, $info)}/;
     $str ~~ s/^ ( "Remote TCP address is " \N+ ) $/{colored($0, $info)}/;
