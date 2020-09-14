@@ -24,13 +24,17 @@ sub MAIN() {
         my $timer;
         while $*IN.read -> $buffer {
             $timer = 0;
-            if $buffer.bytes > 0 {
+            if $buffer.bytes > 2 {
                 $channel.send: message.new(:command("LARGECHARS"), :payload($buffer));
                 $timer = Promise.in(.05).then: {
                     $channel.send: message.new(:command("TICK"));
                 }
             } else {
-                $channel.send: message.new(:command("CHARS"), :payload($buffer));
+                $channel.send: message.new(:command("LARGECHARS"), :payload($buffer));
+                $timer = Promise.in(.01).then: {
+                    $channel.send: message.new(:command("TICK"));
+                }
+                # $channel.send: message.new(:command("CHARS"), :payload($buffer));
             }
         }
 
