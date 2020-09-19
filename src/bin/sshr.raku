@@ -108,6 +108,8 @@ sub parse-line-arista(Str:D $str is copy -->Str:D) {
 
     $str ~~ s/^ ( "  Last " [ "sent" || "rcvd" ] " " [ "socket-error" || "notification" ] ":" \N+ ) $/{colored($0, $info)}/;
 
+    $str ~~ s/^ ( "    " [ "IPv4"|"IPv6" ] " Unicast:     " \N* ) $/{colored($0, $info)}/;
+
     # Display errors
     $str ~~ s/^
         (
