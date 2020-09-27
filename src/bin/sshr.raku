@@ -68,7 +68,9 @@ sub MAIN() {
         $str ~~ s:g/<st> ( \N+ ) $$ /{parse-line($0)}/;
 
         # Numbers
-        $str ~~ s:g/<!after <[:\.0..9]>> (<[0..9]>+) <!before <[:0..9]>> /{numerify($0)}/;
+        # We need to make sure we don't highlight undesirably, such as
+        # in an escape sequence
+        $str ~~ s:g/<!after <[:\.0..9]>|[\e \[]> (<[0..9]>+) <!before <[:0..9]>> /{numerify($0)}/;
 
         print $str;
         last if $msg.command eq 'QUIT';
