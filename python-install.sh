@@ -1,12 +1,12 @@
 #!/bin/bash
 
 #
-# Copyright (C) 2019 Joelle Maslak
+# Copyright (C) 2020 Joelle Maslak
 # All Rights Reserved - See License
 #
 
-PYTHON2=2.7.16
-PYTHON3=3.7.2
+PYTHON2=2.7.18
+PYTHON3=3.8.5
 
 doit() {
     # Defensive umask
@@ -23,6 +23,14 @@ doit() {
         export PYENV_ROOT="$HOME/.pyenv"
         export PATH="$PYENV_ROOT/bin:$PATH"
         eval "$(pyenv init -)"
+    else
+        which pyenv >/dev/null 2>/dev/null
+        if [ $? -ne 0 ] ; then
+            # pyenv not in path.
+            export PYENV_ROOT="$HOME/.pyenv"
+            export PATH="$PYENV_ROOT/bin:$PATH"
+            eval "$(pyenv init -)"
+        fi
     fi
 
     # Install pyenv-virtualenv

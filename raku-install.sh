@@ -10,7 +10,7 @@
 #   ./raku-install.sh blead
 #
 if [ "$RAKUVER" = "" ] ; then
-    RAKUVER=2020.05
+    RAKUVER=2020.08.2
 fi
 
 doit() {
