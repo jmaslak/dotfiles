@@ -91,6 +91,7 @@ sub parse-line(Str:D() $str is copy -->Str:D) {
     my $trailer = $0 // "";
 
     $str = parse-line-arista($str);
+    $str = parse-line-vyos($str);
     $str = parse-line-junos($str);
 
     return "$preamble$str$trailer";
@@ -197,6 +198,29 @@ sub parse-line-arista(Str:D $str is copy -->Str:D) {
     $str ~~ s/^ ( <[A..Z]><[a..z]><[0..9]> \S* [ \s+ <light> ]**4 \s+ <lowlight> \s+ \S+ " ago" ) $ /{colored($0, $red)}/;
     $str ~~ s/^ ( <[A..Z]><[a..z]><[0..9]> \S* [ \s+ <light> ]**5                \s+ \S+ " ago" ) $ /{colored($0, $info)}/;
     $str ~~ s/^ ( <[A..Z]><[a..z]><[0..9]> \S* [ \s+ 'N/A' ]**6 \s*                             ) $ /{colored($0, $orange)}/;
+
+    return $str;
+}
+
+sub parse-line-vyos(Str:D $str is copy -->Str:D) {
+    my regex num { [ "-" ]? <[0..9\.]>+ }
+
+    #
+    # VyOS (Stuff the Arista/Cisco commands did not do)
+    #
+
+    # BGP
+
+    $str ~~ s/^ ( "  BGP state = " <!before "Established"> \N* ) $/{colored($0, $red)}/;
+    $str ~~ s/^ ( "  BGP state = Established"              \N* ) $/{colored($0, $green)}/;
+
+    $str ~~ s/^ ( "  Route map for " [ "incoming"|"outgoing" ] " advertisements is " \N* ) $/{colored($0, $info)}/;
+    $str ~~ s/^ ( "  " \S+ " peer-group member" \N+ ) $/{colored($0, $info)}/;
+
+    $str ~~ s/^ ( "  " \d+ " accepted prefixes" \N+ ) $/{colored($0, $info)}/;
+
+    $str ~~ s/^ ( "Local host: "   \N+ ) $/{colored($0, $info)}/;
+    $str ~~ s/^ ( "Foreign host: " \N+ ) $/{colored($0, $info)}/;
 
     return $str;
 }
