@@ -199,6 +199,14 @@ sub parse-line-arista(Str:D $str is copy -->Str:D) {
     $str ~~ s/^ ( <[A..Z]><[a..z]><[0..9]> \S* [ \s+ <light> ]**5                \s+ \S+ " ago" ) $ /{colored($0, $info)}/;
     $str ~~ s/^ ( <[A..Z]><[a..z]><[0..9]> \S* [ \s+ 'N/A' ]**6 \s*                             ) $ /{colored($0, $orange)}/;
 
+    # LLDP Neighbors Detail
+    $str ~~ s/^ ( "Interface " \S+ " detected " <[0..9]>+ " LLDP neighbors:" ) $/{colored($0, $info)}/;
+    $str ~~ s/^ ( "  Neighbor " \S+ " age " <[0..9]>+ " seconds" ) $/{colored($0, $info)}/;
+    $str ~~ s/^ ( "  Discovered " \N+ "; Last changed " \N+ " ago" ) $/{colored($0, $info)}/;
+    $str ~~ s/^ ( "  - System Name: " \N+ ) $/{colored($0, $info)}/;
+    $str ~~ s/^ ( "    Port ID     :" \N+ ) $/{colored($0, $info)}/;
+    $str ~~ s/^ ( "    Management Address        : " \N+ ) $/{colored($0, $info)}/;
+
     return $str;
 }
 
