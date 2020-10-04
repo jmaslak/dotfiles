@@ -346,6 +346,10 @@ if [ -d "$HOME/openssl" ] ; then
     fi
 fi
 
+# Some of my utils will use the system keyring if I set the appropriate
+# environmental variable.
+export USE_KEYRING=1
+
 # And now we install work stuff.
 if [ -f "$HOME/.bashrc.work" ] ; then
     source "$HOME/.bashrc.work"
