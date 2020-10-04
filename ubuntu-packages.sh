@@ -19,6 +19,7 @@ doit() {
         iputils-ping \
         libbz2-dev \
         libffi-dev \
+        libglib2.0-dev \
         libncurses-dev \
         libreadline-dev \
         libsqlite3-dev \
