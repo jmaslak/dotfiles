@@ -115,6 +115,7 @@ sub parse-line-arista(Str:D $str is copy -->Str:D) {
     $str ~~ s/^ ( "  Inherits configuration from and member of peer-group " \N* ) $/{colored($0, $info)}/;
 
     $str ~~ s/^ ( "    " [ "IPv4"|"IPv6" ] " Unicast:     " \N* ) $/{colored($0, $info)}/;
+    $str ~~ s/^ ( "  Configured maximum total number of routes is " \d+ ", warning limit is " \d+ ) $/{colored($0, $info)}/;
 
     # Display errors
     $str ~~ s/^
