@@ -169,9 +169,9 @@ sub parse-line-arista(Str:D $str is copy -->Str:D) {
     $str ~~ s/^ ( "     0 babbles, 0 late collision, 0 deferred"                         ) $/{colored($0, $green)}/;
     $str ~~ s/^ ( "     " <num> " babbles, " <num> " late collision, " <num> " deferred" ) $/{colored($0, $red)}/;
 
-    $str ~~ s/^ ( <[A..Z]> \S+ " is up, line protocol is up (connected)" ) $/{colored($0, $green)}/;
-    $str ~~ s/^ ( <[A..Z]> \S+ " is administratively down," \N+          ) $/{colored($0, $orange)}/;
-    $str ~~ s/^ ( <[A..Z]> \S+ " is " \N+ ", line protocol is " \N+      ) $/{colored($0, $red)}/;
+    $str ~~ s/^ ( <[A..Z]> \S+ " is up, line protocol is up" " (connected)"? ) $/{colored($0, $green)}/;
+    $str ~~ s/^ ( <[A..Z]> \S+ " is administratively down," \N+              ) $/{colored($0, $orange)}/;
+    $str ~~ s/^ ( <[A..Z]> \S+ " is " \N+ ", line protocol is " \N+          ) $/{colored($0, $red)}/;
 
     $str ~~ s/^ ( "  Up " \N+   ) $/{colored($0, $green)}/;
     $str ~~ s/^ ( "  Down " \N+ ) $/{colored($0, $red)}/;
