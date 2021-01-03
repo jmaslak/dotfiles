@@ -350,6 +350,9 @@ fi
 # environmental variable.
 export USE_KEYRING=1
 
+# We do not want OSX to nag us about needing to "upgrade" to zsh.
+export BASH_SILENCE_DEPRECATION_WARNING=1
+
 # And now we install work stuff.
 if [ -f "$HOME/.bashrc.work" ] ; then
     source "$HOME/.bashrc.work"
