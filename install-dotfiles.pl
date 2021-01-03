@@ -1,6 +1,6 @@
 #!/usr/bin/env perl
 #
-# Copyright (C) 2015-2020 Joelle Maslak
+# Copyright (C) 2015-2021 Joelle Maslak
 # All Rights Reserved - See License
 #
 
@@ -379,6 +379,9 @@ sub install_vim_templates {
     if ( scalar(@_) != 1 ) { confess 'invalid call'; }
     my $copyright = shift;
 
+    my (@dtparts) = gmtime(time);
+    my $year = $dtparts[5] + 1900;
+
     my $home    = $ENV{HOME};
     my $current = getcwd;
 
@@ -411,6 +414,7 @@ sub install_vim_templates {
         print "Creating ... ";
         my $out = slurp("$current/src/.vim/templates/$file");
         $out =~ s/_COPYRIGHT_/$copyright/g;
+        $out =~ s/_YEAR_/$year/g;
         spitout( "$home/.vim/templates/$basefile", $out );
 
         # Make executable if needed
