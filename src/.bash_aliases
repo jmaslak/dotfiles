@@ -27,6 +27,11 @@ else
     alias localtask="TASKDIR=data task.pl6"
 fi
 
+# Create busy indicator alias
+if [ -x ~/git/antelope/Raku-BusyIndicator/busy.raku ] ; then
+    alias busy=~/git/antelope/Raku-BusyIndicator/busy.raku
+fi
+
 # Make sqlplus usable
 alias sqlplus="rlwrap -i -f ~/.sqlplus_history -H ~/.sqlplus_history -s 30000 sqlplus"
 
@@ -267,3 +272,4 @@ ssh() {
         $SSH "$@"
     fi
 }
+
