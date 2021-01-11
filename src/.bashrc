@@ -3,6 +3,13 @@
 # see /usr/share/doc/bash/examples/startup-files (in the package bash-doc)
 # for examples
 
+
+# We remove anything from the PATH that begins with /mnt/c/ - this
+# solves some security warnings for Perl in "taint" mode, because on
+# WSL some Windows directories are "world" writeable (they aren't
+# actually, but it's complicated).
+PATH=`echo "$PATH" | tr ":" "\n" | egrep -v '^/mnt/c/' | tr "\n" ":"`
+
 # If running on Windows, we need to execute /etc/profile
 if [ ! -z "$SYSTEMROOT" ] ; then
     . /etc/profile
