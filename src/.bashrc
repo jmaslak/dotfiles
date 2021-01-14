@@ -153,8 +153,8 @@ fi
 # Do we have Perl 6's rakubrew installed?
 if [ -d ~/.rakubrew ] ; then
     eval "$(~/.rakubrew/rakubrew init Bash)"
-    export "PATH=$HOME/.rakubrew:$PATH"
-    export "PATH=$HOME/.rakubrew/$(rakubrew current | awk '{print $3}')/install/share/raku/site/bin:$PATH"
+    export PATH="$HOME/.rakubrew:$PATH"
+    export PATH="$HOME/.rakubrew/$(rakubrew current | awk '{print $3}')/install/share/raku/site/bin:$PATH"
 fi
 
 # Do we have a Perlbrew?  Prefer local to system perlbrew

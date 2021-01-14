@@ -28,8 +28,8 @@ else
 fi
 
 # Create busy indicator alias
-if [ -x ~/git/antelope/Raku-BusyIndicator/busy.raku ] ; then
-    alias busy=~/git/antelope/Raku-BusyIndicator/busy.raku
+if which busy.raku >/dev/null 2>/dev/null ; then
+    alias busy=busy.raku
 fi
 
 # Make sqlplus usable
