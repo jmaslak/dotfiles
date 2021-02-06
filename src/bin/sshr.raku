@@ -2,7 +2,7 @@
 use v6.c;
 
 #
-# Copyright © 2020 Joelle Maslak
+# Copyright © 2020-2021 Joelle Maslak
 # All Rights Reserved - See License
 #
 
@@ -251,6 +251,19 @@ sub parse-line-junos(Str:D $str is copy -->Str:D) {
     $str ~~ s/^ ( "  Active alarms  : " <!before "None"> \N+ ) $/{colored($0, $red)}/;
     $str ~~ s/^ ( "  Active defects : None"                  ) $/{colored($0, $green)}/;
     $str ~~ s/^ ( "  Active defects : " <!before "None"> \N+ ) $/{colored($0, $red)}/;
+
+    $str ~~ s/^ (   <[gx]> "e-" <[0..9 \/]>+ \s+ "up" \s+ "up" \N+   ) $/{colored($0, $green)}/;
+    $str ~~ s/^ (   <[gx]> "e-" <[0..9 \/]>+ \s+ "VCP"               ) $/{colored($0, $green)}/;
+    $str ~~ s/^ (   <[gx]> "e-" <[0..9 \/]>+ \s+ "up" \s+ "down" \N+ ) $/{colored($0, $red)}/;
+    $str ~~ s/^ (   <[gx]> "e-" <[0..9 \/]>+ \s+ "down" \s+ \N+      ) $/{colored($0, $orange)}/;
+
+    $str ~~ s/^ (   "ae" <[0..9]>+ \s+ "up" \s+ "up" \N+   ) $/{colored($0, $green)}/;
+    $str ~~ s/^ (   "ae" <[0..9]>+ \s+ "up" \s+ "down" \N+ ) $/{colored($0, $red)}/;
+    $str ~~ s/^ (   "ae" <[0..9]>+ \s+ "down" \s+ \N+      ) $/{colored($0, $orange)}/;
+
+    $str ~~ s/^ (   "vlan." <[0..9]>+ \s+ "up" \s+ "up" \N+   ) $/{colored($0, $green)}/;
+    $str ~~ s/^ (   "vlan." <[0..9]>+ \s+ "up" \s+ "down" \N+ ) $/{colored($0, $red)}/;
+    $str ~~ s/^ (   "vlan." <[0..9]>+ \s+ "down" \s+ \N+      ) $/{colored($0, $orange)}/;
 
     return $str;
 }
