@@ -45,6 +45,7 @@ doit() {
     sudo apt-get install -y ubuntu-release-upgrader-core
     sudo apt-get install -y libfindbin-libs-perl
     sudo apt-get install -y time
+    sudo apt-get install -y python3-venv tox
 }
 
 doit "$@"
