@@ -8,7 +8,7 @@
 PYTHON36=3.6.12
 PYTHON37=3.7.9
 PYTHON38=3.8.7
-PYTHON39=3.9.0
+PYTHON39=3.9.1
 
 doit() {
     # Defensive umask
