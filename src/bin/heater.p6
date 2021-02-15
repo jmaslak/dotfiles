@@ -2,17 +2,10 @@
 use v6.d;
 
 sub MAIN() {
-    for ^($*KERNEL.cpu-cores) {
-        start {
-            my $i = 0;
-            loop {
-                $i++;
-            }
-        }
+    for (^$*KERNEL.cpu-cores) {
+        start { sleep 1; loop {} };
     }
-    loop {
-        sleep 1;
-    }
+    sleep;
 }
 
 
