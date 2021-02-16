@@ -1,7 +1,7 @@
 #!/bin/bash
 
 #
-# Copyright (C) 2016-2020 Joelle Maslak
+# Copyright (C) 2016-2021 Joelle Maslak
 # All Rights Reserved - See License
 #
 
@@ -37,7 +37,7 @@ install_modules() {
     install_module App::Mi6
     install_module App::Heater
     install_module App::Tasks
-    install_module cro
+    install_module cro Cro
     install_module DateTime::Monotonic
     install_module Digest::SHA1::Native
     install_module Linenoise            # For REPL
@@ -56,12 +56,16 @@ install_modules() {
     install_module Term::termios
     install_module YAMLish
     install_module if
-    install_module p6doc
+    install_module p6doc Pod::Cache
 }
 
 install_module_force() {
     MODULE="$1"
-    zef locate "$MODULE" 2>/dev/null >/dev/null
+    if [ "$MODULE_NAME" == "" ] ; then
+        MODULE_NAME="$MODULE"
+    fi
+
+    raku -M "$MODULE_NAME" -e exit 2>/dev/null >/dev/null
     if [ $? -ne 0 ] ; then
         zef install --force-test "$MODULE"
     else
@@ -71,7 +75,12 @@ install_module_force() {
 
 install_module() {
     MODULE="$1"
-    zef locate "$MODULE" 2>/dev/null >/dev/null
+    MODULE_NAME="$2"
+    if [ "$MODULE_NAME" == "" ] ; then
+        MODULE_NAME="$MODULE"
+    fi
+
+    raku -M "$MODULE_NAME" -e exit 2>/dev/null >/dev/null
     if [ $? -ne 0 ] ; then
         zef install "$MODULE"
     else
