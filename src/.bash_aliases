@@ -264,12 +264,25 @@ ssh() {
         ROUTER=yes
     fi
 
+    VT102=no
+    if [ "$*" == "sw02" ] ; then
+        VT102=yes
+    fi
+
     if [ "$SSHR_WORKS $ROUTER" == "yes yes" ] ; then
         # SSHR works good
-        $SSH "$@" | ~/bin/sshr.raku
+        if [ "$VT102" == "yes" ] ; then
+            TERM=vt102 $SSH "$@" | ~/bin/sshr.raku
+        else
+            $SSH "$@" | ~/bin/sshr.raku
+        fi
     else
         # No SSHR
-        $SSH "$@"
+        if [ "$VT102" == "yes" ] ; then
+            TERM=vt102 $SSH "$@"
+        else
+            $SSH "$@"
+        fi
     fi
 }
 
