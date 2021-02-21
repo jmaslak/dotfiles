@@ -47,6 +47,7 @@ doit() {
     sudo apt-get install -y python-autopep8
     sudo apt-get install -y python3-autopep8
     sudo apt-get install -y python3-venv tox
+    sudo apt-get install -y rustc
 }
 
 doit "$@"
