@@ -29,6 +29,7 @@ doit() {
         pip install oauth2client
         pip install PyYAML
         pip install virtualenv
+        pip install ansicolors
     else
         echo ""
         echo "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!"
