@@ -431,6 +431,7 @@ sub install_vim_templates {
 sub install_git_submodules {
     system("git submodule init");
     system("git submodule update --init --recursive");
+    system("git submodule sync --recursive");
 
     return;
 }
