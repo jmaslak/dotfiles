@@ -123,10 +123,7 @@ if [ -f /etc/bash_completion ] && ! shopt -oq posix; then
 fi
 
 # Standard editor
-if which nvim >/dev/null 2>/dev/null ; then
-    export VISUAL=$( which nvim )
-    export EDITOR=$( which nvim )
-elif which vim >/dev/null 2>/dev/null ; then
+if which vim >/dev/null 2>/dev/null ; then
     export VISUAL=$( which vim )
     export EDITOR=$( which vim )
 fi
