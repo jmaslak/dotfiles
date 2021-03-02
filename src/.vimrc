@@ -517,3 +517,9 @@ if has('nvim')
     set guicursor=n-v-c:blinkon1,i-ci-ve:ver25-Cursor2/lCursor2,r-cr:hor20,o:hor50
     au VimLeave * set guicursor=a:ver25-blinkon0
 endif
+
+" Disable virtualenvs
+let g:pymode_virtualenv = 0
+
+" Disable pylint
+let g:pymode_lint = 0
