@@ -353,7 +353,27 @@ if [ -d "$HOME/openssl" ] ; then
     fi
 fi
 
-# Some of my utils will use the system keyring if I set the appropriate
+# Set audio device if for some reason the wrong device is set.
+#
+if which pactl >/dev/null 2>/dev/null ; then
+    ACTIVECAM=$(
+        pactl list short sources | \
+            egrep "alsa_input.*USB_Camera.*RUNNING" | \
+            awk '{print $2}'
+    )
+    JABRADEV=$(
+        pactl list short sources | \
+            egrep "alsa_input.*Jabra" | \
+            awk '{print $2}'
+    )
+    if [ "$ACTIVECAM" != "" ] ; then
+        if [ "$JABRADEV" != "" ] ; then
+            echo "Changing audio device from camera to headset"
+            pactl set-default-source "$JABRADEV"
+        fi
+    fi
+fi
+
 # environmental variable.
 export USE_KEYRING=1
 
