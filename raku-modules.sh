@@ -37,6 +37,7 @@ install_modules() {
     install_module App::Mi6
     install_module App::Heater
     install_module App::Tasks
+    install_module BusyIndicator
     install_module cro Cro
     install_module DateTime::Monotonic
     install_module Digest::SHA1::Native
@@ -89,5 +90,4 @@ install_module() {
 }
 
 doit
-
 
