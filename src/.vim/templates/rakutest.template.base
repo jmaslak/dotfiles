@@ -1,0 +1,13 @@
+use v6.d;
+use Test;
+
+#
+# Copyright (C) _YEAR_ _COPYRIGHT_
+# All Rights Reserved - See License
+#
+
+# Tests here
+pass("Test dependencies load");
+
+done-testing;
+
