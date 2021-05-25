@@ -12,6 +12,25 @@ my $orange      = "\e[33m";     # Orange
 my $info        = "\e[36m";     # Cyan
 my $reset       = "\e[0m";
 
+my @bgcolors = (
+    "\e[30m\e[47m",  # black on white
+    "\e[30m\e[41m",  # black on red
+    "\e[30m\e[42m",  # black on green
+    "\e[30m\e[43m",  # black on yellow (orange)
+    "\e[37m\e[44m",  # white on blue
+    "\e[30m\e[45m",  # black on magenta
+    "\e[30m\e[46m",  # black on cyan
+);
+
+my @octet = ^256;
+my regex IPv4 { @octet**4 % '.' };
+
+my token h16 { (<:hexdigit>+) <?{ @$0 ≤ 4 }> };
+my regex IPv6 {
+    | <h16> +% ':' <?{ $<h16> == 8}>
+    | [ (<h16>) +% ':']? '::' [ (<h16>) +% ':' ]? <?{ @$0 + @$1 ≤ 8 }>
+};
+
 class message {
     has $.command;
     has $.payload;
@@ -66,6 +85,12 @@ sub MAIN() {
         # $str ~~ s:g/ " " \x8 //;
         
         $str ~~ s:g/<st> ( \N+ ) $$ /{parse-line($0)}/;
+
+        # IPv4
+        $str ~~ s:g/ ( [\d+]**4 % '.' [ '/' \d+ ]? ) /{ipv4ify($0.Str)}/;
+
+        # IPv6
+        $str ~~ s:g/ ( <IPv6> [ '/' \d+ ]? ) /{ipv6ify($0.Str)}/;
 
         # Numbers
         # We need to make sure we don't highlight undesirably, such as
@@ -291,6 +316,54 @@ sub highlight(Str:D $str --> Str:D) {
     return "\e[4m" ~ $str ~ "\e[24m"; # Underline
 }
 
-sub colored(Str:D() $str, Str:D $color --> Str:D) {
-    return $color ~ $str ~ $reset;
+sub ipv4ify(Str:D() $ip -->Str:D) {
+    my ($subnet, $len) = $ip.split('/');
+    $len //= 32;
+
+    return $ip unless $subnet ~~ /^ <IPv4> $/;
+    return $ip if $len > 32;
+
+    my @oct = $subnet.split(".");
+    my $val = 0;
+    for @oct -> $i {
+        $val ×= 256;
+        $val += $i;
+    }
+    $val = $val × 256 + $len;
+
+    my $color = @bgcolors[$val % 7];
+    return colored($ip, $color);
+}
+
+sub ipv6ify(Str:D() $ip -->Str:D) {
+    my ($subnet, $len) = $ip.split('/');
+    $len //= 128;
+
+    return $ip if $len > 128;
+
+    my grammar IPv6_grammar {
+
+        token TOP {
+            | <h16> +% ':' <?{ $<h16> == 8}>
+                { @*by16 = @$<h16> }
+            | [ (<h16>) +% ':']? '::' [ (<h16>) +% ':' ]? <?{ @$0 + @$1 ≤ 8 }>
+                { @*by16 = |@$0, |('0' xx 8 - (@$0 + @$1)), |@$1; }
+        };
+        
+        token h16 { (<:hexdigit>+) <?{ @$0 ≤ 4 }> };
+    };
+
+    my @*by16;
+    IPv6_grammar.parse($ip);
+    my $val = :16(@*by16.map({:16(~$_)})».fmt("%04x").join ~ $len.fmt("%02x"));
+
+    my $color = @bgcolors[$val % 7];
+    return colored($ip, $color);
+}
+
+sub colored(Str:D() $str is copy, Str:D $color --> Str:D) {
+    $str = $color ~ $str;
+    $str ~~ s:g/ $reset / {$color} /;
+    $str = $str ~ $reset;
+    return $str;
 }
