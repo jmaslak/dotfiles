@@ -25,7 +25,7 @@ my @bgcolors = (
 my @octet = ^256;
 my regex IPv4 { @octet**4 % '.' };
 
-my token h16 { (<:hexdigit>+) <?{ @$0 ≤ 4 }> };
+my token h16 { (<:hexdigit>+) <?{ $0.chars ≤ 4 }> };
 my regex IPv6 {
     | <h16> +% ':' <?{ $<h16> == 8}>
     | [ (<h16>) +% ':']? '::' [ (<h16>) +% ':' ]? <?{ @$0 + @$1 ≤ 8 }>
@@ -90,7 +90,7 @@ sub MAIN() {
         $str ~~ s:g/ ( [\d+]**4 % '.' [ '/' \d+ ]? ) /{ipv4ify($0.Str)}/;
 
         # IPv6
-        $str ~~ s:g/ ( <IPv6> [ '/' \d+ ]? ) /{ipv6ify($0.Str)}/;
+        $str ~~ s:g/ <!after <[ a..f A..F 0..9 : - ]> > ( <IPv6> [ '/' \d+ ]? ) <!before <[ \w : . / ]> > /{ipv6ify($0.Str)}/;
 
         # Numbers
         # We need to make sure we don't highlight undesirably, such as
@@ -340,6 +340,8 @@ sub ipv6ify(Str:D() $ip -->Str:D) {
     $len //= 128;
 
     return $ip if $len > 128;
+    return $ip if $subnet ~~ m/':::'/;
+    return $ip if $subnet ~~ m/'::' .* '::'/;
 
     my grammar IPv6_grammar {
 
@@ -350,7 +352,7 @@ sub ipv6ify(Str:D() $ip -->Str:D) {
                 { @*by16 = |@$0, |('0' xx 8 - (@$0 + @$1)), |@$1; }
         };
         
-        token h16 { (<:hexdigit>+) <?{ @$0 ≤ 4 }> };
+        token h16 { (<:hexdigit>+) <?{ $0 ≤ 4 }> };
     };
 
     my @*by16;
