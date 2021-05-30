@@ -41,6 +41,8 @@ fi
 OLDDIR=$PWD
 cd $HOME
 
+export LC_TIME=C.UTF-8  # We want 24 hour format
+
 # Run this in the background, to create .cpanreporter comment.txt lines
 if [ -x ".bash.sysinfo" ] ; then
     nohup ./.bash.sysinfo </dev/null >/dev/null 2>/dev/null &
