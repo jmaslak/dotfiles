@@ -203,12 +203,17 @@ alias unswap-escape="setxkbmap -option"
 
 # Docker bash shell
 function dockerbash {
-    DIR="$(basename $(pwd))"
-    if [ $(docker ps | grep "$DIR:latest" | wc -l) -ne 1 ] ; then
-        echo "Couldn't locate image" >&2
-        return;
+    if [ "$1" == "" ] ; then
+        IMAGE="$(basename $(pwd)):latest"
+        if [ $(docker ps | grep "$IMAGE" | wc -l) -ne 1 ] ; then
+            echo "Couldn't locate image $IMAGE" >&2
+            return;
+        fi
+    else
+        IMAGE="$1"
     fi
-    docker exec -it `docker ps | grep "$DIR:latest" | awk '{print $1}'` /bin/bash
+    
+    docker exec -it `docker ps | grep "$IMAGE" | awk '{print $1}'` /bin/bash
 }
 
 # Tmux shell
