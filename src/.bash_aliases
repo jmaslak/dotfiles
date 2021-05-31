@@ -44,6 +44,9 @@ if [ \! -f ~/.rakurepl_history ] ; then
 fi
 alias rakurepl="rlwrap -i -f ~/.rakurepl_history -H ~/.rakurepl_history -s 30000 raku"
 
+# Docker ps
+alias ps-docker='docker ps --format="ID\t{{.ID}}\nNAME\t{{.Names}}\nCOMMAND\t{{.Command}}\nSTATUS\t{{.Status}}\nCREATED\t{{.CreatedAt}}\nPORTS\t{{.Ports}}\n"'
+
 # REPL for Perl5 Debugger
 if [ \! -f ~/.perl5d_repl_history ] ; then
     touch ~/.perl5d_repl_history
