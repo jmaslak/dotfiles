@@ -315,6 +315,12 @@ au FileType cool setl nospell
 au FileType cpp setl cinoptions+=g2
 au FileType cpp setl softtabstop=2 shiftwidth=2 expandtab
 
+" C
+au BufNewFile,BufRead *.h set filetype=c
+au filetype c setl noexpandtab      " Expand Tabs to Spaces
+au filetype c setl sts=8            " Soft Tabs = 8 spaces
+au filetype c setl sw=8             " Shift Width = 8 spaces on indenting
+
 " Shell
 " Support syntax highlighting for .bash_aliases & .bash_private
 au BufNewFile,BufRead .bash_aliases set filetype=sh
