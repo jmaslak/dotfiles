@@ -30,3 +30,14 @@ I've added my preferences in these files, but many of these preferences
 are things two different developers/sysadmins may disagree about.
 That's okay!  Feel free to modify them to your own style.
 
+#######################################################################
+# BRANCH RENAME                                                       #
+#######################################################################
+
+The main branch is now using a new name.  To update your local copy, if
+you previously checked it out:
+
+  git branch -m master main
+  git fetch origin
+  git branch -u origin/main main
+  git remote set-head origin -a
