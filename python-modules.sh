@@ -26,6 +26,7 @@ doit() {
     if [ $? -eq 0 ] ; then  # Installed
         pip install --upgrade pip
         pip install google-api-python-client
+        pip install icecream
         pip install oauth2client
         pip install PyYAML
         pip install virtualenv
