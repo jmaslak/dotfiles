@@ -330,7 +330,7 @@ export LESS="-r"
 if [ -d "$HOME/.pyenv" ] ; then
     export PYENV_ROOT="$HOME/.pyenv"
     export PATH="$PYENV_ROOT/bin:$PATH"
-    eval "$(pyenv init -)"
+    eval "$(pyenv init --path)" >/dev/null
 fi
 
 # Set config directory
