@@ -5,10 +5,10 @@
 # All Rights Reserved - See License
 #
 
-PYTHON36=3.6.12
-PYTHON37=3.7.9
-PYTHON38=3.8.7
-PYTHON39=3.9.5
+PYTHON36=3.6.14
+PYTHON37=3.7.11
+PYTHON38=3.8.11
+PYTHON39=3.9.6
 
 doit() {
     # Defensive umask
