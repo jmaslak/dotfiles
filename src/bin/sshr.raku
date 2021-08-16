@@ -81,9 +81,6 @@ sub MAIN() {
         # Handle pagination and backscrowling on Arista:
         my regex st { <?after [ ^ || \n ]> };
 
-        # Remove trailing space/backspace.
-        # $str ~~ s:g/ " " \x8 //;
-        
         $str ~~ s:g/<st> ( \N+ ) $$ /{parse-line($0)}/;
 
         # IPv4
@@ -160,6 +157,7 @@ sub parse-line-arista(Str:D $str is copy -->Str:D) {
                 || "IPv6 labeled-unicast NLRIs dropped due to excessive labels"
                 || "IPv4 local address not available"
                 || "IPv6 local address not available"
+                || "Unexpected IPv6 nexthop for IPv4 routes"
             ]
             ": "
             <!before "0">  # We aren't interested in errors
