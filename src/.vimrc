@@ -529,3 +529,7 @@ let g:pymode_virtualenv = 0
 
 " Disable pylint
 let g:pymode_lint = 0
+
+" Set wrapping in Python mode, which means we need to turn off default
+" options)
+let g:pymode_options = 0
