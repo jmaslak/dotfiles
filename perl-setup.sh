@@ -38,6 +38,7 @@ doit() {
     fi
 
     cpan install App::ccdiff
+    cpan install App::RouterColorizer
     cpan install CPAN
     cpan install JTM::Boilerplate
 }
