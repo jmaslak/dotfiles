@@ -40,7 +40,7 @@ my $TIMER = 0.01;
 my $NUM      = qr/$RE{num}{real}/;
 my $INT      = qr/$RE{num}{int}{-sign => ''}/;
 my $POSINT   = qr/(?!0)$INT/;
-my $LOWLIGHT = qr/ (?: -30\. [0-9]{2} ) | (?: [ -2 [5-9] \. [0-9]{2} ) /xx;
+my $LOWLIGHT = qr/ (?: -30\. [0-9]{2} ) | (?: -2 [5-9] \. [0-9]{2} ) /xx;
 my $LIGHT    = qr/ (?: $NUM ) | (?: N\/A ) /xx;
 
 my $IPV4CIDR = qr/ $RE{net}{IPv4}
