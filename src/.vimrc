@@ -305,7 +305,7 @@ au Filetype ps1  set autoindent
 
 " Tex
 let g:tex_flavor='latex'
-au FileType tex setl tw=72 formatoptions+=t
+au FileType tex setl tw=72 formatoptions+=t noexpandtab shiftwidth=8 softtabstop=8 spell
 
 " Cool
 au BufNewFile,BufRead *.cl set filetype=cool

@@ -333,6 +333,13 @@ if [ -d "$HOME/.pyenv" ] ; then
     eval "$(pyenv init --path)" >/dev/null
 fi
 
+# Set up texlive
+if [ -d /usr/local/texlive/2021 ] ; then
+    export MANPATH="$MANPATH:/usr/local/texlive/2021/texmf-dist/doc/man"
+    export INFOPATH="$INFOPATH:/usr/local/texlive/2021/texmf-dist/doc/info"
+    export PATH="/usr/local/texlive/2021/bin/x86_64-linux:$PATH"
+fi
+
 # Set config directory
 XDG_CONFIG_HOME=$HOME/.config
 
