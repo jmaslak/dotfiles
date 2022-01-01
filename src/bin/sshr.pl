@@ -164,6 +164,8 @@ sub parse_line ($text) {
     # escape sequence.
     $line =~ s/ ( (?<! [:\.0-9]) (?<! \e \[) [0-9]+ (?! [:0-9]) ) /numerify($1)/egxx;
 
+    $line = parse_line_interface_description($line);
+
     return "$preamble$line$trailer$eol";
 }
 
@@ -351,6 +353,17 @@ s/^ ( \Q  Route map for \E (?: incoming|outgoing ) \Q advertisements is \E \N* )
     $line =~ s/^ ( \QForeign host: \E \N+ ) $/colored($1, $INFO)/exx;
 
     return $line;
+}
+
+sub parse_line_interface_description ($line) {
+    $line =~ s/^ ( (^ | \W) ((?! ::) .)*  (:: ((?! ::) .)* ){2,} ( \W | $ )) /colorize_description($1)/exx;
+    return $line;
+}
+
+sub colorize_description ($desc) {
+    my (@parts) = split '::', $desc;
+    return  join '::',
+            map { colored($_, $INFO) } @parts;
 }
 
 sub ipv4ify ($ip) {
