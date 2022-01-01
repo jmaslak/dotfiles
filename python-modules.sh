@@ -25,6 +25,7 @@ doit() {
     which pip 2>/dev/null >/dev/null
     if [ $? -eq 0 ] ; then  # Installed
         pip install --upgrade pip
+        pip install biblib
         pip install google-api-python-client
         pip install icecream
         pip install oauth2client
