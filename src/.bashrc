@@ -389,6 +389,17 @@ export USE_KEYRING=1
 # We do not want OSX to nag us about needing to "upgrade" to zsh.
 export BASH_SILENCE_DEPRECATION_WARNING=1
 
+# Do we need to update the templates for a new year?
+if [ ! -f "$HOME/.dotfiles.year" ] ; then
+    echo "***"
+    echo "Please re-run install-dotfiles.pl to update template years!"
+    echo "***"
+elif [ "$(cat $HOME/.dotfiles.year)" -ne $(date +%Y) ] ; then
+    echo "***"
+    echo "Please re-run install-dotfiles.pl to update template years!"
+    echo "***"
+fi
+
 # And now we install work stuff.
 if [ -f "$HOME/.bashrc.work" ] ; then
     source "$HOME/.bashrc.work"

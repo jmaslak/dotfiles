@@ -97,7 +97,7 @@ MAIN: {
     install_git_submodules() if $network_available;
     install_files( $rename_old, $environment, '',        'src',         ['.config'] );
     install_files( $rename_old, $environment, '.config', 'src/.config', [], );
-    install_vim_templates($copyright);
+    install_vim_templates($home, $copyright);
     install_git_config( $fullname, $email, $personal_email );
 
     if ( !-d "$home/tmp" ) {
@@ -288,6 +288,26 @@ sub get_personal_email {
     return $email;
 }
 
+sub get_and_update_year {
+    my ( $home ) = @_;
+
+    my (@dtparts) = localtime(time);
+    my $year = $dtparts[5] + 1900;
+
+    my $fileyear = 1900;
+    if ( -e "$home/.dotfiles.year" ) {
+        $fileyear = slurp("$home/.dotfiles.year");
+    }
+
+    if ($fileyear != $year) {
+        print "Creating $home/.dotfiles.year ...";
+        spitout( "$home/.dotfiles.year", $year);
+        print "\n";
+    }
+
+    return $year;
+}
+
 sub install_files {
     if ( scalar(@_) != 5 ) { confess 'invalid call'; }
     my $rename_old  = shift;
@@ -376,13 +396,11 @@ sub install_files_dir {
 }
 
 sub install_vim_templates {
-    if ( scalar(@_) != 1 ) { confess 'invalid call'; }
-    my $copyright = shift;
+    if ( scalar(@_) != 2 ) { confess 'invalid call'; }
+    my ($home, $copyright) = @_;
 
-    my (@dtparts) = gmtime(time);
-    my $year = $dtparts[5] + 1900;
+    my $year = get_and_update_year($home);
 
-    my $home    = $ENV{HOME};
     my $current = getcwd;
 
     opendir( my $dh, "$current/src/.vim/templates" );
