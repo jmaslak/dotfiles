@@ -1,7 +1,7 @@
 #!/bin/bash
 
 #
-# Copyright (C) 2020-2021 Joelle Maslak
+# Copyright (C) 2020-2022 Joelle Maslak
 # All Rights Reserved - See License
 #
 
@@ -9,6 +9,7 @@ PYTHON36=3.6.14
 PYTHON37=3.7.11
 PYTHON38=3.8.11
 PYTHON39=3.9.6
+PYTHON310=3.10.1
 
 doit() {
     # Defensive umask
@@ -47,9 +48,10 @@ doit() {
     install $PYTHON37
     install $PYTHON38
     install $PYTHON39
+    install $PYTHON310
 
-    echo "Setting Python version to $PYTHON39"
-    pyenv global "$PYTHON39"
+    echo "Setting Python version to $PYTHON310"
+    pyenv global "$PYTHON310"
     pyenv rehash
 
     cd "$CWD"
