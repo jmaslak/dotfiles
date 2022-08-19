@@ -1,7 +1,7 @@
 #!/bin/bash
 
 #
-# Copyright (C) 2018-2019 Joelle Maslak
+# Copyright (C) 2018-2022 Joelle Maslak
 # All Rights Reserved - See License
 #
 
@@ -13,21 +13,27 @@ doit() {
         bash-completion \
         bc \
         build-essential \
+        cmake \
         curl \
         dnsutils \
         git \
         iputils-ping \
         libbz2-dev \
+        libc-ares-dev \
         libffi-dev \
         libglib2.0-dev \
         liblzma-dev \
         libncurses-dev \
+        libpq-dev \
         libreadline-dev \
         libsqlite3-dev \
         libssl-dev \
+        liblzma-dev \
+        lzma \
         man \
         netcat \
         net-tools \
+        postgresql-common \
         rsync \
         sqlite3 \
         tmux \
