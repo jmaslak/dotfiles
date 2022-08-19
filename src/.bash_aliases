@@ -245,6 +245,10 @@ ssh() {
     if [[ " $* " =~ $RE ]] ; then
         ROUTER=yes
     fi
+    RE=" o[th][0-9][0-9].[a-z][a-z][a-z][0-9][0-9][0-9] "
+    if [[ " $* " =~ $RE ]] ; then
+        ROUTER=yes
+    fi
     RE=" pe[0-9][0-9].[a-z][a-z][a-z][0-9][0-9][0-9] "
     if [[ " $* " =~ $RE ]] ; then
         ROUTER=yes
@@ -283,4 +287,9 @@ ssh() {
         fi
     fi
 }
+
+# Alias for school, work, and research chdir commands
+alias school="cd /data/jmaslak/doc/school"
+alias work="cd /data/jmaslak/doc/work"
+alias research="cd /data/jmaslak/research"
 
