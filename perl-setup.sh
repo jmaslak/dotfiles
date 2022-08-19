@@ -37,6 +37,7 @@ doit() {
         exit 2
     fi
 
+    cpan install App::ack
     cpan install App::ccdiff
     cpan install App::RouterColorizer
     cpan install CPAN
