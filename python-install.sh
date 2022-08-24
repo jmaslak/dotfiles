@@ -22,7 +22,7 @@ doit() {
     # Install pyenv
     if [ ! -d "$HOME/.pyenv" ] ; then
         cd "$HOME"
-        git clone git://github.com/yyuu/pyenv.git .pyenv
+        git clone https://github.com/yyuu/pyenv.git .pyenv
         export PYENV_ROOT="$HOME/.pyenv"
         export PATH="$PYENV_ROOT/bin:$PATH"
         eval "$(pyenv init -)"
@@ -41,7 +41,7 @@ doit() {
     # Install pyenv-virtualenv
     if [ ! -d "$HOME/.pyenv/plugins/pyenv-virtualenv" ] ; then
         cd "$HOME/.pyenv/plugins"
-        git clone git://github.com/yyuu/pyenv-virtualenv.git pyenv-virtualenv
+        git clone https://github.com/yyuu/pyenv-virtualenv.git pyenv-virtualenv
     fi
 
     install $PYTHON36
