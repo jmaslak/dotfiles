@@ -46,13 +46,13 @@ doit() {
         whois \
         zlib1g-dev
     sudo apt-get install -y \
-        neovim \
-        emacs25-nox
+        neovim
     sudo apt-get install -y docker.io
     sudo apt-get install -y ubuntu-release-upgrader-core
     sudo apt-get install -y libfindbin-libs-perl
+    sudo apt-get install -y libusb-1.0-0.dev
     sudo apt-get install -y time
-    sudo apt-get install -y python-autopep8
+    sudo apt-get install -y python3-autopep8
     sudo apt-get install -y python3-autopep8
     sudo apt-get install -y python3-venv tox
     sudo apt-get install -y rustc
