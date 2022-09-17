@@ -32,6 +32,7 @@ doit() {
         liblzma-dev \
         lzma \
         man \
+        ncal \
         netcat \
         net-tools \
         postgresql-common \
