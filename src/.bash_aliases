@@ -233,7 +233,8 @@ ssh() {
     SSH=$(which ssh)
 
     ROUTER=no
-    RE=" [aceo]s[0-9][0-9].[a-z][a-z][a-z][0-9][0-9][0-9] "
+    VT102=no
+    RE=" [ace]s[0-9][0-9].[a-z][a-z][a-z][0-9][0-9][0-9] "
     if [[ " $* " =~ $RE ]] ; then
         ROUTER=yes
     fi
@@ -249,8 +250,9 @@ ssh() {
     if [[ " $* " =~ $RE ]] ; then
         ROUTER=yes
     fi
-    RE=" o[th][0-9][0-9].[a-z][a-z][a-z][0-9][0-9][0-9] "
+    RE=" o[hst][0-9][0-9].[a-z][a-z][a-z][0-9][0-9][0-9] "
     if [[ " $* " =~ $RE ]] ; then
+        VT102=yes
         ROUTER=yes
     fi
     RE=" pe[0-9][0-9].[a-z][a-z][a-z][0-9][0-9][0-9] "
@@ -270,7 +272,6 @@ ssh() {
         ROUTER=yes
     fi
 
-    VT102=no
     if [ "$*" == "sw02" ] ; then
         VT102=yes
     fi
