@@ -16,7 +16,8 @@ doit() {
         cmake \
         curl \
         dnsutils \
-	fonts-noto \
+        ethtool \
+        fonts-noto \
         git \
         iputils-ping \
         libbz2-dev \
