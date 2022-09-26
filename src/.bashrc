@@ -366,12 +366,12 @@ fi
 #
 if which pactl >/dev/null 2>/dev/null ; then
     ACTIVECAM=$(
-        pactl list short sources | \
+        pactl list short sources 2>/dev/null | \
             egrep "alsa_input.*USB_Camera.*RUNNING" | \
             awk '{print $2}'
     )
     JABRADEV=$(
-        pactl list short sources | \
+        pactl list short sources 2>/dev/null | \
             egrep "alsa_input.*Jabra" | \
             awk '{print $2}'
     )
