@@ -233,7 +233,8 @@ ssh() {
     SSH=$(which ssh)
 
     ROUTER=no
-    RE=" [aceo]s[0-9][0-9].[a-z][a-z][a-z][0-9][0-9][0-9] "
+    VT102=no
+    RE=" [ace]s[0-9][0-9].[a-z][a-z][a-z][0-9][0-9][0-9] "
     if [[ " $* " =~ $RE ]] ; then
         ROUTER=yes
     fi
@@ -249,8 +250,9 @@ ssh() {
     if [[ " $* " =~ $RE ]] ; then
         ROUTER=yes
     fi
-    RE=" o[th][0-9][0-9].[a-z][a-z][a-z][0-9][0-9][0-9] "
+    RE=" o[hst][0-9][0-9].[a-z][a-z][a-z][0-9][0-9][0-9] "
     if [[ " $* " =~ $RE ]] ; then
+        VT102=yes
         ROUTER=yes
     fi
     RE=" pe[0-9][0-9].[a-z][a-z][a-z][0-9][0-9][0-9] "
@@ -270,7 +272,6 @@ ssh() {
         ROUTER=yes
     fi
 
-    VT102=no
     if [ "$*" == "sw02" ] ; then
         VT102=yes
     fi
@@ -292,8 +293,20 @@ ssh() {
     fi
 }
 
-# Alias for school, work, and research chdir commands
 alias school="cd /data/jmaslak/doc/school"
 alias work="cd /data/jmaslak/doc/work"
 alias research="cd /data/jmaslak/research"
 
+# Toggle your bluetooth device (e.g., Bose Headphones) between A2DP mode (high-fidelity playback with NO microphone) and HSP/HFP, codec mSBC (lower playback quality, microphone ENABLED)
+function tbt {
+    current_mode_is_a2dp=`pactl list | grep Active | grep a2dp`
+    card=`pactl list | grep "Name: bluez_card." | cut -d ' ' -f 2`
+
+    if [ -n "$current_mode_is_a2dp" ]; then
+        echo "Switching $card to mSBC (headset, for making calls)..."
+        pactl set-card-profile $card headset_head_unit
+    else
+        echo "Switching $card to A2DP (high-fidelity playback)..."
+        pactl set-card-profile $card a2dp_sink
+    fi
+}
