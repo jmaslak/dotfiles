@@ -50,8 +50,8 @@ doit() {
     install $PYTHON310
     install $PYTHON311
 
-    echo "Setting Python version to $PYTHON310"
-    pyenv global "$PYTHON310"
+    echo "Setting Python version to $PYTHON311"
+    pyenv global "$PYTHON311"
     pyenv rehash
 
     cd "$CWD"
