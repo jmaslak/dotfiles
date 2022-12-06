@@ -5,11 +5,11 @@
 # All Rights Reserved - See License
 #
 
-PYTHON36=3.6.14
-PYTHON37=3.7.11
-PYTHON38=3.8.11
-PYTHON39=3.9.6
-PYTHON310=3.10.6
+PYTHON37=3.7.15
+PYTHON38=3.8.15
+PYTHON39=3.9.15
+PYTHON310=3.10.8
+PYTHON311=3.11.0
 
 doit() {
     # Defensive umask
@@ -44,14 +44,14 @@ doit() {
         git clone https://github.com/yyuu/pyenv-virtualenv.git pyenv-virtualenv
     fi
 
-    install $PYTHON36
     install $PYTHON37
     install $PYTHON38
     install $PYTHON39
     install $PYTHON310
+    install $PYTHON311
 
-    echo "Setting Python version to $PYTHON310"
-    pyenv global "$PYTHON310"
+    echo "Setting Python version to $PYTHON311"
+    pyenv global "$PYTHON311"
     pyenv rehash
 
     cd "$CWD"

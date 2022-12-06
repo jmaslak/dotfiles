@@ -32,6 +32,7 @@ doit() {
         pip install PyYAML
         pip install virtualenv
         pip install ansicolors
+        pip install Pygments
     else
         echo ""
         echo "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!"
