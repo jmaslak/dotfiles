@@ -16,6 +16,7 @@ doit() {
         cmake \
         curl \
         dnsutils \
+        entr \ # Execute things when a file is modified
         ethtool \
         fonts-noto \
         git \
@@ -58,6 +59,10 @@ doit() {
     sudo apt-get install -y python3-autopep8
     sudo apt-get install -y python3-venv tox
     sudo apt-get install -y rustc
+
+    if [ "$DISPLAY" != "" ] ; then
+        sudo apt-get install -y emacs-gtk
+    fi
 }
 
 doit "$@"
