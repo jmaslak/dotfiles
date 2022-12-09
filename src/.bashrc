@@ -276,13 +276,16 @@ if [ "$(which dircolors 2>/dev/null)" != "" ] ; then
 fi
 
 # X running?
-# if [ "$(which xrdb 2>/dev/null)" != "" ] ; then
-#     if [ "$DISPLAY" != "" ] ; then
-#         if [ -f ~/.Xresources ] ; then
+if [ "$(which xrdb 2>/dev/null)" != "" ] ; then
+    if [ "$DISPLAY" != "" ] ; then
+        if [ "$(which setxkbmap 2>/dev/null)" != "" ] ; then
+            setkbmap -option altwin:swap_lalt_lwin
+        fi
+#        if [ -f ~/.Xresources ] ; then
 #             xrdb -merge -I$HOME ~/.Xresources &
 #         fi
-#     fi
-# fi
+    fi
+fi
 
 # Do we have a Kerberos ticket?
 if [ "$(which klist 2>/dev/null)" != "" ] ; then
@@ -317,7 +320,7 @@ export UNCRUSTIFY_CONFIG=${HOME}/.uncrustify
 if [ -d "$HOME/.rvm/bin" ] ; then
     export PATH="$PATH:$HOME/.rvm/bin";
 fi
-    
+
 # Load RVM into shell session *as a function*
 if [ -s "$HOME/.rvm/scripts/rvm" ] ; then
     source "$HOME/.rvm/scripts/rvm"

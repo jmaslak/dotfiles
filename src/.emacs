@@ -67,6 +67,11 @@
 (global-set-key (kbd "C-c a") #'org-agenda)
 (global-set-key (kbd "C-c c") #'org-capture)
 
+;; Git
+(unless (package-installed-p 'magit)
+  (package-install 'magit))
+(require 'magit)
+
 ;; Delete autosave files and backup files
 ;; Borrowed from https://se30.xyz/conf.html
 (defvar jmaslak/autosave-dir "~/tmp")
@@ -78,3 +83,14 @@
 ;; No startup messages
 (setq inhibit-startup-message t)
 (setq initial-scratch-message nil)
+
+;; Define function to turn off tabs, from
+;; https://emacs.stackexchange.com/questions/52047/how-to-change-shell-script-mode-indentation-not-to-use-tabs
+(defun turn-off-indent-tabs-mode ()
+  (setq indent-tabs-mode nil))
+
+;; Shell script config
+(add-hook 'sh-mode-hook #'turn-off-indent-tabs-mode)
+
+;; Debug on error
+(toggle-debug-on-error t)
