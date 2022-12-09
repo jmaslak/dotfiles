@@ -1,3 +1,11 @@
+;;; emacs-init -- Initialize Emacs
+
+;;; Commentary:
+
+;; This is Joelle's Emacs configuration file
+
+;;; Code:
+
 ;; Debug on error
 (setq debug-on-error t)
 
@@ -20,6 +28,7 @@
   :config
   (global-undo-tree-mode 1))
 (setq undo-tree-history-directory-alist '(("." . "~/tmp")))
+(require 'evil)
 (use-package evil
   :ensure t
   :config
@@ -27,10 +36,14 @@
   (evil-set-undo-system 'undo-tree))
 
 ;; LaTeX
+;(defun TeX-ispell-skip-setchar ()
+;    "Placate flycheck."
+;  (nil)
 (use-package auctex
   :ensure t
   :defer t)
 (add-hook 'LaTeX-mode-hook #'visual-line-mode)
+(require 'tex-ispell)
 (eval-after-load "tex-ispell"
   '(progn
      (TeX-ispell-skip-setcar
@@ -90,6 +103,7 @@
 ;; Define function to turn off tabs, from
 ;; https://emacs.stackexchange.com/questions/52047/how-to-change-shell-script-mode-indentation-not-to-use-tabs
 (defun turn-off-indent-tabs-mode ()
+    "Turn off indent tabs mode."
   (setq indent-tabs-mode nil))
 
 ;; Shell script config
@@ -103,3 +117,18 @@
 (global-diff-hl-mode)
 (add-hook 'magit-pre-refresh-hook 'diff-hl-magit-pre-refresh)
 (add-hook 'magit-post-refresh-hook 'diff-hl-magit-post-refresh)
+
+;; Flycheck
+(use-package flycheck
+  :ensure t
+  :defer t
+  :hook (prog-mode . flycheck-mode))
+
+;; Raku
+(use-package raku-mode
+  :ensure t
+  :defer t)
+
+
+(provide '.emacs)
+;;; .emacs ends here
