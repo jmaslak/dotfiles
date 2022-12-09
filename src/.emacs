@@ -74,3 +74,7 @@
 (setq auto-save-file-name-transforms
       `((".*" ,jmaslak/autosave-dir t)))
 (setq make-backup-files nil)
+
+;; No startup messages
+(setq inhibit-startup-message t)
+(setq initial-scratch-message nil)
