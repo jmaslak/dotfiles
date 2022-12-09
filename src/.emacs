@@ -129,6 +129,5 @@
   :ensure t
   :defer t)
 
-
 (provide '.emacs)
 ;;; .emacs ends here
