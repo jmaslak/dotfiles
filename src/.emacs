@@ -1,3 +1,6 @@
+;; Debug on error
+(setq debug-on-error t)
+
 ;; Use the MALPA repo
 (require 'package)
 (add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/"))
@@ -92,5 +95,11 @@
 ;; Shell script config
 (add-hook 'sh-mode-hook #'turn-off-indent-tabs-mode)
 
-;; Debug on error
-(toggle-debug-on-error t)
+;; Git highlights
+(unless (package-installed-p 'diff-hl)
+  (package-install 'diff-hl))
+(use-package diff-hl)
+(diff-hl-flydiff-mode)
+(global-diff-hl-mode)
+(add-hook 'magit-pre-refresh-hook 'diff-hl-magit-pre-refresh)
+(add-hook 'magit-post-refresh-hook 'diff-hl-magit-post-refresh)
