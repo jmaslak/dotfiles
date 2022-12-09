@@ -62,3 +62,11 @@
 (global-set-key (kbd "C-c l") #'org-store-link)
 (global-set-key (kbd "C-c a") #'org-agenda)
 (global-set-key (kbd "C-c c") #'org-capture)
+
+;; Delete autosave files and backup files
+;; Borrowed from https://se30.xyz/conf.html
+(defvar jmaslak/autosave-dir "~/tmp")
+(make-directory jmaslak/autosave-dir t)
+(setq auto-save-file-name-transforms
+      `((".*" ,jmaslak/autosave-dir t)))
+(setq make-backup-files nil)
