@@ -24,6 +24,24 @@
   :ensure t
   :defer t)
 (add-hook 'LaTeX-mode-hook #'visual-line-mode)
+(eval-after-load "tex-ispell"
+  '(progn
+     (TeX-ispell-skip-setcar
+      '(("\\\\autocite" ispell-tex-arg-end 1)))
+     (TeX-ispell-skip-setcar
+      '(("\\\\citeyear" ispell-tex-arg-end 1)))
+     (TeX-ispell-skip-setcar
+      '(("\\\\nptextcite" ispell-tex-arg-end 1)))
+     (TeX-ispell-skip-setcar
+      '(("\\\\nptextcites" ispell-tex-arg-end 1)))
+     (TeX-ispell-skip-setcar
+      '(("\\\\parencite" ispell-tex-arg-end 1)))
+     (TeX-ispell-skip-setcar
+      '(("\\\\parencites" ispell-tex-arg-end 1)))
+     (TeX-ispell-skip-setcar
+      '(("\\\\textncite" ispell-tex-arg-end 1)))
+     (TeX-ispell-skip-setcar
+      '(("\\\\textncites" ispell-tex-arg-end 1)))))
 
 ;; Display line numbers
 (global-display-line-numbers-mode)
@@ -39,3 +57,8 @@
 
 ;; Put custom stuff in a different file
 (setq custom-file "~/.custom.el")
+
+;; org-mode
+(global-set-key (kbd "C-c l") #'org-store-link)
+(global-set-key (kbd "C-c a") #'org-agenda)
+(global-set-key (kbd "C-c c") #'org-capture)
