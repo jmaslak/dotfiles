@@ -3,6 +3,9 @@
 (add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/"))
 (package-initialize)
 
+;; Update package contents
+(unless package-archive-contents (package-refresh-contents))
+
 ;; We want the use-package macro
 (unless (package-installed-p 'use-package)
   (package-install 'use-package))
