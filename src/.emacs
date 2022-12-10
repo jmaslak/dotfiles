@@ -129,5 +129,10 @@
   :ensure t
   :defer t)
 
+;; Perl
+(defalias 'perl-mode 'cperl-mode)
+(require 'cperl-mode)
+(setq cperl-indent-level 4)
+
 (provide '.emacs)
 ;;; .emacs ends here
