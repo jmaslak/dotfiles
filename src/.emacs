@@ -28,7 +28,7 @@
   :config
   (global-undo-tree-mode 1))
 (setq undo-tree-history-directory-alist '(("." . "~/tmp")))
-(require 'evil)
+;; (require 'evil)
 (use-package evil
   :ensure t
   :config
