@@ -7,7 +7,7 @@
 ;;; Code:
 
 ;; Debug on error
-(setq debug-on-error t)
+; (setq debug-on-error t)
 
 ;; Use the MALPA repo
 (require 'package)
@@ -62,6 +62,9 @@
       '(("\\\\textncite" ispell-tex-arg-end 1)))
      (TeX-ispell-skip-setcar
       '(("\\\\textncites" ispell-tex-arg-end 1)))))
+
+;; Wrap lines in org mode
+(add-hook 'org-mode-hook #'visual-line-mode)
 
 ;; Display line numbers
 (global-display-line-numbers-mode)
