@@ -64,7 +64,8 @@
       '(("\\\\textncites" ispell-tex-arg-end 1)))))
 
 ;; Wrap lines in org mode
-(add-hook 'org-mode-hook #'visual-line-mode)
+; (add-hook 'org-mode-hook #'visual-line-mode)
+; (add-hook 'org-mode-hook #'adaptive-wrap-prefix-mode)
 
 ;; Display line numbers
 (global-display-line-numbers-mode)
@@ -82,10 +83,19 @@
 (setq custom-file "~/.custom.el")
 
 ;; org-mode
+(require 'org)
+; Some global bindings
 (global-set-key (kbd "C-c l") #'org-store-link)
 (global-set-key (kbd "C-c a") #'org-agenda)
 (global-set-key (kbd "C-c c") #'org-capture)
+; We want to let C-c C-t on a todo add a log line
 (setq org-log-done 'time)
+; We want to have indenting
+(setq org-startup-indented t)
+; Start up without truncating lines.
+(setq org-startup-truncated nil)
+; Wrap lines
+(add-hook 'org-mode-hook #'visual-line-mode)
 
 ;; Git
 (unless (package-installed-p 'magit)
