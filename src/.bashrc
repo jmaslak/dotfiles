@@ -280,7 +280,7 @@ fi
 if [ "$(which xrdb 2>/dev/null)" != "" ] ; then
     if [ "$DISPLAY" != "" ] ; then
         if [ "$(which setxkbmap 2>/dev/null)" != "" ] ; then
-            setxkbmap -option altwin:swap_lalt_lwin
+            setxkbmap -option # altwin:swap_lalt_lwin
         fi
 #        if [ -f ~/.Xresources ] ; then
 #             xrdb -merge -I$HOME ~/.Xresources &
