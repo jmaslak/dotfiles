@@ -9,6 +9,7 @@
 
 doit() {
     sudo apt-get update
+    # entr = Execute things when a file is modified
     sudo apt-get install -y \
         bash-completion \
         bc \
@@ -16,7 +17,7 @@ doit() {
         cmake \
         curl \
         dnsutils \
-        entr \ # Execute things when a file is modified
+        entr \
         ethtool \
         fonts-noto \
         git \
