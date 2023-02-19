@@ -20,6 +20,8 @@ if v:version >= 701
     digraphs po 128169 " 💩 - Pile of Poo
     digraphs ee 8715   " ∋  - Contains
     digraphs e/ 8716   " ∌  - Does not contain
+    digraphs (- 8712   " ∈  - Element of
+    digraphs (/ 8713   " ∉  - Not element of
     digraphs 4^ 8308   " Superscript 4
     digraphs 5^ 8309   " Superscript 5
     digraphs 6^ 8310   " Superscript 6
@@ -141,6 +143,10 @@ set spelllang=en_us           " Set spelling Language
 " To turn off spelling, <leader>s
 nnoremap <leader>S :set spell<cr>
 nnoremap <leader>s :set nospell<cr>
+
+" Set spell check colors
+highlight SpellBad ctermbg=yellow ctermfg=darkgray
+highlight SpellLocal ctermbg=cyan ctermfg=darkgray
 
 " Use templates to create new files
 if has("win32")
