@@ -46,11 +46,7 @@ sub get_random_file(Str:D $dir --> IO) {
     return @tree.pick;
 }
 
-multi sub get_dir_tree(Str:D $dir) {
-    return get_dir_tree($dir.IO);
-}
-
-multi sub get_dir_tree(IO:D $dir) {
+sub get_dir_tree(IO:D() $dir) {
     my @all = $dir.dir;
     @all = @all.grep( { not m/ ^ \. / and not  m/ \/ \. / } );
 
