@@ -5,3 +5,9 @@
 # All Rights Reserved - See License
 #
 
+def main():
+    """Main application function."""
+
+
+if __name__ == "__main__":
+    main()
