@@ -23,12 +23,12 @@ sub MAIN(Str:D $dir = "/home/jmaslak/git/antelope/joelles-notes") {
     }
 
     my $get_word = "";
-    while $get_word ne $word {
+    while $get_word.fc ne $word.fc {
         say "FIND: { $file.Str }, line { $line_number+1 }, word { $word_number + 1 }";
         print "Please enter the word: ";
         my $line = $*IN.get;
         $get_word = $line.trim;
-        if $get_word ne $word {
+        if $get_word.fc ne $word.fc {
             say "Wrong word.";
         }
     }
