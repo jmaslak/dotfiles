@@ -1,3 +1,11 @@
 theme: dark
 ignore-tags:
  - shopping
+monitor:
+  display-time: False
+trello:
+  tasks:
+   "Personal Tasks":
+     "Today": "personal"
+   "Work Tasks":
+     "Today": "work"
