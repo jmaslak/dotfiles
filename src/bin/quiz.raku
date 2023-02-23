@@ -22,9 +22,12 @@ sub MAIN(Str:D $dir = "/home/jmaslak/git/antelope/joelles-notes") {
         $word = Str unless $word ~~ m/^ <[a..z A..Z]>+ $/;
     }
 
+    my $file_pretty = $file.Str;
+    $file_pretty ~~ s/$dir/.../;
+
     my $get_word = "";
     while $get_word.fc ne $word.fc {
-        say "FIND: { $file.Str }, line { $line_number+1 }, word { $word_number+1 }";
+        say "FIND: { $file_pretty }, line { $line_number+1 }, word { $word_number+1 }";
         print "Please enter the word: ";
         my $line = $*IN.get;
         $get_word = $line.trim;
