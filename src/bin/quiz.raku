@@ -51,7 +51,7 @@ sub get_random_file(Str:D $dir --> IO) {
 
 sub get_dir_tree(IO:D() $dir) {
     my @all = $dir.dir;
-    @all = @all.grep( { not m/ ^ \. / and not  m/ \/ \. / and not m/^ "1-1" $/ } );
+    @all = @all.grep( { not m/ ^ \. / and not  m/ \/ \. / and not m/ "1-1" / } );
 
     my @files = @all.grep( { $^a.f } );
     my @dirs  = @all.grep( { $^a.d } );
