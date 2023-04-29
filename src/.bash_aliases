@@ -1,8 +1,14 @@
+#!/bin/bash
 # Alias Definitions
 
 # enable color support of ls and also add handy aliases
 if [ -x /usr/bin/dircolors ]; then
-    test -r ~/.dircolors && eval "$(dircolors -b ~/.dircolors)" || eval "$(dircolors -b)"
+    if [ -r ~/.dircolors ] ; then
+        eval "$(dircolors -b ~/.dircolors)"
+    else 
+        eval "$(dircolors -b)"
+    fi
+
     alias ls='ls --color=auto'
 
     # Don't do this on Solaris
@@ -28,7 +34,7 @@ else
 fi
 
 # Create busy indicator alias
-if which busy.raku >/dev/null 2>/dev/null ; then
+if command -v busy.raku >/dev/null ; then
     alias busy=busy.raku
 fi
 
@@ -39,7 +45,7 @@ alias sqlplus="rlwrap -i -f ~/.sqlplus_history -H ~/.sqlplus_history -s 30000 sq
 alias perl6=raku
 
 # REPL for Raku
-if [ \! -f ~/.rakurepl_history ] ; then
+if [ ! -f ~/.rakurepl_history ] ; then
     touch ~/.rakurepl_history
 fi
 alias rakurepl="rlwrap -i -f ~/.rakurepl_history -H ~/.rakurepl_history -s 30000 raku"
@@ -48,7 +54,7 @@ alias rakurepl="rlwrap -i -f ~/.rakurepl_history -H ~/.rakurepl_history -s 30000
 alias ps-docker='docker ps --format="ID\t{{.ID}}\nNAME\t{{.Names}}\nCOMMAND\t{{.Command}}\nSTATUS\t{{.Status}}\nCREATED\t{{.CreatedAt}}\nPORTS\t{{.Ports}}\n"'
 
 # REPL for Perl5 Debugger
-if [ \! -f ~/.perl5d_repl_history ] ; then
+if [ ! -f ~/.perl5d_repl_history ] ; then
     touch ~/.perl5d_repl_history
 fi
 alias perl5d="rlwrap -i -f ~/.perl5d_repl_history -H ~/.perl5d_repl_history -s 30000 perl -d"
@@ -58,27 +64,27 @@ alias codeprint="vim -c 'colorscheme default' -c hardcopy -c quit"
 alias 4codeprint="vim -c 'colorscheme default' -c 'hardcopy | lpr -o number-up=4' -c quit"
 
 # We use vim
-if which vim >/dev/null 2>/dev/null ; then
-    alias vi="$( which vim )"
+if command -v vim >/dev/null ; then
+    # shellcheck disable=SC2139
+    alias vi="$( command -v vim )"
 fi
 
 # Json Pretty Printer with my options
-if which json_pp >/dev/null 2>&1 ; then
+if command -v json_pp >/dev/null ; then
     alias jsonpp="json_pp -json_opt canonical,indent"
 fi
 
 # ksudo (uses ksu to execute arbitrary commands as root)
-ENVLOC=$(which env)
+ENVLOC=$(command -v env)
+# shellcheck disable=SC2139
 alias ksudo="ksu -q -e $ENVLOC --"
 
 # kinit should use renewable option
-KINIT=$(which kinit 2>/dev/null)
+KINIT=$(command -v kinit)
 if [ "$KINIT" != "" ] ; then
 
     # This works on Heimdal, fails on MIT
-    kinit --version 2>/dev/null
-
-    if [ "$?" -eq 0 ] ; then
+    if kinit --version 2>/dev/null ; then
         # Heimdal Kerberos
         alias kinit="kinit --renewable --lifetime=30h"
     else
@@ -96,6 +102,7 @@ fi
 # Cygwin); Note OS X doesn't have the -o switch...
 if [ "$(uname -o 2>/dev/null )" == "Cygwin" ] ; then
     cpath=$(cygpath "$HOMEDRIVE$HOMEPATH")
+    # shellcheck disable=SC2139
     alias home="cd $cpath ; pwd"
 else
     alias home="cd ~ ; pwd"
@@ -103,7 +110,7 @@ fi
 
 alias lgrep="grep --line-buffered"
 
-if which vim >/dev/null 2>/dev/null ; then
+if command -v vim >/dev/null ; then
     # Do Nothing
     true
 else
@@ -136,13 +143,13 @@ else
             return 1
         fi
         while true ; do
-            echo $NUM
+            echo "$NUM"
 
-            if [ $NUM -eq $END ] ; then
+            if [ "$NUM" -eq "$END" ] ; then
                 return 0
             fi
             
-            NUM=$(( $NUM + $DIR ))
+            NUM=$(( NUM + DIR ))
         done
     }
 fi
@@ -164,7 +171,7 @@ function sol {
         return 1
     fi
     
-    if [ \! -f ~/.ipmi.pw ] ; then
+    if [ ! -f ~/.ipmi.pw ] ; then
         echo "Must include the IPMI password in ~/.ipmi.pw" >&2
         return 2
     fi
@@ -179,7 +186,7 @@ function ipmi {
         return 1
     fi
 
-    if [ \! -f ~/.ipmi.pw ] ; then
+    if [ ! -f ~/.ipmi.pw ] ; then
         echo "Must include the IPMI password in ~/.ipmi.pw" >&2
         return 2
     fi
@@ -204,8 +211,8 @@ alias unswap-escape="setxkbmap -option"
 # Docker bash shell
 function dockerbash {
     if [ "$1" == "" ] ; then
-        IMAGE="$(basename $(pwd)):latest"
-        if [ $(docker ps | grep "$IMAGE" | wc -l) -ne 1 ] ; then
+        IMAGE="$(basename "$(pwd)"):latest"
+        if [ "$(docker ps | grep -c "$IMAGE")" -ne 1 ] ; then
             echo "Couldn't locate image $IMAGE" >&2
             return;
         fi
@@ -213,24 +220,23 @@ function dockerbash {
         IMAGE="$1"
     fi
     
-    docker exec -it `docker ps | grep "$IMAGE" | awk '{print $1}'` /bin/bash
+    docker exec -it "$(docker ps | grep "$IMAGE" | awk '{print $1}')" /bin/bash
 }
 
 # Tmux shell
 function tmuxsh {
-    ssh -t $1 tmux attach \|\| tmux
+    ssh -t "$1" tmux attach \|\| tmux
 }
 
 # SSH w/ color
 ssh() {
-    echo | router-colorizer.pl 2>/dev/null >/dev/null
-    if [ $? -eq 0 ] ; then
+    if echo | router-colorizer.pl 2>/dev/null >/dev/null ; then
         SSHR_WORKS=yes
     else
         SSHR_WORKS=no
     fi
 
-    SSH=$(which ssh)
+    SSH=$(command -v ssh)
 
     ROUTER=no
     VT102=no
@@ -299,14 +305,23 @@ alias research="cd /data/jmaslak/research"
 
 # Toggle your bluetooth device (e.g., Bose Headphones) between A2DP mode (high-fidelity playback with NO microphone) and HSP/HFP, codec mSBC (lower playback quality, microphone ENABLED)
 function tbt {
-    current_mode_is_a2dp=`pactl list | grep Active | grep a2dp`
-    card=`pactl list | grep "Name: bluez_card." | cut -d ' ' -f 2`
+    current_mode_is_a2dp=$(pactl list | grep Active | grep a2dp)
+    card=$(pactl list | grep "Name: bluez_card." | cut -d ' ' -f 2)
 
     if [ -n "$current_mode_is_a2dp" ]; then
         echo "Switching $card to mSBC (headset, for making calls)..."
-        pactl set-card-profile $card headset_head_unit
+        pactl set-card-profile "$card" headset_head_unit
     else
         echo "Switching $card to A2DP (high-fidelity playback)..."
-        pactl set-card-profile $card a2dp_sink
+        pactl set-card-profile "$card" a2dp_sink
     fi
 }
+
+alias d4="raku -e 'say (1..4).roll'"
+alias d6="raku -e 'say (1..6).roll'"
+alias d8="raku -e 'say (1..8).roll'"
+alias d10="raku -e 'say (1..10).roll'"
+alias d12="raku -e 'say (1..12).roll'"
+alias d20="raku -e 'say (1..20).roll'"
+alias d00="raku -e 'say (1..100).roll'"
+

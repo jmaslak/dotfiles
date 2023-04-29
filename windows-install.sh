@@ -1,7 +1,7 @@
 #!/bin/bash
 
 #
-# Copyright (C) 2016 Joelle Maslak
+# Copyright (C) 2016-2023 Joelle Maslak
 # All Rights Reserved - See License
 #
 #
@@ -14,7 +14,7 @@
 
 doit() {
     # Defensive umask
-    if [ $(umask) == '0000' ] ; then
+    if [ "$(umask)" == '0000' ] ; then
         umask 0002
     fi
 
@@ -29,7 +29,7 @@ doit() {
     if [ "$HOMEPATH" == "" ] ; then
         die_error "HOMEPATH not defined"
     fi
-    CYGWINHOME=$(cygpath $HOMEDRIVE$HOMEPATH)
+    CYGWINHOME=$(cygpath "$HOMEDRIVE$HOMEPATH")
     if [ "$CYGWINHOME" == "" ] ; then
         die_error "Could not determine Windows home directory"
     fi
@@ -37,16 +37,16 @@ doit() {
     echo "User Windows home dir: $CYGWINHOME"
 
     echo "Syncing .vim"
-    rsync -av ~/.vim/ $CYGWINHOME/vimfiles/
+    rsync -av ~/.vim/ "$CYGWINHOME/vimfiles/"
     echo ""
 
     echo "Syncing .vimrc"
-    cp ~/.vimrc $CYGWINHOME/_vimrc
+    cp ~/.vimrc "$CYGWINHOME/_vimrc"
     echo ""
 }
 
 die_error() {
-    echo $* >&2
+    echo "$@" >&2
     exit 1
 }
 

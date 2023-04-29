@@ -1,13 +1,13 @@
 #!/bin/bash
 
 #
-# Copyright (C) 2016 Joelle Maslak
+# Copyright (C) 2016-2023 Joelle Maslak
 # All Rights Reserved - See License
 #
 
 doit() {
     # Defensive umask
-    if [ $(umask) == '0000' ] ; then
+    if [ "$(umask)" == '0000' ] ; then
         umask 0002
     fi
 

@@ -1,7 +1,7 @@
 #!/bin/bash
 
 #
-# Copyright © 2018-2022 Joelle Maslak
+# Copyright © 2018-2023 Joelle Maslak
 # All Rights Reserved - See License
 #
 
@@ -15,22 +15,22 @@ fi
 
 doit() {
     # Defensive umask
-    if [ $(umask) == '0000' ] ; then
+    if [ "$(umask)" == '0000' ] ; then
         umask 0002
     fi
 
     echo " --->>  Switching to root directory"
-    cd ~
+    cd ~ || echo >/dev/null
     if [ ! -d .rakubrew ] ; then
         mkdir .rakubrew
-        cd .rakubrew
+        cd .rakubrew || echo >/dev/null
         # This works for Linux.  For MacOS replace "perl" with "macos"
         curl https://rakubrew.org/perl/rakubrew >rakubrew
         chmod a+x rakubrew
-        cd ..
+        cd .. || echo >/dev/null
     fi
 
-    export PATH="~/.rakubrew:$PATH"
+    export PATH="$HOME/.rakubrew:$PATH"
     eval "$(~/.rakubrew/rakubrew init Bash)"
    
     echo " --->>  Building moar"

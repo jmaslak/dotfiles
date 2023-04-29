@@ -1,21 +1,21 @@
 #!/bin/bash
 
 #
-# Copyright (C) 2016-2021 Joelle Maslak
+# Copyright (C) 2016-2023 Joelle Maslak
 # All Rights Reserved - See License
 #
 
 doit() {
     # Defensive umask
-    if [ $(umask) == '0000' ] ; then
+    if [ "$(umask)" == '0000' ] ; then
         umask 0002
     fi
 
     # Workaround Solaris which that doesn't return a useful value (grrr!)
-    ZEF="$( which zef 2>/dev/null )"
-    RAKU="$( which raku 2>/dev/null )"
+    ZEF="$( command -v zef )"
+    RAKU="$( command -v raku )"
 
-    if [ -x "$ZEF" -a -x "$RAKU" ] ; then
+    if [ -x "$ZEF" ] && [ -x "$RAKU" ] ; then
         install_modules
     else
         echo ""
@@ -41,6 +41,7 @@ install_modules() {
     install_module cro Cro
     install_module DateTime::Monotonic
     install_module Digest::SHA1::Native
+    install_module JSON::Fast
     install_module Linenoise            # For REPL
     install_module IO::Socket::SSL      # p6doc ends up failing without this
     install_module NativeHelpers::Blob
@@ -66,8 +67,7 @@ install_module_force() {
         MODULE_NAME="$MODULE"
     fi
 
-    raku -M "$MODULE_NAME" -e exit 2>/dev/null >/dev/null
-    if [ $? -ne 0 ] ; then
+    if ! raku -M "$MODULE_NAME" -e exit 2>/dev/null >/dev/null ; then
         zef install --force-test "$MODULE"
     else
         echo "$MODULE already installed."
@@ -81,8 +81,7 @@ install_module() {
         MODULE_NAME="$MODULE"
     fi
 
-    raku -M "$MODULE_NAME" -e exit 2>/dev/null >/dev/null
-    if [ $? -ne 0 ] ; then
+    if ! raku -M "$MODULE_NAME" -e exit 2>/dev/null >/dev/null ; then
         zef install "$MODULE"
     else
         echo "$MODULE already installed."

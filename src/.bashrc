@@ -1,3 +1,4 @@
+#!/bin/bash
 # Modified from base Unbutu .bashrc
 # ~/.bashrc: executed by bash(1) for non-login shells.
 # see /usr/share/doc/bash/examples/startup-files (in the package bash-doc)
@@ -8,10 +9,10 @@
 # solves some security warnings for Perl in "taint" mode, because on
 # WSL some Windows directories are "world" writeable (they aren't
 # actually, but it's complicated).
-PATH=`echo "$PATH" | tr ":" "\n" | egrep -v '^/mnt/c/' | tr "\n" ":"`
+PATH=$(echo "$PATH" | tr ":" "\n" | grep -Ev '^/mnt/c/' | tr "\n" ":")
 
 # If running on Windows, we need to execute /etc/profile
-if [ ! -z "$SYSTEMROOT" ] ; then
+if [ -n "$SYSTEMROOT" ] ; then
     . /etc/profile
 fi
 
@@ -19,27 +20,26 @@ fi
 [ -z "$PS1" ] && return
 
 # If we are on Bash for Windows, we start in the wrong directory.
-bash --version 2>/dev/null | head -1 | grep 'version 3' >/dev/null
-if [ $? -ne 0 ] ; then
+if ! bash --version 2>/dev/null | head -1 | grep 'version 3' >/dev/null ; then
     # We know we're dealing with BASH 4+ (I'm assuming nobody is running
     # <= 2); But we don't want this firing off on MacOS running old BASH
-    pwd=$(pwd)
-    if [ ${pwd,,} == '/mnt/c/windows/system32' ] ; then
-        cd ~
+    pwd="$(pwd)"
+    if [ "${pwd,,}" == '/mnt/c/windows/system32' ] ; then
+        cd ~ || echo >/dev/null  # Satisfy shellcheck
     fi
-    if [ ${pwd,,} == '/mnt/c/users/jmaslak' ] ; then
-        cd ~
+    if [ "${pwd,,}" == '/mnt/c/users/jmaslak' ] ; then
+        cd ~ || echo >/dev/null  # Satisfy shellcheck
     fi
 fi
 
 # Defensive umask
-if [ $(umask) == '0000' ] ; then
+if [ "$(umask)" == '0000' ] ; then
     umask 0002
 fi
 
 # Make sure we are in $HOME, save old dir
-OLDDIR=$PWD
-cd $HOME
+OLDDIR="$PWD"
+cd "$HOME" || echo >/dev/null  # Satisfy shellcheck
 
 export LC_TIME=C.UTF-8  # We want 24 hour format
 
@@ -103,19 +103,20 @@ esac
 export SHELL="$0"
 # If shell is set to "-su", reset it to bash
 if [ "$SHELL" == "-su" ] ; then
-    SHELL="$(which bash)"
+    SHELL="$(command -v bash)"
 fi
 # If shell is just "bash", set it to path
 if [ "$SHELL" == "bash" ] ; then
-    SHELL="$(which bash)"
+    SHELL="$(command -v bash)"
 fi
 # If shell is "-bash", set it to path
 if [ "$SHELL" == "-bash" ] ; then
-    SHELL="$(which bash)"
+    SHELL="$(command -v bash)"
 fi
 
 # Alias definitions.
 if [ -f ~/.bash_aliases ]; then
+    # shellcheck source=.bash_aliases
     . ~/.bash_aliases
 fi
 
@@ -125,9 +126,10 @@ if [ -f /etc/bash_completion ] && ! shopt -oq posix; then
 fi
 
 # Standard editor
-if which vim >/dev/null 2>/dev/null ; then
-    export VISUAL=$( which vim )
-    export EDITOR=$( which vim )
+if command -v vim >/dev/null ; then
+    VIM=$( command -v vim )
+    export VISUAL=$VIM
+    export EDITOR=$VIM
 fi
 
 # Quagga likes to run everything through a pager. Annoying.
@@ -158,10 +160,11 @@ fi
 
 # Do we have Perl 6's rakubrew installed?
 if [ -d ~/.rakubrew ] ; then
-    eval "$(~/.rakubrew/rakubrew init Bash)"
+    eval "$("$HOME"/.rakubrew/rakubrew init Bash)"
+    RAKUCURRENT=$(rakubrew current | awk '{print $3}')
     export PATH="$HOME/.rakubrew:$PATH"
-    export PATH="$HOME/.rakubrew/$(rakubrew current | awk '{print $3}')/install/share/raku/site/bin:$PATH"
-    export PATH="$HOME/.rakubrew/versions/$(rakubrew current | awk '{print $3}')/install/share/perl6/site/bin:$PATH"
+    export PATH="$HOME/.rakubrew/$RAKUCURRENT/install/share/raku/site/bin:$PATH"
+    export PATH="$HOME/.rakubrew/versions/$RAKUCURRENT/install/share/perl6/site/bin:$PATH"
 fi
 
 # Do we have a Perlbrew?  Prefer local to system perlbrew
@@ -172,13 +175,14 @@ if [ -d ~/perl5/perlbrew ] ; then
 fi
 
 # Load the appropriate perlbrew
-if [ ! -z "$PERLBREW_ROOT" ] ; then
-    . $PERLBREW_ROOT/etc/bashrc
+if [ -n "$PERLBREW_ROOT" ] ; then
+    # shellcheck source=/home/jmaslak/perl5/perlbrew/etc/bashrc
+    . "$PERLBREW_ROOT/etc/bashrc"
 fi
 
 # Local bin directory?  Use it!
 if [ -d ~/bin ] ; then
-    export PATH="~/bin:${PATH}"
+    export PATH="$HOME/bin:${PATH}"
 fi
 
 # Data Analyisis scripts
@@ -196,6 +200,7 @@ fi
 
 # Private stuff that shouldn't be in Github
 if [ -e ~/.bash_private ] ; then
+    # shellcheck source=/home/jmaslak/.bash_private
     . ~/.bash_private
 fi
 
@@ -251,19 +256,15 @@ elif [ -d ~/perltest ] ; then
 fi
 
 # Check for proper terminal functionality
-which infocmp 2>&1 >/dev/null
-if [ $? -eq 0 ] ; then
-    infocmp -1 "$TERM" >/dev/null 2>&1
-    if [ $? -ne 0 ] ; then
+if command -v infocmp >/dev/null ; then
+    if ! infocmp -1 "$TERM" >/dev/null 2>&1 ; then
         export TERM=screen-256color
-        infocmp -1 "$TERM" >/dev/null 2>&1
-        if [ $? -ne 0 ] ; then
+        if ! infocmp -1 "$TERM" >/dev/null 2>&1 ; then
             export TERM=xterm-256color
             infocmp -1 "$TERM" >/dev/null 2>&1
-            if [ $? -ne 0 ] ; then
+            if ! infocmp -1 "$TERM" >/dev/null 2>&1 ; then
                 export TERM=xterm
-                infocmp -1 "$TERM" >/dev/null 2>&1
-                if [ $? -ne 0 ] ; then
+                if ! infocmp -1 "$TERM" >/dev/null 2>&1 ; then
                     export TERM=vt102
                 fi
             fi
@@ -272,14 +273,14 @@ if [ $? -eq 0 ] ; then
 fi
 
 # dircolors installed?
-if [ "$(which dircolors 2>/dev/null)" != "" ] ; then
-    eval $(dircolors "$HOME/.dircolors.ansi-universal")
+if [ "$(command -v dircolors)" != "" ] ; then
+    eval "$(dircolors "$HOME/.dircolors.ansi-universal")"
 fi
 
 # X running?
-if [ "$(which xrdb 2>/dev/null)" != "" ] ; then
+if [ "$(command -v xrdb 2>/dev/null)" != "" ] ; then
     if [ "$DISPLAY" != "" ] ; then
-        if [ "$(which setxkbmap 2>/dev/null)" != "" ] ; then
+        if [ "$(command -v setxkbmap)" != "" ] ; then
             setxkbmap -option # altwin:swap_lalt_lwin
         fi
 #        if [ -f ~/.Xresources ] ; then
@@ -289,7 +290,7 @@ if [ "$(which xrdb 2>/dev/null)" != "" ] ; then
 fi
 
 # Do we have a Kerberos ticket?
-if [ "$(which klist 2>/dev/null)" != "" ] ; then
+if [ "$(command -v klist)" != "" ] ; then
     klist >/dev/null 2>&1
     if [ 0"$?" -eq 0 ] ; then
         # Renew if we can
@@ -298,21 +299,19 @@ if [ "$(which klist 2>/dev/null)" != "" ] ; then
 fi
 
 # Make sure we are in the proper directory
-if [ \! -z $OLDDIR ] ; then
-    if [ -d $OLDDIR ] ; then
-        cd $OLDDIR
-    fi
+if [ -n "$OLDDIR" ] && [ -d "$OLDDIR" ] ; then
+    cd "$OLDDIR" || echo >/dev/null  # to satisfy shellcheck
 fi
 
 # Use vi bindings, not emacs
 set -o vi
 
 # Go
-if [ \! -d ~/go ] ; then
+if [ ! -d ~/go ] ; then
     mkdir ~/go
 fi
 export GOPATH=~/go
-PATH="$PATH:~/go/bin:/usr/local/go/bin"
+PATH="$PATH:$HOME/go/bin:/usr/local/go/bin"
 
 export UNCRUSTIFY_CONFIG=${HOME}/.uncrustify
 
@@ -323,9 +322,11 @@ if [ -d "$HOME/.rvm/bin" ] ; then
 fi
 
 # Load RVM into shell session *as a function*
-if [ -s "$HOME/.rvm/scripts/rvm" ] ; then
-    source "$HOME/.rvm/scripts/rvm"
-fi
+# RVM = Ruby Version Manager
+# if [ -s "$HOME/.rvm/scripts/rvm" ] ; then
+#     # shellcheck source=.rvm/scripts/rvm
+#     source "$HOME/.rvm/scripts/rvm"
+# fi
 
 # We want to default to understanding ANSI color codes in less
 export LESS="-r"
@@ -348,9 +349,6 @@ elif [ -d /usr/local/texlive/2021 ] ; then
     export PATH="/usr/local/texlive/2021/bin/x86_64-linux:$PATH"
 fi
 
-# Set config directory
-XDG_CONFIG_HOME=$HOME/.config
-
 # Remind programs we ahve a light background
 export TERM_BACKGROUND=light
 
@@ -358,7 +356,7 @@ export TERM_BACKGROUND=light
 if [ -d "$HOME/openssl" ] ; then
     export PATH="$HOME/openssl/bin:$PATH"
     export LD_LIBRARY_PATH="$HOME/openssl/lib:$LD_LIBRARY_PATH"
-    if [ "LIBRARY_PATH"z != ""z ] ; then
+    if [ "$LIBRARY_PATH" != "" ] ; then
         export LIBRARY_PATH="$HOME/openssl/lib:$LIBRARY_PATH"
     else
         export LIBRARY_PATH="$HOME/openssl/lib"
@@ -372,15 +370,15 @@ fi
 
 # Set audio device if for some reason the wrong device is set.
 #
-if which pactl >/dev/null 2>/dev/null ; then
+if command -v pactl >/dev/null ; then
     ACTIVECAM=$(
         pactl list short sources 2>/dev/null | \
-            egrep "alsa_input.*USB_Camera.*RUNNING" | \
+            grep -E "alsa_input.*USB_Camera.*RUNNING" | \
             awk '{print $2}'
     )
     JABRADEV=$(
         pactl list short sources 2>/dev/null | \
-            egrep "alsa_input.*Jabra" | \
+            grep -E "alsa_input.*Jabra" | \
             awk '{print $2}'
     )
     if [ "$ACTIVECAM" != "" ] ; then
@@ -402,7 +400,7 @@ if [ ! -f "$HOME/.dotfiles.year" ] ; then
     echo "***"
     echo "Please re-run install-dotfiles.pl to update template years!"
     echo "***"
-elif [ "$(cat $HOME/.dotfiles.year)" -ne $(date +%Y) ] ; then
+elif [ "$(cat "$HOME/.dotfiles.year")" -ne "$(date +%Y)" ] ; then
     echo "***"
     echo "Please re-run install-dotfiles.pl to update template years!"
     echo "***"
@@ -410,10 +408,12 @@ fi
 
 # And now we install work stuff.
 if [ -f "$HOME/.bashrc.work" ] ; then
+    # shellcheck source=/home/jmaslak/.bashrc.work
     source "$HOME/.bashrc.work"
 fi
 
 # And now local overrides
 if [ -f "$HOME/.bashrc.local" ] ; then
+    # shellcheck source=/home/jmaslak/.bashrc.local
     source "$HOME/.bashrc.local"
 fi

@@ -1,7 +1,7 @@
 #!/bin/bash
 
 #
-# Copyright (C) 2018-2022 Joelle Maslak
+# Copyright (C) 2018-2023 Joelle Maslak
 # All Rights Reserved - See License
 #
 
@@ -11,13 +11,12 @@ PERLBREW_MINOR=86
 
 doit() {
     # Defensive umask
-    if [ $(umask) == '0000' ] ; then
+    if [ "$(umask)" == '0000' ] ; then
         umask 0002
     fi
     
     # Check for installation of curl
-    which curl 2>/dev/null >/dev/null
-    if [ $? -ne 0 ] ; then
+    if ! command -v curl >/dev/null ; then
         echo "" >&2
         echo "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!" >&2
         echo "Please install curl first" >&2
@@ -34,17 +33,18 @@ doit() {
     fi
     
     # Source the bashrc
+    # shellcheck source=/home/jmaslak/perl5/perlbrew/etc/bashrc
     . ~/perl5/perlbrew/etc/bashrc
 
     MAJOR=$(perlbrew --version | sed -e 's/.*\///' | sed -e 's/\..*//' )
     MINOR=$(perlbrew --version | sed -e 's/.*\/0\.//')
-    if [ $MAJOR -lt $PERLBREW_MAJOR ] ; then
+    if [ "$MAJOR" -lt "$PERLBREW_MAJOR" ] ; then
         echo " --->> Upgrading perlbrew"
         perlbrew self-upgrade
-    elif [ $MAJOR -gt $PERLBREW_MAJOR ] ; then
+    elif [ "$MAJOR" -gt "$PERLBREW_MAJOR" ] ; then
         # We're new enough
         true
-    elif [ $MINOR -lt $PERLBREW_MINOR ] ; then
+    elif [ "$MINOR" -lt "$PERLBREW_MINOR" ] ; then
         echo " --->> Upgrading perlbrew"
         perlbrew self-upgrade
     fi

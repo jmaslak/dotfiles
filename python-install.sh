@@ -1,7 +1,7 @@
 #!/bin/bash
 
 #
-# Copyright (C) 2020-2022 Joelle Maslak
+# Copyright (C) 2020-2023 Joelle Maslak
 # All Rights Reserved - See License
 #
 
@@ -13,7 +13,7 @@ PYTHON311=3.11.0
 
 doit() {
     # Defensive umask
-    if [ $(umask) == '0000' ] ; then
+    if [ "$(umask)" == '0000' ] ; then
         umask 0002
     fi
 
@@ -21,26 +21,25 @@ doit() {
 
     # Install pyenv
     if [ ! -d "$HOME/.pyenv" ] ; then
-        cd "$HOME"
+        cd "$HOME" || echo >/dev/null
         git clone https://github.com/yyuu/pyenv.git .pyenv
         export PYENV_ROOT="$HOME/.pyenv"
         export PATH="$PYENV_ROOT/bin:$PATH"
         eval "$(pyenv init -)"
     else
-        which pyenv >/dev/null 2>/dev/null
-        if [ $? -ne 0 ] ; then
+        if ! command -v pyenv >/dev/null ; then
             # pyenv not in path.
             export PYENV_ROOT="$HOME/.pyenv"
             export PATH="$PYENV_ROOT/bin:$PATH"
             eval "$(pyenv init -)"
         fi
 
-        cd "$HOME/.pyenv/" && git pull && cd -
+        cd "$HOME/.pyenv/" && git pull && cd - || echo >/dev/null
     fi
 
     # Install pyenv-virtualenv
     if [ ! -d "$HOME/.pyenv/plugins/pyenv-virtualenv" ] ; then
-        cd "$HOME/.pyenv/plugins"
+        cd "$HOME/.pyenv/plugins" || echo >/dev/null
         git clone https://github.com/yyuu/pyenv-virtualenv.git pyenv-virtualenv
     fi
 
@@ -54,7 +53,7 @@ doit() {
     pyenv global "$PYTHON311"
     pyenv rehash
 
-    cd "$CWD"
+    cd "$CWD" || echo >/dev/null
 }
 
 install() {
@@ -63,8 +62,7 @@ install() {
     PYVERREGEX=${PYVER//./\\.}
 
     # Install python
-    pyenv versions 2>/dev/null | grep -P " $PYVERREGEX(\s.*)?$" >/dev/null
-    if [ $? -ne 0 ] ; then
+    if ! pyenv versions 2>/dev/null | grep -P " $PYVERREGEX(\s.*)?$" >/dev/null ; then
         PYTHON_CONFIGURE_OPTS="--enable-shared" pyenv install "$PYVER"
     fi
 }

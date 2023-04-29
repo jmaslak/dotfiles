@@ -1,13 +1,13 @@
 #!/bin/bash
 
 #
-# Copyright (C) 2015-2018 Joelle Maslak
+# Copyright (C) 2015-2023 Joelle Maslak
 # All Rights Reserved - See License
 #
 
 doit() {
     # Defensive umask
-    if [ $(umask) == '0000' ] ; then
+    if [ "$(umask)" == '0000' ] ; then
         umask 0002
     fi
 
@@ -24,8 +24,7 @@ doit() {
     fi
 
     # Check for use of Perlbrew
-    which perl 2>/dev/null | grep perlbrew 2>/dev/null >/dev/null
-    if [ $? -ne 0 ] ; then
+    if ! command -v perl >/dev/null ; then
         echo "" >&2
         echo "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!" >&2
         echo "You should use a Perlbrew perl (perlbrew switch)." >&2

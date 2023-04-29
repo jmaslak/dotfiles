@@ -1,3 +1,4 @@
+#!/bin/bash
 # Unknown source, believed to be from Ubuntu or Debian distribution,
 # Likely licensed uner GNU Public License
 

@@ -1,7 +1,7 @@
 #!/bin/bash
 
 #
-# Copyright (C) 2019 Joelle Maslak
+# Copyright (C) 2019-2023 Joelle Maslak
 # All Rights Reserved - See License
 #
 
@@ -11,7 +11,7 @@ gsettings set org.gnome.mutter edge-tiling false
 BG_COLOR="#EEEEEECC99FF"
 FG_COLOR="#444444444444"
 
-if [ "$(which gconftool-2)" == "" ] ; then
+if ! command -v gconftool-2 >/dev/null ; then
     echo "Please install the gconf2 package" >&2
     exit 1
 fi
