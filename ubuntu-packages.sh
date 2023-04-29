@@ -40,6 +40,7 @@ doit() {
         net-tools \
         postgresql-common \
         rsync \
+        shellcheck \
         sqlite3 \
         tmux \
         traceroute \
