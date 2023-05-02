@@ -236,7 +236,8 @@ ssh() {
         SSHR_WORKS=no
     fi
 
-    SSH=$(command -v ssh)
+    # shellcheck disable=SC2230
+    SSH=$(which ssh)
 
     ROUTER=no
     VT102=no
