@@ -417,3 +417,8 @@ if [ -f "$HOME/.bashrc.local" ] ; then
     # shellcheck source=/home/jmaslak/.bashrc.local
     source "$HOME/.bashrc.local"
 fi
+
+# Set audio mixer
+if command -v amixer >/dev/null ; then
+    amixer -D pulse set Master 50%,50% 2>/dev/null >/dev/null
+fi
