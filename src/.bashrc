@@ -420,5 +420,13 @@ fi
 
 # Set audio mixer
 if command -v amixer >/dev/null ; then
-    amixer -D pulse set Master 50%,50% 2>/dev/null >/dev/null
+    vol_l=$(amixer -D pulse get Master | grep 'Front Left:' | sed -e 's/^[^[]*\[//' | sed -e 's/%.*$//')
+    vol_r=$(amixer -D pulse get Master | grep 'Front Right:' | sed -e 's/^[^[]*\[//' | sed -e 's/%.*$//')
+    if [ "$vol_l" != "$vol_r" ] ; then
+        if [ "$vol_l" -gt "$vol_r" ] ; then
+            amixer -D pulse set Master $vol_l%,$vol_l% 2>/dev/null >/dev/null
+        else
+            amixer -D pulse set Master $vol_r%,$vol_r% 2>/dev/null >/dev/null
+        fi
+    fi
 fi
