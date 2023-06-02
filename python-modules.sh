@@ -31,6 +31,7 @@ doit() {
         pip install virtualenv
         pip install ansicolors
         pip install Pygments
+        pip install openrgb-python
     else
         echo ""
         echo "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!"
