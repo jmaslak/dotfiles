@@ -184,6 +184,9 @@ fi
 if [ -d ~/bin ] ; then
     export PATH="$HOME/bin:${PATH}"
 fi
+if [ -d ~/.local/bin ] ; then
+    export PATH="$HOME/.local/bin:${PATH}"
+fi
 
 # Data Analyisis scripts
 if [ -d ~/analyze ] ; then
