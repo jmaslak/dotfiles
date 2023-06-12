@@ -342,14 +342,12 @@ if [ -d "$HOME/.pyenv" ] ; then
 fi
 
 # Set up texlive
-if [ -d /usr/local/texlive/2022 ] ; then
-    export MANPATH="$MANPATH:/usr/local/texlive/2022/texmf-dist/doc/man"
-    export INFOPATH="$INFOPATH:/usr/local/texlive/2022/texmf-dist/doc/info"
-    export PATH="/usr/local/texlive/2022/bin/x86_64-linux:$PATH"
-elif [ -d /usr/local/texlive/2021 ] ; then
-    export MANPATH="$MANPATH:/usr/local/texlive/2021/texmf-dist/doc/man"
-    export INFOPATH="$INFOPATH:/usr/local/texlive/2021/texmf-dist/doc/info"
-    export PATH="/usr/local/texlive/2021/bin/x86_64-linux:$PATH"
+if [ -d /usr/local/texlive ] ; then
+    # shellcheck disable=SC2012
+    DIR=$(ls -d /usr/local/texlive/20[0-9][0-9] | sort -nr | head -1)
+    export MANPATH="$MANPATH:$DIR/texmf-dist/doc/man"
+    export INFOPATH="$INFOPATH:$DIR/texmf-dist/doc/info"
+    export PATH="$DIR/bin/x86_64-linux:$PATH"
 fi
 
 # Remind programs we ahve a light background
@@ -427,9 +425,9 @@ if command -v amixer >/dev/null ; then
     vol_r=$(amixer -D pulse get Master | grep 'Front Right:' | sed -e 's/^[^[]*\[//' | sed -e 's/%.*$//')
     if [ "$vol_l" != "$vol_r" ] ; then
         if [ "$vol_l" -gt "$vol_r" ] ; then
-            amixer -D pulse set Master $vol_l%,$vol_l% 2>/dev/null >/dev/null
+            amixer -D pulse set Master "$vol_l%,$vol_l%" 2>/dev/null >/dev/null
         else
-            amixer -D pulse set Master $vol_r%,$vol_r% 2>/dev/null >/dev/null
+            amixer -D pulse set Master "$vol_r%,$vol_r%" 2>/dev/null >/dev/null
         fi
     fi
 fi
