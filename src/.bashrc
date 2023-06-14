@@ -130,6 +130,10 @@ if command -v vim >/dev/null ; then
     VIM=$( command -v vim )
     export VISUAL=$VIM
     export EDITOR=$VIM
+elif command -v vi >/dev/null ; then
+    VI=$( command -v vi )
+    export VISUAL=$VI
+    export EDITOR=$VI
 fi
 
 # Quagga likes to run everything through a pager. Annoying.
@@ -282,13 +286,10 @@ fi
 
 # X running?
 if [ "$(command -v xrdb 2>/dev/null)" != "" ] ; then
-    if [ "$DISPLAY" != "" ] ; then
+    if [ "$DISPLAY" != "" -a "$WAYLAND_DISPLAY" == "" ] ; then
         if [ "$(command -v setxkbmap)" != "" ] ; then
             setxkbmap -option # altwin:swap_lalt_lwin
         fi
-#        if [ -f ~/.Xresources ] ; then
-#             xrdb -merge -I$HOME ~/.Xresources &
-#         fi
     fi
 fi
 
@@ -421,8 +422,8 @@ fi
 
 # Set audio mixer
 if command -v amixer >/dev/null ; then
-    vol_l=$(amixer -D pulse get Master | grep 'Front Left:' | sed -e 's/^[^[]*\[//' | sed -e 's/%.*$//')
-    vol_r=$(amixer -D pulse get Master | grep 'Front Right:' | sed -e 's/^[^[]*\[//' | sed -e 's/%.*$//')
+    vol_l=$(amixer -D pulse get Master 2>/dev/null | grep 'Front Left:' | sed -e 's/^[^[]*\[//' | sed -e 's/%.*$//')
+    vol_r=$(amixer -D pulse get Master 2>/dev/null | grep 'Front Right:' | sed -e 's/^[^[]*\[//' | sed -e 's/%.*$//')
     if [ "$vol_l" != "$vol_r" ] ; then
         if [ "$vol_l" -gt "$vol_r" ] ; then
             amixer -D pulse set Master "$vol_l%,$vol_l%" 2>/dev/null >/dev/null
