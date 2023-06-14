@@ -20,6 +20,7 @@ doit() {
     sudo dnf -y install readline-devel
     sudo dnf -y install perl-File-Copy
     sudo dnf -y install perl-Net-Ping
+    sudo dnf -y install vim
 }
 
 doit
