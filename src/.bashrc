@@ -130,6 +130,10 @@ if command -v vim >/dev/null ; then
     VIM=$( command -v vim )
     export VISUAL=$VIM
     export EDITOR=$VIM
+elif command -v vi >/dev/null ; then
+    VI=$( command -v vi )
+    export VISUAL=$VI
+    export EDITOR=$VI
 fi
 
 # Quagga likes to run everything through a pager. Annoying.
@@ -183,6 +187,9 @@ fi
 # Local bin directory?  Use it!
 if [ -d ~/bin ] ; then
     export PATH="$HOME/bin:${PATH}"
+fi
+if [ -d ~/.local/bin ] ; then
+    export PATH="$HOME/.local/bin:${PATH}"
 fi
 
 # Data Analyisis scripts
@@ -279,13 +286,10 @@ fi
 
 # X running?
 if [ "$(command -v xrdb 2>/dev/null)" != "" ] ; then
-    if [ "$DISPLAY" != "" ] ; then
+    if [ "$DISPLAY" != "" -a "$WAYLAND_DISPLAY" == "" ] ; then
         if [ "$(command -v setxkbmap)" != "" ] ; then
             setxkbmap -option # altwin:swap_lalt_lwin
         fi
-#        if [ -f ~/.Xresources ] ; then
-#             xrdb -merge -I$HOME ~/.Xresources &
-#         fi
     fi
 fi
 
@@ -339,14 +343,12 @@ if [ -d "$HOME/.pyenv" ] ; then
 fi
 
 # Set up texlive
-if [ -d /usr/local/texlive/2022 ] ; then
-    export MANPATH="$MANPATH:/usr/local/texlive/2022/texmf-dist/doc/man"
-    export INFOPATH="$INFOPATH:/usr/local/texlive/2022/texmf-dist/doc/info"
-    export PATH="/usr/local/texlive/2022/bin/x86_64-linux:$PATH"
-elif [ -d /usr/local/texlive/2021 ] ; then
-    export MANPATH="$MANPATH:/usr/local/texlive/2021/texmf-dist/doc/man"
-    export INFOPATH="$INFOPATH:/usr/local/texlive/2021/texmf-dist/doc/info"
-    export PATH="/usr/local/texlive/2021/bin/x86_64-linux:$PATH"
+if [ -d /usr/local/texlive ] ; then
+    # shellcheck disable=SC2012
+    DIR=$(ls -d /usr/local/texlive/20[0-9][0-9] | sort -nr | head -1)
+    export MANPATH="$MANPATH:$DIR/texmf-dist/doc/man"
+    export INFOPATH="$INFOPATH:$DIR/texmf-dist/doc/info"
+    export PATH="$DIR/bin/x86_64-linux:$PATH"
 fi
 
 # Remind programs we ahve a light background
@@ -420,13 +422,13 @@ fi
 
 # Set audio mixer
 if command -v amixer >/dev/null ; then
-    vol_l=$(amixer -D pulse get Master | grep 'Front Left:' | sed -e 's/^[^[]*\[//' | sed -e 's/%.*$//')
-    vol_r=$(amixer -D pulse get Master | grep 'Front Right:' | sed -e 's/^[^[]*\[//' | sed -e 's/%.*$//')
+    vol_l=$(amixer -D pulse get Master 2>/dev/null | grep 'Front Left:' | sed -e 's/^[^[]*\[//' | sed -e 's/%.*$//')
+    vol_r=$(amixer -D pulse get Master 2>/dev/null | grep 'Front Right:' | sed -e 's/^[^[]*\[//' | sed -e 's/%.*$//')
     if [ "$vol_l" != "$vol_r" ] ; then
         if [ "$vol_l" -gt "$vol_r" ] ; then
-            amixer -D pulse set Master $vol_l%,$vol_l% 2>/dev/null >/dev/null
+            amixer -D pulse set Master "$vol_l%,$vol_l%" 2>/dev/null >/dev/null
         else
-            amixer -D pulse set Master $vol_r%,$vol_r% 2>/dev/null >/dev/null
+            amixer -D pulse set Master "$vol_r%,$vol_r%" 2>/dev/null >/dev/null
         fi
     fi
 fi
