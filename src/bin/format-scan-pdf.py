@@ -5,6 +5,8 @@
 # All Rights Reserved - See License
 #
 
+# USAGE: format-scan-pdf.py <source.pdf> <destination.pdf>
+
 #
 # DEPENDENCIES (all must be in your PATH):
 #
