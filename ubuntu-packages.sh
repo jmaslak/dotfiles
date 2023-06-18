@@ -21,6 +21,8 @@ doit() {
         ethtool \
         fonts-noto \
         git \
+        graphicmagick \
+        imagemagick \
         iputils-ping \
         libbz2-dev \
         libc-ares-dev \
@@ -28,6 +30,7 @@ doit() {
         libglib2.0-dev \
         liblzma-dev \
         libncurses-dev \
+        libpodofo-utils \
         libpq-dev \
         libreadline-dev \
         libsqlite3-dev \

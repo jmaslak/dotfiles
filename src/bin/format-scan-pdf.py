@@ -5,6 +5,19 @@
 # All Rights Reserved - See License
 #
 
+#
+# DEPENDENCIES (all must be in your PATH):
+#
+#   deskew -> Available via https://galfar.vevb.net/wp/projects/deskew/
+#   evince -> Available on Ubuntu in the evince package
+#   gm --> Available on Ubuntu in the graphicsmagick package
+#   mutool --> Available on Ubuntu in the mupdf-tools package
+#   ocrmypdf --> Available on Ubuntu in the ocrmypdf package
+#   parallel --> Available on Ubuntu in the parallel package
+#   pdftk --> Available on Ubuntu in the pdftk package
+#   pdftoppm --> Available on Ubuntu in the poppler-utils package
+#
+
 import argparse
 import os
 import os.path
@@ -76,6 +89,32 @@ def remove_pages(fn_in, fn_out):
         subprocess.check_call(["pdftk", fn_in, "cat", choice, "output", fn_out])
 
 
+def deskew(fn_in, fn_out, tmpdir):
+    """Prompt user to determine if they want deskewing and, if so, deskew it."""
+    choice = radiolist_dialog(
+        title="Deskew",
+        text="Do you want to deskew the document?\n(note this causes loss of everything but the image of te PDF)",
+        values=[
+            ("no", "No"),
+            ("standard", "Standard Deskew"),
+            ("100", "100 Pixel Margin Deskew"),
+            ("200", "200 Pixel Margin Deskew"),
+        ],
+    ).run()
+
+    if choice is None or choice == "no":
+        shutil.copy(fn_in, fn_out)
+    else:
+        base = os.path.join(tmpdir, "images")
+        subprocess.check_call([f"pdftoppm -cropbox -jpeg {fn_in} {base}"], shell=True)
+        if choice == "standard":
+            subprocess.check_call(["parallel deskew -o {}.new.jpg {} ::: " + f"{base}-*[0-9].jpg"], shell=True)
+        else:
+            margins = f"{choice},{choice},{choice},{choice}"
+            subprocess.check_call(["parallel deskew -r " + margins + " -o {}.new.jpg {} ::: " + f"{base}-*[0-9].jpg"], shell=True)
+        subprocess.check_call([f"gm convert {base}-*.new.jpg {fn_out}"], shell=True)
+
+
 def ocr(fn_in, fn_out):
     """Prompt user to determine if they want OCR and, if so, OCR it."""
     choice = yes_no_dialog(
@@ -86,7 +125,7 @@ def ocr(fn_in, fn_out):
     if not choice:
         shutil.copy(fn_in, fn_out)
     else:
-        subprocess.check_call(["ocrmypdf", fn_in, fn_out])
+        subprocess.check_call(["ocrmypdf", "-d", fn_in, fn_out])
 
 
 def evince(fn):
@@ -115,6 +154,9 @@ def main():
     shutil.copy(fn_tmp2, fn_tmp1)
 
     remove_pages(fn_tmp1, fn_tmp2)
+    shutil.copy(fn_tmp2, fn_tmp1)
+
+    deskew(fn_tmp1, fn_tmp2, tmpdir.name)
     shutil.copy(fn_tmp2, fn_tmp1)
 
     ocr(fn_tmp1, fn_tmp2)
