@@ -18,6 +18,7 @@
 #   parallel --> Available on Ubuntu in the parallel package
 #   pdftk --> Available on Ubuntu in the pdftk package
 #   pdftoppm --> Available on Ubuntu in the poppler-utils package
+#   prompt_toolkit --> Available on Ubuntu in the python3-prompt-toolkit package
 #
 
 import argparse
