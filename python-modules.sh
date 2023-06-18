@@ -23,14 +23,7 @@ doit() {
 
     if command -v pip 2>/dev/null ; then  # Installed
         pip install --upgrade pip
-        pip install biblib
-        pip install google-api-python-client
-        pip install icecream
-        pip install oauth2client
-        pip install PyYAML
-        pip install virtualenv
-        pip install ansicolors
-        pip install Pygments
+        pip install -r requirements.txt
     else
         echo ""
         echo "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!"

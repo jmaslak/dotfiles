@@ -1,0 +1,9 @@
+ansicolors
+biblib
+google-api-python-client
+icecream
+oauth2client
+prompt_toolkit
+Pygments
+PyYAML
+virtualenv

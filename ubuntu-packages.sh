@@ -35,6 +35,7 @@ doit() {
         liblzma-dev \
         lzma \
         man \
+        mupdf-tools \
         ncal \
         netcat \
         net-tools \
