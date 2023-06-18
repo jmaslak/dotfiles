@@ -12,6 +12,7 @@
 #
 #   deskew -> Available via https://galfar.vevb.net/wp/projects/deskew/
 #   evince -> Available on Ubuntu in the evince package
+#   exiftool -> Available on Ubuntu in the libimage-exiftool-perl package
 #   gm --> Available on Ubuntu in the graphicsmagick package
 #   mutool --> Available on Ubuntu in the mupdf-tools package
 #   ocrmypdf --> Available on Ubuntu in the ocrmypdf package
@@ -60,17 +61,50 @@ def rotate(fn_in, fn_out):
         subprocess.check_call(["pdftk", fn_in, "cat", choice, "output", fn_out])
 
 
-def split_pages(fn_in, fn_out):
+def split_pages(fn_in, fn_out, tmpdir):
     """Split pages in scan."""
-    choice = yes_no_dialog(
+    choice = radiolist_dialog(
         title="Page Split",
         text="Do you want to split each input page into two output pages?",
+        values=[
+            ("no", "No"),
+            ("all", "Split all pages"),
+            ("skipfirst", "Split all but FIRST page"),
+            ("skiplast", "Split all but LAST page"),
+            ("skipfirstlast", "Split all but FIRST and LAST page"),
+        ],
     ).run()
 
-    if not choice:
+    if not choice or choice == "no":
         shutil.copy(fn_in, fn_out)
-    else:
+    elif choice == "all":
         subprocess.check_call(["mutool", "poster", "-x", "2", fn_in, fn_out])
+    elif choice == "skipfirst":
+        fn_first = os.path.join(tmpdir, "work-first.pdf")
+        fn_middle = os.path.join(tmpdir, "work-middle.pdf")
+        fn_split = os.path.join(tmpdir, "work-split.pdf")
+        subprocess.check_call(["pdftk", fn_in, "cat", "1", "output", fn_first])
+        subprocess.check_call(["pdftk", fn_in, "cat", "2-end", "output", fn_middle])
+        subprocess.check_call(["mutool", "poster", "-x", "2", fn_middle, fn_split])
+        subprocess.check_call(["pdftk", fn_first, fn_split, "cat", "output", fn_out])
+    elif choice == "skiplast":
+        fn_middle = os.path.join(tmpdir, "work-middle.pdf")
+        fn_last = os.path.join(tmpdir, "work-last.pdf")
+        fn_split = os.path.join(tmpdir, "work-split.pdf")
+        subprocess.check_call(["pdftk", fn_in, "cat", "1-r2", "output", fn_middle])
+        subprocess.check_call(["pdftk", fn_in, "cat", "r1", "output", fn_last])
+        subprocess.check_call(["mutool", "poster", "-x", "2", fn_middle, fn_split])
+        subprocess.check_call(["pdftk", fn_split, fn_last, "cat", "output", fn_out])
+    elif choice == "skipfirstlast":
+        fn_first = os.path.join(tmpdir, "work-first.pdf")
+        fn_middle = os.path.join(tmpdir, "work-middle.pdf")
+        fn_last = os.path.join(tmpdir, "work-last.pdf")
+        fn_split = os.path.join(tmpdir, "work-split.pdf")
+        subprocess.check_call(["pdftk", fn_in, "cat", "1", "output", fn_first])
+        subprocess.check_call(["pdftk", fn_in, "cat", "2-r2", "output", fn_middle])
+        subprocess.check_call(["pdftk", fn_in, "cat", "r1", "output", fn_last])
+        subprocess.check_call(["mutool", "poster", "-x", "2", fn_middle, fn_split])
+        subprocess.check_call(["pdftk", fn_first, fn_split, fn_last, "cat", "output", fn_out])
 
 
 def remove_pages(fn_in, fn_out):
@@ -131,6 +165,17 @@ def ocr(fn_in, fn_out):
         subprocess.check_call(["ocrmypdf", "-d", fn_in, fn_out])
 
 
+def restore_metadata(fn_in, fn_out):
+    """Reset metadata in PDF file."""
+    author = subprocess.check_output(["exiftool", fn_in, "-Author", "-s"]).decode()
+    publisher = subprocess.check_output(["exiftool", fn_in, "-Publisher", "-s"]).decode()
+    title = subprocess.check_output(["exiftool", fn_in, "-Title", "-s"]).decode()
+
+    subprocess.check_call(["exiftool", fn_out, f"-Author={author}"])
+    subprocess.check_call(["exiftool", fn_out, f"-Publisher={publisher}"])
+    subprocess.check_call(["exiftool", fn_out, f"-Title={title}"])
+
+
 def evince(fn):
     """Open evince with filename provided, if X is running."""
     if os.environ.get('DISPLAY') is not None:
@@ -153,7 +198,7 @@ def main():
     rotate(fn_tmp1, fn_tmp2)
     shutil.copy(fn_tmp2, fn_tmp1)
 
-    split_pages(fn_tmp1, fn_tmp2)
+    split_pages(fn_tmp1, fn_tmp2, tmpdir.name)
     shutil.copy(fn_tmp2, fn_tmp1)
 
     remove_pages(fn_tmp1, fn_tmp2)
@@ -165,6 +210,7 @@ def main():
     ocr(fn_tmp1, fn_tmp2)
 
     shutil.copy(fn_tmp2, fn_out)
+    restore_metadata(fn_in, fn_out)
     evince(fn_out)
 
 
