@@ -432,3 +432,23 @@ if command -v amixer >/dev/null ; then
         fi
     fi
 fi
+
+# Quiz me!
+if [ ! -z "$PS1" ]; then
+    if [ -d ~/git/antelope/joelles-notes ] ; then
+        if [ -f ~/.quiz.quizzed ] ; then
+            AGE=$(( $(date +%s) - $(stat --format %Y ~/.quiz.quizzed) ))
+        else
+            AGE=1000000
+        fi
+        if [ $AGE -gt 7200 ] ; then
+            touch ~/.quiz.quizzed  # Allows other sessions to bypass.
+            if which raku >/dev/null ; then
+                until raku ~/bin/quiz.raku ; do
+                    sleep 1
+                done
+                touch ~/.quiz.quizzed
+            fi
+        fi
+    fi
+fi
