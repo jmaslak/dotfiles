@@ -19,6 +19,7 @@ doit() {
         dnsutils \
         entr \
         ethtool \
+        expect \
         fonts-noto \
         git \
         graphicmagick \
