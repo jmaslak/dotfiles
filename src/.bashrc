@@ -286,7 +286,7 @@ fi
 
 # X running?
 if [ "$(command -v xrdb 2>/dev/null)" != "" ] ; then
-    if [ "$DISPLAY" != "" -a "$WAYLAND_DISPLAY" == "" ] ; then
+    if [ "$DISPLAY" != "" ] &&  [ "$WAYLAND_DISPLAY" == "" ] ; then
         if [ "$(command -v setxkbmap)" != "" ] ; then
             setxkbmap -option # altwin:swap_lalt_lwin
         fi
@@ -316,6 +316,10 @@ if [ ! -d ~/go ] ; then
 fi
 export GOPATH=~/go
 PATH="$PATH:$HOME/go/bin:/usr/local/go/bin"
+if [ "$(command -v go)" != "" ] ; then
+    # shellcheck disable=SC2155
+    export GOROOT="$(dirname "$(dirname "$(which go)")")"
+fi
 
 export UNCRUSTIFY_CONFIG=${HOME}/.uncrustify
 
@@ -435,7 +439,7 @@ if command -v amixer >/dev/null ; then
 fi
 
 # Quiz me!
-if [ ! -z "$PS1" ]; then
+if [ -n "$PS1" ]; then
     if [ -d ~/git/antelope/joelles-notes ] ; then
         if [ -f ~/.quiz.quizzed ] ; then
             AGE=$(( $(date +%s) - $(stat --format %Y ~/.quiz.quizzed) ))
