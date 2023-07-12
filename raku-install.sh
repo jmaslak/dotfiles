@@ -10,7 +10,7 @@
 #   ./raku-install.sh blead
 #
 if [ "$RAKUVER" = "" ] ; then
-    RAKUVER=2023.04
+    RAKUVER=2023.06
 fi
 
 doit() {
