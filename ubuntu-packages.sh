@@ -22,7 +22,7 @@ doit() {
         expect \
         fonts-noto \
         git \
-        graphicmagick \
+        graphicsmagick \
         imagemagick \
         iputils-ping \
         libbz2-dev \
