@@ -58,7 +58,7 @@ install_modules() {
     install_module Term::termios
     install_module YAMLish
     install_module if
-    install_module p6doc Pod::Cache
+    install_module rakudoc Pod::Cache
 }
 
 install_module_force() {
