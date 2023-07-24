@@ -314,7 +314,6 @@ set -o vi
 if [ ! -d ~/go ] ; then
     mkdir ~/go
 fi
-export GOPATH=~/go
 PATH="$PATH:$HOME/go/bin:/usr/local/go/bin"
 if [ "$(command -v go)" != "" ] ; then
     # shellcheck disable=SC2155
