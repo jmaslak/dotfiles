@@ -18,9 +18,9 @@ doit() {
     fi
 
     CWD=$(pwd)
-    cd $(HOME)
+    cd "$HOME" || exit
     if [ -d go ] ; then
-        chmod -r a+w go
+        chmod -R u+w go
         rm -rf go
     fi
     mkdir go
