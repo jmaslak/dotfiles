@@ -197,9 +197,6 @@ function ipmi {
     ipmitool -I lanplus -H "$HOST" -U ADMIN -P "$(cat ~/.ipmi_pw)" "$@"
 }
 
-# BGP development
-alias bgp="cd ~/git/antelope/perl6/Perl6-Net-BGP"
-
 # Also want 6prove, an alias to test Raku code
 alias 6prove="RAKULIB=lib prove -e raku --ext .t --ext .t6"
 alias venv="source venv/bin/activate"
