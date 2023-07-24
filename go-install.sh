@@ -19,13 +19,21 @@ doit() {
 
     CWD=$(pwd)
     cd "$HOME" || exit
+    if [ ! -d .go ] ; then
+        mkdir .go
+    fi
+    cd .go || exit
     if [ -d go ] ; then
         chmod -R u+w go
         rm -rf go
     fi
-    mkdir go
 
     curl -L https://go.dev/dl/go1.20.6.linux-amd64.tar.gz | tar -xvzf -
+
+    # shellcheck disable=SC2155
+    export GOROOT="$(pwd)/go"
+    # shellcheck disable=SC2155
+    export PATH="$(pwd)/go/bin:$PATH"
 
     cd "$CWD" || echo >/dev/null
 
@@ -33,4 +41,3 @@ doit() {
 }
 
 doit "$@"
-
