@@ -1,0 +1,5 @@
+Package: framework-tweaks
+Version: 0.1
+Architecture: amd64
+Maintainer: Joelle Maslak <jmaslak@antelope.net>
+Description: Configure useful Framework laptop tweaks

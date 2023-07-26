@@ -66,6 +66,7 @@ doit() {
     sudo apt-get install -y python3-autopep8
     sudo apt-get install -y python3-venv tox
     sudo apt-get install -y rustc
+    sudo apt-get install -y linux-firmware
 
     if [ "$DISPLAY" != "" ] ; then
         sudo apt-get install -y emacs-gtk
