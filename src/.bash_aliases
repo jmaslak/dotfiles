@@ -242,7 +242,7 @@ ssh() {
     if [[ " $* " =~ $RE ]] ; then
         ROUTER=yes
     fi
-    RE=" ar[0-9]"
+    RE=" [al]r[0-9]"
     if [[ " $* " =~ $RE ]] ; then
         ROUTER=yes
     fi
