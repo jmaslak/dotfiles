@@ -327,6 +327,9 @@ au filetype c setl noexpandtab      " Expand Tabs to Spaces
 au filetype c setl sts=8            " Soft Tabs = 8 spaces
 au filetype c setl sw=8             " Shift Width = 8 spaces on indenting
 
+" JSON
+au filetype json setl sts=2 sw=2 expandtab
+
 " Shell
 " Support syntax highlighting for .bash_aliases & .bash_private
 au BufNewFile,BufRead .bash_aliases set filetype=sh
