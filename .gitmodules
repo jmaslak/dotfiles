@@ -20,3 +20,6 @@
 [submodule "src/.vim/bundle/vim-go"]
 	path = src/.vim/bundle/vim-go
 	url = https://github.com/fatih/vim-go
+[submodule "src/.vim/bundle/vim-bundle-mako"]
+	path = src/.vim/bundle/vim-bundle-mako
+	url = https://github.com/sophacles/vim-bundle-mako
