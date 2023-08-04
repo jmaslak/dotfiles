@@ -465,6 +465,7 @@ sub install_git_config {
     system("git config --global diff.tool ccdiff");
     system("git config --global difftool.prompt false");
     system("git config --global init.defaultBranch main");
+    system("git config --global pull.rebase true");
     system(
 "git config --global difftool.ccdiff.cmd 'ccdiff --bg=black --old=bright_red --utf-8 -u -r \$LOCAL \$REMOTE'"
     );
