@@ -5,7 +5,7 @@
 # All Rights Reserved - See License
 #
 
-GOLANGVER=1.20.6
+GOLANGVER=1.21.0
 GOARCH=linux-amd64
 
 URL="https://go.dev/dl/go$GOLANGVER.$GOARCH.tar.gz"
@@ -28,7 +28,7 @@ doit() {
         rm -rf go
     fi
 
-    curl -L https://go.dev/dl/go1.20.6.linux-amd64.tar.gz | tar -xvzf -
+    curl -L https://go.dev/dl/go{$GOLANGVER}.linux-amd64.tar.gz | tar -xvzf -
 
     # shellcheck disable=SC2155
     export GOROOT="$(pwd)/go"
