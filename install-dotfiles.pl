@@ -94,10 +94,14 @@ MAIN: {
     my $email          = get_email( $home, $environment );
     my $personal_email = get_personal_email( $home, $environment );
 
+    if ( $environment eq 'work' ) {
+        assert_work_dotfiles_exist($network_available);
+    }
+
     install_git_submodules() if $network_available;
     install_files( $rename_old, $environment, '',        'src',         ['.config'] );
     install_files( $rename_old, $environment, '.config', 'src/.config', [], );
-    install_vim_templates($home, $copyright);
+    install_vim_templates( $home, $copyright );
     install_git_config( $fullname, $email, $personal_email );
 
     if ( !-d "$home/tmp" ) {
@@ -107,9 +111,40 @@ MAIN: {
     }
 
     if ($network_available) {
-        system "$current/perl-setup.sh"     unless exists $options{skipperl};
-        system "$current/raku-modules.sh"  unless exists $options{skipraku};
+        system "$current/perl-setup.sh"   unless exists $options{skipperl};
+        system "$current/raku-modules.sh" unless exists $options{skipraku};
         # XXX system "$current/python-modules.sh" unless exists $options{skippython};
+    }
+}
+
+sub assert_work_dotfiles_exist {
+    my ($network_available) = @_;
+
+    my $current = getcwd;
+    if ( !-d "$current/../../netflix/dotfiles" ) {
+        print STDERR "Work dotfile directory does not exist.  Please clone that repo.\n";
+        print STDERR "\n";
+        print STDERR "Aborting.\n";
+        exit 1;
+    }
+
+    if ( ( !-f '~/.dotfile.nogit' ) || ( !exists( $ENV{DOTFILE_NOGIT} ) ) ) {
+        chdir '../../netflix/dotfiles' or die($!);
+        if ($network_available) {
+            system "git fetch origin main >/dev/null 2>/dev/null";
+            my $gitrevs = `git rev-list HEAD..origin/main | wc -l`;
+
+            if ( $gitrevs > 0 ) {
+                print STDERR
+                  "Work dotfile directory is not synced with remote, please do a git pull.\n";
+                print STDERR "\n";
+                print STDERR "To avoid this check, set \$ENV{DOTFILE_NOGIT}\n";
+                print STDERR "\n";
+                print STDERR "Aborting.\n";
+                exit 1;
+            }
+        }
+        chdir $current or die($!);
     }
 }
 
@@ -289,7 +324,7 @@ sub get_personal_email {
 }
 
 sub get_and_update_year {
-    my ( $home ) = @_;
+    my ($home) = @_;
 
     my (@dtparts) = localtime(time);
     my $year = $dtparts[5] + 1900;
@@ -299,9 +334,9 @@ sub get_and_update_year {
         $fileyear = slurp("$home/.dotfiles.year");
     }
 
-    if ($fileyear != $year) {
+    if ( $fileyear != $year ) {
         print "Creating $home/.dotfiles.year ...";
-        spitout( "$home/.dotfiles.year", $year);
+        spitout( "$home/.dotfiles.year", $year );
         print "\n";
     }
 
@@ -397,7 +432,7 @@ sub install_files_dir {
 
 sub install_vim_templates {
     if ( scalar(@_) != 2 ) { confess 'invalid call'; }
-    my ($home, $copyright) = @_;
+    my ( $home, $copyright ) = @_;
 
     my $year = get_and_update_year($home);
 
@@ -505,7 +540,7 @@ sub spitout {
 
     my $fh = gensym();
     open( $fh, '>', $fn ) or die("Couldn't create $fn - $!\n");
-    print $fh $val or die($!);
+    print $fh $val        or die($!);
     close($fh);
 
     return;
