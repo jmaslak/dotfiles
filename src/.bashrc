@@ -456,3 +456,6 @@ if [ -n "$PS1" ]; then
         fi
     fi
 fi
+
+# Set cd path!
+CDPATH=~/git/antelope
