@@ -458,4 +458,8 @@ if [ -n "$PS1" ]; then
 fi
 
 # Set cd path!
-CDPATH=~/git/antelope
+if [ "$CDPATH" != "" ] ; then
+    export CDPATH="$CDPATH:~/git/antelope"
+else
+    export CDPATH="~/git/antelope"
+fi
