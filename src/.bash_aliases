@@ -323,3 +323,4 @@ alias d12="raku -e 'say (1..12).roll'"
 alias d20="raku -e 'say (1..20).roll'"
 alias d00="raku -e 'say (1..100).roll'"
 
+alias captions="flatpak run net.sapples.LiveCaptions"
