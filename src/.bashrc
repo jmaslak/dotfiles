@@ -461,5 +461,5 @@ fi
 if [ "$CDPATH" != "" ] ; then
     export CDPATH="$CDPATH:~/git/antelope"
 else
-    export CDPATH="~/git/antelope"
+    export CDPATH=".:~/git/antelope"
 fi
