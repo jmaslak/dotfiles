@@ -291,6 +291,15 @@ autocmd FileType raku setl iskeyword+=@-@
 autocmd FileType raku setl iskeyword+=:
 autocmd FileType raku setl iskeyword+=,
 
+" Turn off some substitutions
+autocmd FileType raku iabbrev <buffer> / /
+autocmd FileType raku iabbrev <buffer> * *
+autocmd FileType raku iabbrev <buffer> e e
+autocmd FileType raku iabbrev <buffer> / /
+
+autocmd FileType raku iabbrev <buffer> div ÷
+autocmd FileType raku iabbrev <buffer> mul ×
+
 " Apache
 " Preserve indent levels
 au FileType apache setlocal indentexpr= autoindent
