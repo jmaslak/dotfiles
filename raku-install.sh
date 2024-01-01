@@ -1,7 +1,7 @@
 #!/bin/bash
 
 #
-# Copyright © 2018-2023 Joelle Maslak
+# Copyright © 2018-2024 Joelle Maslak
 # All Rights Reserved - See License
 #
 
@@ -10,7 +10,7 @@
 #   ./raku-install.sh blead
 #
 if [ "$RAKUVER" = "" ] ; then
-    RAKUVER=2023.06
+    RAKUVER=2023.12
 fi
 
 doit() {

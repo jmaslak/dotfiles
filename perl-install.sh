@@ -1,13 +1,13 @@
 #!/bin/bash
 
 #
-# Copyright (C) 2018-2023 Joelle Maslak
+# Copyright (C) 2018-2024 Joelle Maslak
 # All Rights Reserved - See License
 #
 
-CURRENTPERL=perl-5.38.0
+CURRENTPERL=perl-5.38.2
 PERLBREW_MAJOR=0
-PERLBREW_MINOR=86
+PERLBREW_MINOR=98
 
 doit() {
     # Defensive umask
