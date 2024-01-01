@@ -3,6 +3,8 @@
 # ~/.bashrc: executed by bash(1) for non-login shells.
 # see /usr/share/doc/bash/examples/startup-files (in the package bash-doc)
 # for examples
+#
+# Modifications Copyright (C) 2024 by Joelle Maslak
 
 
 # We remove anything from the PATH that begins with /mnt/c/ - this
@@ -463,3 +465,8 @@ if [ "$CDPATH" != "" ] ; then
 else
     export CDPATH=".:~/git/antelope"
 fi
+
+# Make sure git copyright hook is in place
+for i in "$HOME"/git/*/*/.git/hooks ; do
+    ln -s "$HOME/bin/pre-commit-copyright-check" "$i/pre-commit" 2>/dev/null
+done

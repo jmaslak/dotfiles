@@ -64,14 +64,18 @@ I could not locate a language for the cisco.vim plugin.  The original is
 available at:
     https://github.com/CyCoreSystems/vim-cisco-ios
 
+The Copyright Check (pre-commit-copyright-check) git hook is licensed
+under the Apache 2.0 license.  The hook is available at:
+    https://github.com/pc-m/copyright_check
+
 =====
 
 All code added by me is licensed under the Artistic License 2.0,
 included below.
 
-               The Artistic License 2.0
+                The Artistic License 2.0
 
-         Copyright (c) 2015-2016 J. Maslak
+         Copyright (c) 2015-2024 Joelle Maslak
 
      Everyone is permitted to copy and distribute verbatim copies
       of this license document, but changing it is not allowed.
