@@ -332,9 +332,9 @@ au FileType cpp setl softtabstop=2 shiftwidth=2 expandtab
 
 " C
 au BufNewFile,BufRead *.h set filetype=c
-au filetype c setl noexpandtab      " Expand Tabs to Spaces
-au filetype c setl sts=8            " Soft Tabs = 8 spaces
-au filetype c setl sw=8             " Shift Width = 8 spaces on indenting
+au filetype c setl expandtab        " Expand Tabs to Spaces
+au filetype c setl sts=4            " Soft Tabs = 4 spaces
+au filetype c setl sw=4             " Shift Width = 4 spaces on indenting
 
 " JSON
 au filetype json setl sts=2 sw=2 expandtab
