@@ -468,5 +468,7 @@ fi
 
 # Make sure git copyright hook is in place
 for i in "$HOME"/git/*/*/.git/hooks ; do
-    ln -s "$HOME/bin/pre-commit-copyright-check" "$i/pre-commit" 2>/dev/null
+    if [ ! -e "$i/pre-commit" ] ; then
+        ln -s "$HOME/bin/pre-commit-copyright-check" "$i/pre-commit" 2>/dev/null
+    fi
 done
