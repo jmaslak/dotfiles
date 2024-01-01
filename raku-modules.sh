@@ -1,7 +1,7 @@
 #!/bin/bash
 
 #
-# Copyright (C) 2016-2023 Joelle Maslak
+# Copyright (C) 2016-2024 Joelle Maslak
 # All Rights Reserved - See License
 #
 
@@ -48,7 +48,7 @@ install_modules() {
     install_module Net::Netmask
     install_module OO::Monitors
     install_module P5getpriority        # For getppid
-    install_module P5localtime
+    install_module_force P5localtime
     install_module StrictClass
     # install_module StrictNamedArguments # Doesn't work in 6.d
     install_module Sys::Domainname
