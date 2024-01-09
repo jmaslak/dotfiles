@@ -380,19 +380,19 @@ fi
 #
 if command -v pactl >/dev/null ; then
     ACTIVECAM=$(
-        pactl list short sources 2>/dev/null | \
-            grep -E "alsa_input.*USB_Camera.*RUNNING" | \
+        pactl info 2>/dev/null | \
+            grep -E "Default Source: alsa_input.*USB_Camera" | \
             awk '{print $2}'
     )
-    JABRADEV=$(
+    ROGERDEV=$(
         pactl list short sources 2>/dev/null | \
-            grep -E "alsa_input.*Jabra" | \
+            grep -E "alsa_input.*Roger_On" | \
             awk '{print $2}'
     )
     if [ "$ACTIVECAM" != "" ] ; then
-        if [ "$JABRADEV" != "" ] ; then
-            echo "Changing audio device from camera to headset"
-            pactl set-default-source "$JABRADEV"
+        if [ "$ROGERDEV" != "" ] ; then
+            echo "Changing audio device from camera to Roger ON"
+            pactl set-default-source "$ROGERDEV"
         fi
     fi
 fi
