@@ -1,14 +1,19 @@
 #!/bin/bash
 
 #
-# Copyright (C) 2023 Joelle Maslak
+# Copyright (C) 2023-2024 Joelle Maslak
 # All Rights Reserved - See License
 #
 
-if [ \! -d ~/pdf ] ; then
-    echo "You must create a ~/pdf directory and put your input file there." >&2
-    exit 1
-fi
-docker run -it --user $(id -u):$(id -g) -v ~/pdf:/usr/pdf jmaslak/format-scan-pdf "$@"
+set -e
 
+if [ \! -d ~/pdf ] ; then
+    mkdir ~/pdf
+fi
+
+SRC="$1"
+DST="$2"
+cp "$SRC" ~/pdf/in.$$.pdf
+docker run -it --user $(id -u):$(id -g) -v ~/pdf:/usr/pdf jmaslak/format-scan-pdf in.$$.pdf out.$$.pdf
+cp ~/pdf/out.$$.pdf "$DST"
 
