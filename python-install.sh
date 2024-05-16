@@ -5,7 +5,6 @@
 # All Rights Reserved - See License
 #
 
-PYTHON38=3.8.15
 PYTHON39=3.9.15
 PYTHON310=3.10.8
 PYTHON311=3.11.7
@@ -45,7 +44,6 @@ doit() {
         git clone https://github.com/yyuu/pyenv-virtualenv.git pyenv-virtualenv
     fi
 
-    install $PYTHON38
     install $PYTHON39
     install $PYTHON310
     install $PYTHON311
