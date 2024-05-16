@@ -378,6 +378,7 @@ fi
 
 # Set audio device if for some reason the wrong device is set.
 #
+# This is in the pulseaudio-utils module
 if command -v pactl >/dev/null ; then
     ACTIVECAM=$(
         pactl info 2>/dev/null | \
