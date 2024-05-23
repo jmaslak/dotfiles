@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
+set -e
 
 #
 # Copyright (C) 2018-2024 Joelle Maslak
