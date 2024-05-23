@@ -182,8 +182,19 @@ fi
 
 # Load the appropriate perlbrew
 if [ -n "$PERLBREW_ROOT" ] ; then
+    set -o | grep hashall | grep off >/dev/null
+    HASHSTATUS=$?
+    if [ $HASHSTATUS -eq 0 ] ; then
+        # Deal with NixOS which defaults to no hashing, but perlbrew
+        # expects to need to clear the cache (hash -r), which gives an
+        # error when hashing is off
+        set -h
+    fi
     # shellcheck source=/home/jmaslak/perl5/perlbrew/etc/bashrc
     . "$PERLBREW_ROOT/etc/bashrc"
+    if [ $HASHSTATUS -eq 0 ] ; then
+        set +h
+    fi
 fi
 
 # Local bin directory?  Use it!
