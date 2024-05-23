@@ -30,7 +30,10 @@ doit() {
 
     if [ ! -d ~/perl5/perlbrew ] ; then
         echo " --->> Installing perlbrew"
-        curl -L https://install.perlbrew.pl | bash
+        curl -L https://install.perlbrew.pl | \
+            sed -e s_/usr/local/bin/perl_/run/current-system/sw/bin/perl_ | \
+            bash
+        exit
     fi
     
     # Source the bashrc
