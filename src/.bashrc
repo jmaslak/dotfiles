@@ -182,9 +182,8 @@ fi
 
 # Load the appropriate perlbrew
 if [ -n "$PERLBREW_ROOT" ] ; then
-    set -o | grep hashall | grep off >/dev/null
-    HASHSTATUS=$?
-    if [ $HASHSTATUS -eq 0 ] ; then
+    if [ ! -o hashall ] ; then
+        HASHSTATUS="off"
         # Deal with NixOS which defaults to no hashing, but perlbrew
         # expects to need to clear the cache (hash -r), which gives an
         # error when hashing is off
@@ -192,7 +191,7 @@ if [ -n "$PERLBREW_ROOT" ] ; then
     fi
     # shellcheck source=/home/jmaslak/perl5/perlbrew/etc/bashrc
     . "$PERLBREW_ROOT/etc/bashrc"
-    if [ $HASHSTATUS -eq 0 ] ; then
+    if [ "$HASHSTATUS" == "off" ] ; then
         set +h
     fi
 fi
