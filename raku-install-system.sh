@@ -1,7 +1,7 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 #
-# Copyright (C) 2020-2023 Joelle Maslak
+# Copyright (C) 2020-2024 Joelle Maslak
 # All Rights Reserved - See License
 #
 
