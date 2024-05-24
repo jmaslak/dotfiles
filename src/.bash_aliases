@@ -298,7 +298,7 @@ ssh() {
 }
 
 alias school="cd /data/jmaslak/doc/school"
-alias work="cd /data/jmaslak/doc/work"
+# alias work="cd /data/jmaslak/doc/work"
 alias research="cd /data/jmaslak/research"
 
 # Toggle your bluetooth device (e.g., Bose Headphones) between A2DP mode (high-fidelity playback with NO microphone) and HSP/HFP, codec mSBC (lower playback quality, microphone ENABLED)
