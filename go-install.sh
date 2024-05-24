@@ -1,11 +1,11 @@
 #!/bin/bash
 
 #
-# Copyright (C) 2023 Joelle Maslak
+# Copyright (C) 2024 Joelle Maslak
 # All Rights Reserved - See License
 #
 
-GOLANGVER=1.21.0
+GOLANGVER=1.22.0
 GOARCH=linux-amd64
 
 URL="https://go.dev/dl/go$GOLANGVER.$GOARCH.tar.gz"
