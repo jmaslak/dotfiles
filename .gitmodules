@@ -21,3 +21,6 @@
 [submodule "src/.vim/bundle/vim-bundle-mako"]
 	path = src/.vim/bundle/vim-bundle-mako
 	url = https://github.com/sophacles/vim-bundle-mako
+[submodule "src/.vim/bundle/python-mode"]
+	path = src/.vim/bundle/python-mode
+	url = https://github.com/python-mode/python-mode
