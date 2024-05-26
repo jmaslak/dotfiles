@@ -15,9 +15,6 @@
 	path = src/.vim/bundle/vim-raku
 	url = https://github.com/raku/vim-raku
 	branch = master
-[submodule "src/.vim/bundle/python-mode"]
-	path = src/.vim/bundle/python-mode
-	url = https://github.com/python-mode/python-mode
 [submodule "src/.vim/bundle/vim-go"]
 	path = src/.vim/bundle/vim-go
 	url = https://github.com/fatih/vim-go
