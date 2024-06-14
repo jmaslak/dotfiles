@@ -9,4 +9,5 @@ Net-SSLeay-1.85/SSLeay.o
 Net-SSLeay-1.85/blib/
 Net-SSLeay-1.85/pm_to_blib
 openssl-1.*
-
+src/bin/grpc
+src/bin/ubuntu.sh
