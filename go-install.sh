@@ -5,7 +5,7 @@
 # All Rights Reserved - See License
 #
 
-GOLANGVER=1.22.0
+GOLANGVER=1.22.4
 GOARCH=linux-amd64
 
 URL="https://go.dev/dl/go$GOLANGVER.$GOARCH.tar.gz"
