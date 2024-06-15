@@ -40,6 +40,7 @@ doit() {
     cpan install App::RouterColorizer
     cpan install CPAN
     cpan install JTM::Boilerplate
+    cpan install Perl::LanguageServer
     cpan install Term::Tmux::Layout
 }
 
