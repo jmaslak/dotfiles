@@ -275,6 +275,10 @@ ssh() {
     if [[ " $* " =~ $RE ]] ; then
         ROUTER=yes
     fi
+    RE=" cs[0-9]"
+    if [[ " $* " =~ $RE ]] ; then
+        ROUTER=yes
+    fi
 
     if [ "$*" == "sw02" ] ; then
         VT102=yes
