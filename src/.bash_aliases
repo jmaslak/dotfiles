@@ -287,9 +287,9 @@ ssh() {
     if [ "$SSHR_WORKS $ROUTER" == "yes yes" ] ; then
         # SSHR works good
         if [ "$VT102" == "yes" ] ; then
-            TERM=vt102 $SSH "$@" | router-colorizer.pl
+            ( TERM=vt102 $SSH "$@" {fd}>&2- 2>&1 1>&${fd} | router-colorizer.pl ) {fd2}>&2- 2>&1 1>&${fd2} | router-colorizer.pl
         else
-            $SSH "$@" | router-colorizer.pl
+            ( $SSH "$@" {fd}>&2- 2>&1 1>&${fd} | router-colorizer.pl ) {fd2}>&2- 2>&1 1>&${fd2} | router-colorizer.pl
         fi
     else
         # No SSHR
