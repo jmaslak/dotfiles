@@ -4,7 +4,7 @@
 # see /usr/share/doc/bash/examples/startup-files (in the package bash-doc)
 # for examples
 #
-# Modifications Copyright (C) 2024 by Joelle Maslak
+# Modifications Copyright (C) 2024-2025 by Joelle Maslak
 
 
 # We remove anything from the PATH that begins with /mnt/c/ - this
@@ -483,3 +483,20 @@ for i in "$HOME"/git/*/*/.git/hooks ; do
         ln -s "$HOME/bin/pre-commit-copyright-check" "$i/pre-commit" 2>/dev/null
     fi
 done
+
+if [ ! -o hashall ] ; then
+    HASHSTATUS="off"
+    # Deal with NixOS which defaults to no hashing, but perlbrew
+    # expects to need to clear the cache (hash -r), which gives an
+    # error when hashing is off
+    set -h
+fi
+
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+
+if [ "$HASHSTATUS" == "off" ] ; then
+    set +h
+fi
+
