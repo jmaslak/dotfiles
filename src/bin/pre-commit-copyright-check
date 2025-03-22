@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 #
 # Copyright (C) 2015-2016 Pascal Cadotte Michaud
+# Copyright (C) 2025 Joelle Maslak
 #
 # This hook checks if there is a copyright in the each file included
 # in this commit.
@@ -16,7 +17,7 @@ fail=0
 
 for filename in $files_to_check
 do
-    grep -Poq "(:c|C)opyright.*${current_year}" <(git show ":${filename}")
+    egrep -oq "(:c|C)opyright.*${current_year}" <(git show ":${filename}")
     if [[ $? -ne 0 ]]; then
       grep -iq 'copyright' -m1 <(git show ":${filename}")
       if [[ $? -ne 1 ]]; then
