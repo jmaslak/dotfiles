@@ -1,10 +1,13 @@
+" Copyright (C) 2025 Joelle Maslak
 " Everything pretty much should be UTF-8 by now
 set encoding=utf-8
 
 " Some environments don't set the shell right, which causes
 " issues with gitgutter and probably other things that assume
 " the shell is actually bash and not sh.
-if !empty(glob("/bin/bash"))
+if $SHELL != "/bin/sh"
+    " do nothing
+elseif !empty(glob("/bin/bash"))
     set shell=/bin/bash
 elseif !empty(glob("/usr/bin/bash"))
     set shell=/usr/bin/bash
