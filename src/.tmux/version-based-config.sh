@@ -23,6 +23,10 @@ load_tmux_conf() {
     fi
 
     tmux source-file "$tmux_home/tmux_all.conf"
+
+    if uname | grep -q Darwin ; then
+        tmux source-file "$tmux_home/tmux_osx.conf"
+    fi
 }
 
 load_tmux_conf
