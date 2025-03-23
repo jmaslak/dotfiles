@@ -174,3 +174,6 @@ for i in "$HOME"/git/*/*/.git/hooks ; do
     fi
 done
 
+# Set up compleation
+autoload -Uz compinit
+compinit 

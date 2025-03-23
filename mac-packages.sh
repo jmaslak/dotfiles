@@ -8,10 +8,10 @@
 # Install some packages needed for other tasks (such as building Perl)
 
 doit() {
-    brew install dircolors
     brew install lesspipe
     brew install tmux
     brew install reattach-to-user-namespace
+    brew install watch
 }
 
 foo() {
