@@ -156,12 +156,9 @@ if [ -d /usr/local/cuda-7.0 ] ; then
     export PATH="${PATH}:${CUDA_HOME}/bin"
 fi
 
-# For MacPorts
-if [ -d /opt/local/bin ] ; then
-    export PATH="$PATH:/opt/local/bin"
-fi
-if [ -d /opt/local/sbin ] ; then
-    export PATH="$PATH:/opt/local/sbin"
+# For Homebrew
+if [ -f "/opt/homebrew/bin/brew" ] ; then
+    eval "$(/opt/homebrew/bin/brew shellenv)"
 fi
 
 # Do we have Perl 6's rakubrew installed?
