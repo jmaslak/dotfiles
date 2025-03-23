@@ -364,8 +364,8 @@ if [ -d /usr/local/texlive ] ; then
     export PATH="$DIR/bin/x86_64-linux:$PATH"
 fi
 
-# Remind programs we ahve a light background
-export TERM_BACKGROUND=light
+# Remind programs we have a dark background
+export TERM_BACKGROUND=dark
 
 # Add OpenSSL if it's installed locally
 if [ -d "$HOME/openssl" ] ; then
