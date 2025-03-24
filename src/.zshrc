@@ -14,7 +14,7 @@
 OLDDIR="$PWD"
 cd "$HOME" || echo >/dev/null  # Satisfy shellcheck
 
-export LC_TIME=C.UTF-8  # we want 24 hour format
+export LC_TIME=C  # we want 24 hour format
 
 # Ignore commands with a leading space, for history purposes
 setopt HIST_IGNORE_SPACE
