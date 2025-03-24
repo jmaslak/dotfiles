@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 #
-# Copyright (C) 2020-2024 Joelle Maslak
+# Copyright (C) 2020-2025 Joelle Maslak
 # All Rights Reserved - See License
 #
 
@@ -62,7 +62,7 @@ install() {
     PYVERREGEX=${PYVER//./\\.}
 
     # Install python
-    if ! pyenv versions 2>/dev/null | grep -P " $PYVERREGEX(\s.*)?$" >/dev/null ; then
+    if ! pyenv versions 2>/dev/null | egrep " $PYVERREGEX(\s.*)?$" >/dev/null ; then
         PYTHON_CONFIGURE_OPTS="--enable-shared" pyenv install "$PYVER"
     fi
 }
