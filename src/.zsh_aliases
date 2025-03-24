@@ -1,0 +1,91 @@
+#!/bin/zsh
+# Alias Definitions
+
+# SSH w/ color
+ssh() {
+    if echo | router-colorizer.pl 2>/dev/null >/dev/null ; then
+        SSHR_WORKS=yes
+    else
+        SSHR_WORKS=no
+    fi
+
+    # shellcheck disable=SC2230
+    SSH=$(which ssh)
+
+    ROUTER=no
+    VT102=no
+    RE=" [ace]s[0-9][0-9].[a-z][a-z][a-z][0-9][0-9][0-9] "
+    if [[ " $* " =~ $RE ]] ; then
+        ROUTER=yes
+    fi
+    RE=" [al]r[0-9]"
+    if [[ " $* " =~ $RE ]] ; then
+        ROUTER=yes
+    fi
+    RE=" dcr[0-9][0-9].[a-z][a-z][a-z][0-9][0-9][0-9] "
+    if [[ " $* " =~ $RE ]] ; then
+        ROUTER=yes
+    fi
+    RE=" ert[0-9][0-9].[a-z][a-z][a-z][0-9][0-9][0-9] "
+    if [[ " $* " =~ $RE ]] ; then
+        ROUTER=yes
+    fi
+    RE=" o[hst][0-9][0-9].[a-z][a-z][a-z][0-9][0-9][0-9] "
+    if [[ " $* " =~ $RE ]] ; then
+        VT102=yes
+        ROUTER=yes
+    fi
+    RE=" pe[0-9][0-9].[a-z][a-z][a-z][0-9][0-9][0-9] "
+    if [[ " $* " =~ $RE ]] ; then
+        ROUTER=yes
+    fi
+    RE=" rr[0-9][0-9].[a-z][a-z][a-z][0-9][0-9][0-9] "
+    if [[ " $* " =~ $RE ]] ; then
+        ROUTER=yes
+    fi
+    RE=" wdm[0-9][0-9].[a-z][a-z][a-z][0-9][0-9][0-9] "
+    if [[ " $* " =~ $RE ]] ; then
+        ROUTER=yes
+    fi
+    RE=" fw[0-9]"
+    if [[ " $* " =~ $RE ]] ; then
+        ROUTER=yes
+    fi
+    RE=" sw[0-9]"
+    if [[ " $* " =~ $RE ]] ; then
+        ROUTER=yes
+    fi
+    RE=" cs[0-9]"
+    if [[ " $* " =~ $RE ]] ; then
+        ROUTER=yes
+    fi
+
+    if [ "$*" == "sw02" ] ; then
+        VT102=yes
+    fi
+
+    if [ "$SSHR_WORKS $ROUTER" == "yes yes" ] ; then
+        # SSHR works good
+        if [ "$VT102" == "yes" ] ; then
+            ( TERM=vt102 $SSH "$@" {fd}>&2- 2>&1 1>&${fd} | router-colorizer.pl ) {fd2}>&2- 2>&1 1>&${fd2} | router-colorizer.pl
+        else
+            ( $SSH "$@" {fd}>&2- 2>&1 1>&${fd} | router-colorizer.pl ) {fd2}>&2- 2>&1 1>&${fd2} | router-colorizer.pl
+        fi
+    else
+        # No SSHR
+        if [ "$VT102" == "yes" ] ; then
+            TERM=vt102 $SSH "$@"
+        else
+            $SSH "$@"
+        fi
+    fi
+}
+
+# Simulate dice
+alias d4="raku -e 'say (1..4).roll'"
+alias d6="raku -e 'say (1..6).roll'"
+alias d8="raku -e 'say (1..8).roll'"
+alias d10="raku -e 'say (1..10).roll'"
+alias d12="raku -e 'say (1..12).roll'"
+alias d20="raku -e 'say (1..20).roll'"
+alias d00="raku -e 'say (1..100).roll'"
