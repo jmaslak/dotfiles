@@ -8,10 +8,11 @@
 # Install some packages needed for other tasks (such as building Perl)
 
 doit() {
-    brew install lesspipe
+    brew install lesspipe   # Handle piping of less from non-files
     brew install tmux
-    brew install reattach-to-user-namespace
+    brew install reattach-to-user-namespace   # Used so tmux can access clipboard
     brew install watch
+    brew install xz
 }
 
 foo() {
