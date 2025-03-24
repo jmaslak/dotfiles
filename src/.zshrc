@@ -29,6 +29,11 @@ setopt APPEND_HISTORY
 HISTSIZE=1000
 SAVEHIST=20000
 
+# Keybindings for home/end/delete
+bindkey "^[[1~" beginning-of-line
+bindkey "^[[4~" end-of-line
+bindkey "^[[3~" delete-char
+
 # Less should be more graceful with non-text input files (see
 # lesspipe(1))
 if [ "$(command -v lesspipe)" != "" ] ; then
@@ -48,7 +53,7 @@ fi
 
 # Aliases
 if [ -f ~/.zsh_aliases ] ; then
-    source ~/.bash_aliases
+    source ~/.zsh_aliases
 fi
 
 # Standard editor
