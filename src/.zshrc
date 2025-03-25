@@ -29,10 +29,17 @@ setopt APPEND_HISTORY
 HISTSIZE=1000
 SAVEHIST=20000
 
+# use vi bindings, not emacs
+set -o vi
+
 # Keybindings for home/end/delete
 bindkey "^[[1~" beginning-of-line
 bindkey "^[[4~" end-of-line
 bindkey "^[[3~" delete-char
+
+# Keybindings for emacs-style search in vi mode
+bindkey -M viins '^R' history-incremental-pattern-search-backward
+bindkey -M viins '^F' history-incremental-pattern-search-forward
 
 # Less should be more graceful with non-text input files (see
 # lesspipe(1))
@@ -116,9 +123,6 @@ export LSCOLORS=ExGxBxDxCxEgEdxbxgxcxd
 if [ -n "$OLDDIR" ] && [ -d "$OLDDIR" ] ; then
     cd "$OLDDIR" || echo >/dev/null  # to satisfy shellcheck
 fi
-
-# use vi bindings, not emacs
-set -o vi
 
 # Go!
 if [ ! -d ~/go ] ; then
