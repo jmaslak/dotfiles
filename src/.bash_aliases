@@ -238,6 +238,10 @@ ssh() {
 
     ROUTER=no
     VT102=no
+    RE=" [ac]sw[0-9][0-9].[a-z][a-z][a-z][0-9][0-9][0-9] "
+    if [[ " $* " =~ $RE ]] ; then
+        ROUTER=yes
+    fi
     RE=" [ace]s[0-9][0-9].[a-z][a-z][a-z][0-9][0-9][0-9] "
     if [[ " $* " =~ $RE ]] ; then
         ROUTER=yes
