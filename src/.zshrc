@@ -168,9 +168,9 @@ if [ -f "$HOME/.zshrc.local" ] ; then
 fi
 
 if [ "$CDPATH" != "" ] ; then
-    export CDPATH="$CDPATH:~/git/antelope"
+    export CDPATH="${CDPATH}:${HOME}/git/antelope"
 else
-    export CDPATH=".:~/git/antelope"
+    export CDPATH=".:${HOME}/git/antelope"
 fi
 
 # Make sure git copyright hook is in place
