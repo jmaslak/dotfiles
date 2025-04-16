@@ -10,6 +10,7 @@
 doit() {
     brew install lesspipe   # Handle piping of less from non-files
     brew install tmux
+    brew install readline   # GNU Readline (used by Dist::Zilla!)
     brew install reattach-to-user-namespace   # Used so tmux can access clipboard
     brew install watch
     brew install xz
