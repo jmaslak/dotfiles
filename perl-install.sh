@@ -2,11 +2,11 @@
 set -e
 
 #
-# Copyright (C) 2018-2024 Joelle Maslak
+# Copyright (C) 2018-2025 Joelle Maslak
 # All Rights Reserved - See License
 #
 
-CURRENTPERL=perl-5.40.0
+CURRENTPERL=perl-5.40.2
 PERLBREW_MAJOR=0
 PERLBREW_MINOR=98
 
