@@ -183,3 +183,8 @@ done
 # Set up compleation
 autoload -Uz compinit
 compinit 
+
+# Use secretive for SSH
+if [ "$(command -v secretive)" != "" ] ; then
+    export SSH_AUTH_SOCK="${HOME}/Library/Containers/com.maxgoedjen.Secretive.SecretAgent/Data/socket.ssh"
+fi
