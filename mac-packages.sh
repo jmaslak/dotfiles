@@ -8,6 +8,7 @@
 # Install some packages needed for other tasks (such as building Perl)
 
 doit() {
+    brew install bc
     brew install entr       # Watch files for change and exec commands
     brew install lesspipe   # Handle piping of less from non-files
     brew install tmux
