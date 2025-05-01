@@ -15,6 +15,7 @@ doit() {
     brew install readline   # GNU Readline (used by Dist::Zilla!)
     brew install reattach-to-user-namespace   # Used so tmux can access clipboard
     brew install secretive  # Use hardware enclave for SSH key
+    brew install telnet
     brew install redis
     brew install watch
     brew install xz
