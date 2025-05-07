@@ -5,12 +5,12 @@
 # All Rights Reserved - See License
 #
 
-PYTHON39=3.9.19
 PYTHON310=3.10.14
 PYTHON311=3.11.9
 PYTHON312=3.12.4
+PYTHON313=3.13.3
 
-PREFERRED="$PYTHON311"
+PREFERRED="$PYTHON313"
 
 doit() {
     # Defensive umask
@@ -44,10 +44,10 @@ doit() {
         git clone https://github.com/yyuu/pyenv-virtualenv.git pyenv-virtualenv
     fi
 
-    install $PYTHON39
     install $PYTHON310
     install $PYTHON311
     install $PYTHON312
+    install $PYTHON313
 
     echo "Setting Python version to $PREFERRED"
     pyenv global "$PREFERRED"
