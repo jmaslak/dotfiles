@@ -11,6 +11,7 @@ doit() {
     brew install bc
     brew install entr       # Watch files for change and exec commands
     brew install lesspipe   # Handle piping of less from non-files
+    brew install nmap
     brew install tmux
     brew install readline   # GNU Readline (used by Dist::Zilla!)
     brew install reattach-to-user-namespace   # Used so tmux can access clipboard
