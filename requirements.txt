@@ -7,5 +7,6 @@ openrgb-python
 prompt_toolkit
 Pygments
 PyYAML
+ruff
 virtualenv
         
