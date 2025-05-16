@@ -9,6 +9,7 @@
 
 doit() {
     brew install bc
+    brew install countdown  # Display countdown timer
     brew install entr       # Watch files for change and exec commands
     brew install lesspipe   # Handle piping of less from non-files
     brew install nmap
