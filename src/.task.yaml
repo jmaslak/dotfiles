@@ -5,6 +5,8 @@ monitor:
   display-time: False
 trello:
   tasks:
+   "Goals":
+     "Today": "theme"
    "Personal Tasks":
      "Today": "personal"
    "Work Tasks":
