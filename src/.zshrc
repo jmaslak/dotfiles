@@ -144,6 +144,9 @@ if [ -d "$HOME/.pyenv" ] ; then
     eval "$(pyenv init -)" >/dev/null
 fi
 
+# Enable Python warnings
+export PYTHONWARNINGS=once
+
 # Do we need to update the templates for a new year?
 if [ ! -f "$HOME/.dotfiles.year" ] ; then
     echo "***"
