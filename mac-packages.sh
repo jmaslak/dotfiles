@@ -13,12 +13,13 @@ doit() {
     brew install entr       # Watch files for change and exec commands
     brew install lesspipe   # Handle piping of less from non-files
     brew install nmap
-    brew install tmux
+    brew install protobuf
     brew install readline   # GNU Readline (used by Dist::Zilla!)
     brew install reattach-to-user-namespace   # Used so tmux can access clipboard
     brew install secretive  # Use hardware enclave for SSH key
     brew install shellcheck # Shell linter
     brew install telnet
+    brew install tmux
     brew install redis
     brew install watch
     brew install xz
