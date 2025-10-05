@@ -355,7 +355,7 @@ if [ -d "$HOME/.pyenv" ] ; then
 fi
 
 # Enable Python warnings
-export PYTHONWARNINGS=once
+# export PYTHONWARNINGS=once
 
 # Set up texlive
 if [ -d /usr/local/texlive ] ; then
