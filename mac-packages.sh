@@ -12,6 +12,7 @@ doit() {
     brew install countdown  # Display countdown timer
     brew install entr       # Watch files for change and exec commands
     brew install lesspipe   # Handle piping of less from non-files
+    brew install mtr
     brew install nmap
     brew install protobuf
     brew install readline   # GNU Readline (used by Dist::Zilla!)
