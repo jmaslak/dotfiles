@@ -14,7 +14,9 @@ doit() {
     brew install lesspipe   # Handle piping of less from non-files
     brew install mtr
     brew install nmap
+    brew install nodejs
     brew install protobuf
+    brew install tmux
     brew install readline   # GNU Readline (used by Dist::Zilla!)
     brew install reattach-to-user-namespace   # Used so tmux can access clipboard
     brew install secretive  # Use hardware enclave for SSH key
