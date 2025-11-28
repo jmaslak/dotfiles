@@ -5,12 +5,13 @@
 # All Rights Reserved - See License
 #
 
-PYTHON310=3.10.14
+PYTHON310=3.10.14   # to be removed
 PYTHON311=3.11.9
 PYTHON312=3.12.4
 PYTHON313=3.13.3
+PYTHON314=3.14.0
 
-PREFERRED="$PYTHON313"
+PREFERRED="$PYTHON314"
 
 doit() {
     # Defensive umask
@@ -44,10 +45,11 @@ doit() {
         git clone https://github.com/yyuu/pyenv-virtualenv.git pyenv-virtualenv
     fi
 
-    install $PYTHON310
+    uninstall $PYTHON310
     install $PYTHON311
     install $PYTHON312
     install $PYTHON313
+    install $PYTHON314
 
     echo "Setting Python version to $PREFERRED"
     pyenv global "$PREFERRED"
@@ -58,12 +60,20 @@ doit() {
 
 install() {
     PYVER="$1"
-
     PYVERREGEX=${PYVER//./\\.}
 
     # Install python
     if ! pyenv versions 2>/dev/null | egrep " $PYVERREGEX(\s.*)?$" >/dev/null ; then
         PYTHON_CONFIGURE_OPTS="--enable-shared" pyenv install "$PYVER"
+    fi
+}
+
+uninstall() {
+    PYVER="$1"
+    PYVERREGEX=${PYVER//./\\.}
+
+    if pyenv versions 2>/dev/null | egrep " $PYVERREGEX(\s.)?$" >/dev/null ; then
+        pyenv uninstall "$PYVER"
     fi
 }
 

@@ -21,6 +21,7 @@ doit() {
     brew install reattach-to-user-namespace   # Used so tmux can access clipboard
     brew install secretive  # Use hardware enclave for SSH key
     brew install shellcheck # Shell linter
+    brew install tcl-tk
     brew install telnet
     brew install tmux
     brew install redis
