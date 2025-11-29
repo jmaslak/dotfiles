@@ -8,5 +8,6 @@ prompt_toolkit
 Pygments
 PyYAML
 ruff
+uv
 virtualenv
         
