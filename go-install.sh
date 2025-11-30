@@ -8,9 +8,19 @@
 set -euo pipefail
 
 GOLANGVER=1.25.4
-BASEURL="https://go.dev/dl/"
+BASEURL="https://go.dev/dl"
 
 doit() {
+    if [ -x /usr/local/go/bin/go ] ; then
+        ver=$(/usr/local/go/bin/go version | awk '{print $3}')
+        if [ "$ver" == "go$GOLANGVER" ] ; then
+            echo "/usr/local/go/bin/go is up-to-date"
+            return
+        else
+            echo "/usr/local/go/bin/go is out-of-date ($ver), updating..."
+        fi
+    fi
+
     macharch=$(uname -om)
     case "$macharch" in
         "Darwin arm64")
@@ -27,16 +37,16 @@ doit() {
 
     echo "Go architecture: $goarch"
 
-    URL="https://go.dev/dl/go$GOLANGVER.$goarch.tar.gz"
+    url="$BASEURL/go$GOLANGVER.$goarch.tar.gz"
     tmpfile=$(mktemp /tmp/go-download.tgz.XXXXXX)
-    curl -L https://go.dev/dl/go{$GOLANGVER}.${goarch}.tar.gz >$tmpfile
+    curl -L "$url" >"$tmpfile"
 
     echo "Downloaded!"
     echo ""
     echo "You may be asked to provide your password to install golang:"
 
-    sudo tar -xvzf $tmpfile --cd /usr/local
-    rm $tmpfile
+    sudo tar -xvzf "$tmpfile" --cd /usr/local
+    rm "$tmpfile"
 
     # shellcheck disable=SC2155
     export GOROOT="/usr/local/go"
