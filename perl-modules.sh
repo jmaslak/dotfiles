@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 #
-# Copyright (C) 2015-2024 Joelle Maslak
+# Copyright (C) 2015-2025 Joelle Maslak
 # All Rights Reserved - See License
 #
 
@@ -40,7 +40,6 @@ doit() {
     cpan install App::RouterColorizer
     cpan install CPAN
     cpan install JTM::Boilerplate
-    cpan install Perl::LanguageServer
     cpan install Term::Tmux::Layout
 }
 
