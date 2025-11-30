@@ -10,7 +10,9 @@
 brewinstall() {
     mod="$1"
 
-    if ! brew list --versions "$mod" >/dev/null 2>&1 ; then
+    if brew list --versions "$mod" >/dev/null 2>&1 ; then
+        echo "$mod already installed"
+    else
         brew install "$mod"
     fi
 }
