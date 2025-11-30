@@ -1,41 +1,47 @@
 #!/bin/bash
 
 #
-# Copyright (C) 2024 Joelle Maslak
+# Copyright (C) 2024-2025 Joelle Maslak
 # All Rights Reserved - See License
 #
 
-GOLANGVER=1.22.4
-GOARCH=linux-amd64
+set -euo pipefail
 
-URL="https://go.dev/dl/go$GOLANGVER.$GOARCH.tar.gz"
-echo $URL
+GOLANGVER=1.25.4
+BASEURL="https://go.dev/dl/"
 
 doit() {
-    # Defensive umask
-    if [ "$(umask)" == '0000' ] ; then
-        umask 0002
-    fi
+    macharch=$(uname -om)
+    case "$macharch" in
+        "Darwin arm64")
+            goarch="darwin-arm64"
+            ;;
+        "x86_64 GNU/Linux")
+            goarch="linux-amd64"
+            ;;
+        *)
+            echo "Cannot determine go arch for $macharch" >&2
+            exit 1
+            ;;
+    esac
 
-    CWD=$(pwd)
-    cd "$HOME" || exit
-    if [ ! -d .go ] ; then
-        mkdir .go
-    fi
-    cd .go || exit
-    if [ -d go ] ; then
-        chmod -R u+w go
-        rm -rf go
-    fi
+    echo "Go architecture: $goarch"
 
-    curl -L https://go.dev/dl/go{$GOLANGVER}.linux-amd64.tar.gz | tar -xvzf -
+    URL="https://go.dev/dl/go$GOLANGVER.$goarch.tar.gz"
+    tmpfile=$(mktemp /tmp/go-download.tgz.XXXXXX)
+    curl -L https://go.dev/dl/go{$GOLANGVER}.${goarch}.tar.gz >$tmpfile
+
+    echo "Downloaded!"
+    echo ""
+    echo "You may be asked to provide your password to install golang:"
+
+    sudo tar -xvzf $tmpfile --cd /usr/local
+    rm $tmpfile
 
     # shellcheck disable=SC2155
-    export GOROOT="$(pwd)/go"
+    export GOROOT="/usr/local/go"
     # shellcheck disable=SC2155
-    export PATH="$(pwd)/go/bin:$PATH"
-
-    cd "$CWD" || echo >/dev/null
+    export PATH="$HOME/go/bin:$(pwd)/go/bin:$PATH"
 
     ./go-modules.sh
 }

@@ -128,7 +128,7 @@ fi
 if [ ! -d ~/go ] ; then
     mkdir ~/go
 fi
-PATH="$PATH:$HOME/go/bin:$HOME/.go/go/bin:/usr/local/go/bin"
+PATH="$PATH:$HOME/go/bin:/usr/local/go/bin"
 if [ "$(command -v go)" != "" ] ; then
     # shellcheck disable=SC2155
     export GOROOT="$(dirname "$(dirname "$(which go)")")"
