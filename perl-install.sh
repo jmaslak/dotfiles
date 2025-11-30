@@ -6,7 +6,7 @@ set -e
 # All Rights Reserved - See License
 #
 
-CURRENTPERL=perl-5.40.2
+CURRENTPERL=perl-5.42.0
 PERLBREW_MAJOR=0
 PERLBREW_MINOR=98
 
