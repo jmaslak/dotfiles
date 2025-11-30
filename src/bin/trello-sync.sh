@@ -1,7 +1,7 @@
 #!/bin/bash
 
 #
-# Copyright (C) 2023 Joelle Maslak
+# Copyright (C) 2023-2025 Joelle Maslak
 # All Rights Reserved - See License
 #
 
@@ -14,6 +14,7 @@ doit() {
         export PATH="$HOME/.rakubrew/versions/$(rakubrew current | awk '{print $3}')/install/share/perl6/site/bin:$PATH"
     fi
 
+    rm $HOME/.task/.taskview.lock 2>/dev/null
     task.pl6 trello-sync
 }
 
