@@ -1,12 +1,12 @@
 #!/usr/bin/env perl
 #
-# Copyright (C) 2015-2021 Joelle Maslak
+# Copyright (C) 2015-2025 Joelle Maslak
 # All Rights Reserved - See License
 #
 
 use strict;
 use warnings;
-# use autodie;  # This is incompatible with older perl
+use autodie;
 
 use Carp;
 use Cwd;
