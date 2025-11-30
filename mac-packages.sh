@@ -7,28 +7,36 @@
 
 # Install some packages needed for other tasks (such as building Perl)
 
-doit() {
-    brew install bc
-    brew install countdown  # Display countdown timer
-    brew install entr       # Watch files for change and exec commands
-    brew install lesspipe   # Handle piping of less from non-files
-    brew install mtr
-    brew install nmap
-    brew install nodejs
-    brew install protobuf
-    brew install tmux
-    brew install readline   # GNU Readline (used by Dist::Zilla!)
-    brew install reattach-to-user-namespace   # Used so tmux can access clipboard
-    brew install secretive  # Use hardware enclave for SSH key
-    brew install shellcheck # Shell linter
-    brew install tcl-tk
-    brew install telnet
-    brew install tmux
-    brew install redis
-    brew install watch
-    brew install xz
+brewinstall() {
+    mod="$1"
 
-    brew services start redis
+    if ! brew list --versions "$mod" >/dev/null 2>&1 ; then
+        brew install "$mod"
+    fi
+}
+
+doit() {
+    brewinstall bc
+    brewinstall countdown  # Display countdown timer
+    brewinstall entr       # Watch files for change and exec commands
+    brewinstall lesspipe   # Handle piping of less from non-files
+    brewinstall mtr
+    brewinstall nmap
+    brewinstall nodejs
+    brewinstall protobuf
+    brewinstall tmux
+    brewinstall readline   # GNU Readline (used by Dist::Zilla!)
+    brewinstall reattach-to-user-namespace   # Used so tmux can access clipboard
+    brewinstall secretive  # Use hardware enclave for SSH key
+    brewinstall shellcheck # Shell linter
+    brewinstall tcl-tk
+    brewinstall telnet
+    brewinstall tmux
+    brewinstall redis
+    brewinstall watch
+    brewinstall xz
+
+    brew services start redis >/dev/null
 }
 
 doit "$@"
