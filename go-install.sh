@@ -7,7 +7,7 @@
 
 set -euo pipefail
 
-GOLANGVER=1.25.4
+GOLANGVER=1.25.5
 BASEURL="https://go.dev/dl"
 
 doit() {
@@ -45,6 +45,9 @@ doit() {
     echo ""
     echo "You may be asked to provide your password to install golang:"
 
+    if [ -d /usr/local/go ] ; then
+        sudo rm -rf /usr/local/go
+    fi
     sudo tar -xvzf "$tmpfile" --cd /usr/local
     rm "$tmpfile"
 
