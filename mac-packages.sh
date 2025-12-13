@@ -21,6 +21,7 @@ doit() {
     brewinstall bc
     brewinstall countdown  # Display countdown timer
     brewinstall entr       # Watch files for change and exec commands
+    brewinstall gdb
     brewinstall lesspipe   # Handle piping of less from non-files
     brewinstall mtr
     brewinstall nmap
@@ -36,6 +37,7 @@ doit() {
     brewinstall tmux
     brewinstall redis
     brewinstall watch
+    brewinstall wget
     brewinstall xz
 
     brew services start redis >/dev/null
