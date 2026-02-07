@@ -1,7 +1,7 @@
 #!/bin/bash
 
 #
-# Copyright (C) 2025 Joelle Maslak
+# Copyright (C) 2025-2026 Joelle Maslak
 # All Rights Reserved - See License
 #
 
@@ -19,6 +19,7 @@ brewinstall() {
 
 doit() {
     brewinstall bc
+    brewinstall clisp      # Common lisp
     brewinstall countdown  # Display countdown timer
     brewinstall entr       # Watch files for change and exec commands
     brewinstall gdb
