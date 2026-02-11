@@ -31,6 +31,9 @@ doit() {
     brewinstall tmux
     brewinstall readline   # GNU Readline (used by Dist::Zilla!)
     brewinstall reattach-to-user-namespace   # Used so tmux can access clipboard
+    brewinstall rlwrap     # Readline wrapper
+    brewinstall roswell    # Roswell (LISP implementation manager)
+    brewinstall sbcl       # Another common lisp
     brewinstall secretive  # Use hardware enclave for SSH key
     brewinstall shellcheck # Shell linter
     brewinstall tcl-tk
@@ -42,6 +45,13 @@ doit() {
     brewinstall xz
 
     brew services start redis >/dev/null
+
+    # Init roswell
+    if [ ! -d ~/.roswell ] ; then
+        ros init
+        ros install sbcl
+        ros use sbcl
+    fi
 }
 
 doit "$@"
