@@ -1,13 +1,13 @@
 #!/bin/bash
 
 #
-# Copyright (C) 2024-2025 Joelle Maslak
+# Copyright (C) 2024-2026 Joelle Maslak
 # All Rights Reserved - See License
 #
 
 set -euo pipefail
 
-GOLANGVER=1.25.5
+GOLANGVER=1.26.0
 BASEURL="https://go.dev/dl"
 
 doit() {
