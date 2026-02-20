@@ -4,7 +4,7 @@
 # see /usr/share/doc/bash/examples/startup-files (in the package
 # bash-doc) for examples.
 #
-# Modifications Copyright (C) 2024-2025 Joelle Maslak
+# Modifications Copyright (C) 2024-2026 Joelle Maslak
 
 
 # If not running interactively, don't do anything
@@ -196,3 +196,7 @@ fi
 export SDKMAN_DIR="$HOME/.sdkman"
 [[ -s "$HOME/.sdkman/bin/sdkman-init.sh" ]] && source "$HOME/.sdkman/bin/sdkman-init.sh"
 
+# Starship prompt
+if [ "$(command -v starship)" != "" ] ; then
+    eval "$(starship init zsh)"
+fi

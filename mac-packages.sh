@@ -36,6 +36,7 @@ doit() {
     brewinstall sbcl       # Another common lisp
     brewinstall secretive  # Use hardware enclave for SSH key
     brewinstall shellcheck # Shell linter
+    brewinstall starship   # Shell prompt
     brewinstall tcl-tk
     brewinstall telnet
     brewinstall tmux
