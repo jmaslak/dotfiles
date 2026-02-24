@@ -1,0 +1,9 @@
+{
+  "name": "idiom-check",
+  "version": "0.1.0",
+  "description": "Checks source files for idiomatic code patterns and reports violations with fixes",
+  "author": {
+    "name": "Joelle Maslak"
+  }
+}
+

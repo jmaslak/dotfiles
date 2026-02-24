@@ -1,0 +1,13 @@
+{
+    "name": "joelle-plugins",
+    "owner": {
+        "name": "Joelle Maslak"
+    },
+    "plugins": [
+        {
+            "name": "idiom-check",
+            "source": "./plugins/idiom-check",
+            "description": "Checks source files for idiomatic code patterns and reports violations with fixes"
+        }
+    ]
+}

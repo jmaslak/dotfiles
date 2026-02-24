@@ -1,6 +1,6 @@
 #!/usr/bin/env perl
 #
-# Copyright (C) 2015-2025 Joelle Maslak
+# Copyright (C) 2015-2026 Joelle Maslak
 # All Rights Reserved - See License
 #
 
@@ -114,6 +114,7 @@ MAIN: {
         system "$current/perl-modules.sh"   unless exists $options{skipperl};
         system "$current/raku-modules.sh" unless exists $options{skipraku};
         # XXX system "$current/python-modules.sh" unless exists $options{skippython};
+        system "$current/claude-setup.sh" unless exists $options{skipclaude};
     }
 }
 
