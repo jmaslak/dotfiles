@@ -1,13 +1,13 @@
 #!/usr/bin/env bash
 
 #
-# Copyright (C) 2020-2025 Joelle Maslak
+# Copyright (C) 2020-2026 Joelle Maslak
 # All Rights Reserved - See License
 #
 
-PYTHON310=3.10.14   # to be removed
-PYTHON311=3.11.9
-PYTHON312=3.12.4
+PYTHON310=3.10.20   # to be removed
+PYTHON311=3.11.15
+PYTHON312=3.12.13
 PYTHON313=3.13.11
 PYTHON314=3.14.2
 
