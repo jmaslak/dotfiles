@@ -14,6 +14,8 @@ install_plugin() {
 }
 
 doit() {
+    cp ./claude/CLAUDE.md ~/.claude/CLAUDE.md
+
     if ! command -v claude >/dev/null 2>&1 ] ; then
         echo "claude not installed" >&2
         exit 1
