@@ -200,3 +200,14 @@ export SDKMAN_DIR="$HOME/.sdkman"
 if [ "$(command -v starship)" != "" ] ; then
     eval "$(starship init zsh)"
 fi
+
+# bun completions
+[ -s "/Users/jmaslak/.bun/_bun" ] && source "/Users/jmaslak/.bun/_bun"
+
+# bun
+export BUN_INSTALL="$HOME/.bun"
+export PATH="$BUN_INSTALL/bin:$PATH"
+
+# bun
+export BUN_INSTALL="$HOME/.bun"
+export PATH="$BUN_INSTALL/bin:$PATH"
