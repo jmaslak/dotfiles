@@ -26,7 +26,7 @@ doit() {
 
     install_plugin "idiom-check@joelle-plugins"
 
-    ./add-claude-hook.py
+    python add-claude-hook.py
 }
 
 doit "$@"
