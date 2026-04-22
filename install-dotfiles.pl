@@ -111,10 +111,13 @@ MAIN: {
     }
 
     if ($network_available) {
-        system "$current/perl-modules.sh"   unless exists $options{skipperl};
+        system "$current/perl-modules.sh" unless exists $options{skipperl};
         system "$current/raku-modules.sh" unless exists $options{skipraku};
         # XXX system "$current/python-modules.sh" unless exists $options{skippython};
-        system "$current/claude-setup.sh" unless exists $options{skipclaude};
+
+        if ( -d "$home/.claude" ) {
+            system "$current/claude-setup.sh" unless exists $options{skipclaude};
+        }
     }
 }
 
