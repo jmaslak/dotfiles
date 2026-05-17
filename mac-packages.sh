@@ -38,7 +38,7 @@ doit() {
     brewinstall shellcheck # Shell linter
     brewinstall starship   # Shell prompt
     brewinstall tcl-tk
-    brewinstall telnet
+    brewinstall inetutils  # telnet, rsh, etc.
     brewinstall tmux
     brewinstall redis
     brewinstall watch
