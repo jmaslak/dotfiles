@@ -23,7 +23,9 @@ doit() {
     brewinstall countdown  # Display countdown timer
     brewinstall entr       # Watch files for change and exec commands
     brewinstall gdb
+    brewinstall graphviz
     brewinstall lesspipe   # Handle piping of less from non-files
+    brewinstall librdkafka # Add kafka library
     brewinstall mtr
     brewinstall nmap
     brewinstall nodejs
