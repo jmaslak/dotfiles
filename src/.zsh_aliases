@@ -3,7 +3,7 @@
 
 # SSH w/ color
 ssh() {
-    if echo | router-colorizer.pl 2>/dev/null >/dev/null ; then
+    if echo | router-colorizer 2>/dev/null >/dev/null ; then
         SSHR_WORKS=yes
     else
         SSHR_WORKS=no
@@ -68,9 +68,9 @@ ssh() {
     if [ "$SSHR_WORKS $ROUTER" = "yes yes" ] ; then
         # SSHR works good
         if [ "$VT102" = "yes" ] ; then
-            TERM=vt102 command ssh "$@" | router-colorizer.pl
+            TERM=vt102 command ssh "$@" | router-colorizer
         else
-            command ssh "$@" | router-colorizer.pl
+            command ssh "$@" | router-colorizer
         fi
     else
         # No SSHR

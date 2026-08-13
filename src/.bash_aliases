@@ -227,7 +227,7 @@ function tmuxsh {
 
 # SSH w/ color
 ssh() {
-    if echo | router-colorizer.pl 2>/dev/null >/dev/null ; then
+    if echo | router-colorizer 2>/dev/null >/dev/null ; then
         SSHR_WORKS=yes
     else
         SSHR_WORKS=no
@@ -295,9 +295,9 @@ ssh() {
     if [ "$SSHR_WORKS $ROUTER" == "yes yes" ] ; then
         # SSHR works good
         if [ "$VT102" == "yes" ] ; then
-            ( TERM=vt102 $SSH "$@" {fd}>&2- 2>&1 1>&${fd} | router-colorizer.pl ) {fd2}>&2- 2>&1 1>&${fd2} | router-colorizer.pl
+            ( TERM=vt102 $SSH "$@" {fd}>&2- 2>&1 1>&${fd} | router-colorizer ) {fd2}>&2- 2>&1 1>&${fd2} | router-colorizer
         else
-            ( $SSH "$@" {fd}>&2- 2>&1 1>&${fd} | router-colorizer.pl ) {fd2}>&2- 2>&1 1>&${fd2} | router-colorizer.pl
+            ( $SSH "$@" {fd}>&2- 2>&1 1>&${fd} | router-colorizer ) {fd2}>&2- 2>&1 1>&${fd2} | router-colorizer
         fi
     else
         # No SSHR

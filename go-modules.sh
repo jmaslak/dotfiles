@@ -1,7 +1,7 @@
 #!/bin/bash
 
 #
-# Copyright (C) 2024-2025 Joelle Maslak
+# Copyright (C) 2024-2026 Joelle Maslak
 # All Rights Reserved - See License
 #
 
@@ -11,6 +11,10 @@ doit() {
     go install github.com/fullstorydev/grpcurl/cmd/grpcurl@latest
     # go install github.com/go-delve/delve/cmd/dlv@latest
     go install github.com/rakyll/gotest@latest   # colorized gotest command
+    go install github.com/palkan/mulint@latest  # mutex linter
+    go install golang.org/x/vuln/cmd/govulncheck@latest  # Go vulnerability checker
+    go install github.com/securego/gosec/v2/cmd/gosec@latest  # Go security scanner
+    go install github.com/jmaslak/go-router-colorizer/cmd/router-colorizer@latest  # Router colorizer
 }
 
 doit "$@"
