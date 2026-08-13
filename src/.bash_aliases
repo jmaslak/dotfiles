@@ -226,6 +226,13 @@ function tmuxsh {
 }
 
 # SSH w/ color
+# Colorizes stdout and stderr as two independent streams (each through its
+# own router-colorizer) via a double fd-swap, so neither stream's line order
+# gets mangled by merging into the other.
+_ssh_colorized() {
+    ( command ssh "$@" {fd}>&2- 2>&1 1>&${fd} | router-colorizer ) {fd2}>&2- 2>&1 1>&${fd2} | router-colorizer
+}
+
 ssh() {
     if echo | router-colorizer 2>/dev/null >/dev/null ; then
         SSHR_WORKS=yes
@@ -233,78 +240,27 @@ ssh() {
         SSHR_WORKS=no
     fi
 
-    # shellcheck disable=SC2230
-    SSH=$(which ssh)
-
     ROUTER=no
     VT102=no
-    RE=" [ac]sw[0-9][0-9].[a-z][a-z][a-z][0-9][0-9][0-9] "
-    if [[ " $* " =~ $RE ]] ; then
-        ROUTER=yes
-    fi
-    RE=" [ace]s[0-9][0-9].[a-z][a-z][a-z][0-9][0-9][0-9] "
-    if [[ " $* " =~ $RE ]] ; then
-        ROUTER=yes
-    fi
-    RE=" [al]r[0-9]"
-    if [[ " $* " =~ $RE ]] ; then
-        ROUTER=yes
-    fi
-    RE=" dcr[0-9][0-9].[a-z][a-z][a-z][0-9][0-9][0-9] "
-    if [[ " $* " =~ $RE ]] ; then
-        ROUTER=yes
-    fi
-    RE=" ert[0-9][0-9].[a-z][a-z][a-z][0-9][0-9][0-9] "
-    if [[ " $* " =~ $RE ]] ; then
-        ROUTER=yes
-    fi
-    RE=" o[hst][0-9][0-9].[a-z][a-z][a-z][0-9][0-9][0-9] "
-    if [[ " $* " =~ $RE ]] ; then
-        VT102=yes
-        ROUTER=yes
-    fi
-    RE=" pe[0-9][0-9].[a-z][a-z][a-z][0-9][0-9][0-9] "
-    if [[ " $* " =~ $RE ]] ; then
-        ROUTER=yes
-    fi
-    RE=" rr[0-9][0-9].[a-z][a-z][a-z][0-9][0-9][0-9] "
-    if [[ " $* " =~ $RE ]] ; then
-        ROUTER=yes
-    fi
-    RE=" wdm[0-9][0-9].[a-z][a-z][a-z][0-9][0-9][0-9] "
-    if [[ " $* " =~ $RE ]] ; then
-        ROUTER=yes
-    fi
-    RE=" fw[0-9]"
-    if [[ " $* " =~ $RE ]] ; then
-        ROUTER=yes
-    fi
-    RE=" sw[0-9]"
-    if [[ " $* " =~ $RE ]] ; then
-        ROUTER=yes
-    fi
-    RE=" cs[0-9]"
-    if [[ " $* " =~ $RE ]] ; then
-        ROUTER=yes
-    fi
+    ROUTER_RE=" ([ac]sw|[ace]s|dcr|ert|o[hst]|pe|rr|wdm)[0-9][0-9]\.[a-z][a-z][a-z][0-9][0-9][0-9] | [al]r[0-9]| fw[0-9]| sw[0-9]| cs[0-9]"
+    VT102_RE=" o[hst][0-9][0-9]\.[a-z][a-z][a-z][0-9][0-9][0-9] "
 
-    if [ "$*" == "sw02" ] ; then
-        VT102=yes
-    fi
+    [[ " $* " =~ $ROUTER_RE ]] && ROUTER=yes
+    [[ " $* " =~ $VT102_RE || "$*" == "sw02" ]] && VT102=yes
 
     if [ "$SSHR_WORKS $ROUTER" == "yes yes" ] ; then
         # SSHR works good
         if [ "$VT102" == "yes" ] ; then
-            ( TERM=vt102 $SSH "$@" {fd}>&2- 2>&1 1>&${fd} | router-colorizer ) {fd2}>&2- 2>&1 1>&${fd2} | router-colorizer
+            TERM=vt102 _ssh_colorized "$@"
         else
-            ( $SSH "$@" {fd}>&2- 2>&1 1>&${fd} | router-colorizer ) {fd2}>&2- 2>&1 1>&${fd2} | router-colorizer
+            _ssh_colorized "$@"
         fi
     else
         # No SSHR
         if [ "$VT102" == "yes" ] ; then
-            TERM=vt102 $SSH "$@"
+            TERM=vt102 command ssh "$@"
         else
-            $SSH "$@"
+            command ssh "$@"
         fi
     fi
 }
