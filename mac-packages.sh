@@ -29,7 +29,9 @@ doit() {
     brewinstall mtr
     brewinstall nmap
     brewinstall nodejs
+    brewinstall pngquant   # Quantize (go to 8 bit color depth) PNGs
     brewinstall protobuf
+    brewinstall pv         # Pipe Viewer to see throughput
     brewinstall tmux
     brewinstall readline   # GNU Readline (used by Dist::Zilla!)
     brewinstall reattach-to-user-namespace   # Used so tmux can access clipboard
