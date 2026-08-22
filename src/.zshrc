@@ -211,3 +211,8 @@ export PATH="$BUN_INSTALL/bin:$PATH"
 # bun
 export BUN_INSTALL="$HOME/.bun"
 export PATH="$BUN_INSTALL/bin:$PATH"
+
+if [ -d "$HOME/esp" ] ; then
+    # ESP32 tools
+    source $HOME/esp/esp-idf/export.sh >/dev/null 2>&1
+fi
