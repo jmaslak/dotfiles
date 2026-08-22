@@ -1,4 +1,4 @@
-" Copyright (C) 2025 Joelle Maslak
+" Copyright (C) 2025-2026 Joelle Maslak
 " Everything pretty much should be UTF-8 by now
 set encoding=utf-8
 
@@ -200,7 +200,6 @@ au FileType .ep setl nosmarttab noautoindent
 
 " Go
 au FileType go setl noet sts=8 sw=8 listchars=tab:\ \ 
-au FileType go GoInstallBinaries
 if v:version < 705 " Don't give go VIM version warnings on old VIMs
     let g:go_version_warning = 0
 endif
