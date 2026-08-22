@@ -90,3 +90,6 @@ alias d10="raku -e 'say (1..10).roll'"
 alias d12="raku -e 'say (1..12).roll'"
 alias d20="raku -e 'say (1..20).roll'"
 alias d00="raku -e 'say (1..100).roll'"
+
+alias nb="grep '\S'"          # no blank lines
+alias nz="grep -E '[^0 ]'"    # no zeros
