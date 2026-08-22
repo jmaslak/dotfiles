@@ -7,7 +7,7 @@
 
 set -euo pipefail
 
-GOLANGVER=1.26.5
+GOLANGVER=1.27.0
 BASEURL="https://go.dev/dl"
 
 doit() {
