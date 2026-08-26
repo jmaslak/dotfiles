@@ -216,3 +216,9 @@ if [ -d "$HOME/esp" ] ; then
     # ESP32 tools
     source $HOME/esp/esp-idf/export.sh >/dev/null 2>&1
 fi
+
+# kafka
+if [ -d /opt/homebrew/opt/librdkafka ] ; then
+    export C_INCLUDE_PATH=/opt/homebrew/opt/librdkafka/include
+    export LIBRARY_PATH=/opt/homebrew/opt/librdkafka/lib
+fi

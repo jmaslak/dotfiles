@@ -226,13 +226,6 @@ function tmuxsh {
 }
 
 # SSH w/ color
-# Colorizes stdout and stderr as two independent streams (each through its
-# own router-colorizer) via a double fd-swap, so neither stream's line order
-# gets mangled by merging into the other.
-_ssh_colorized() {
-    ( command ssh "$@" {fd}>&2- 2>&1 1>&${fd} | router-colorizer ) {fd2}>&2- 2>&1 1>&${fd2} | router-colorizer
-}
-
 ssh() {
     if echo | router-colorizer 2>/dev/null >/dev/null ; then
         SSHR_WORKS=yes
@@ -251,9 +244,9 @@ ssh() {
     if [ "$SSHR_WORKS $ROUTER" == "yes yes" ] ; then
         # SSHR works good
         if [ "$VT102" == "yes" ] ; then
-            TERM=vt102 _ssh_colorized "$@"
+            TERM=vt102 router-colorizer --cmd ssh -- "$@"
         else
-            _ssh_colorized "$@"
+            router-colorizer --cmd ssh -- "$@"
         fi
     else
         # No SSHR
