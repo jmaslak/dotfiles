@@ -12,6 +12,7 @@ doit() {
     # go install github.com/go-delve/delve/cmd/dlv@latest
     go install github.com/golangci/golangci-lint/v2/cmd/golangci-lint@latest
     go install github.com/jmaslak/go-busy-indicator/cmd/...@latest
+    go install github.com/jmaslak/go-task/cmd/task@latest
     go install github.com/rakyll/gotest@latest   # colorized gotest command
     go install github.com/palkan/mulint@latest  # mutex linter
     go install golang.org/x/vuln/cmd/govulncheck@latest  # Go vulnerability checker
