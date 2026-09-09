@@ -18,6 +18,7 @@ brewinstall() {
 }
 
 doit() {
+    brewinstall bat        # Alternative to cat
     brewinstall bc
     brewinstall clisp      # Common lisp
     brewinstall countdown  # Display countdown timer
