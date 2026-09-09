@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 #
-# Copyright (C) 2016-2024 Joelle Maslak
+# Copyright (C) 2016-2026 Joelle Maslak
 # All Rights Reserved - See License
 #
 
@@ -36,8 +36,6 @@ install_modules() {
 
     install_module App::Mi6
     install_module App::Heater
-    install_module App::Tasks
-    install_module BusyIndicator
     install_module cro Cro
     install_module DateTime::Monotonic
     install_module Digest::SHA1::Native

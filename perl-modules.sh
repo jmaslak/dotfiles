@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 #
-# Copyright (C) 2015-2025 Joelle Maslak
+# Copyright (C) 2015-2026 Joelle Maslak
 # All Rights Reserved - See License
 #
 
@@ -37,7 +37,6 @@ doit() {
     fi
 
     cpan install App::ccdiff
-    cpan install App::RouterColorizer
     cpan install CPAN
     cpan install JTM::Boilerplate
     cpan install Term::Tmux::Layout
