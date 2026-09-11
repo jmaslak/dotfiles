@@ -59,6 +59,9 @@ doit() {
         ros install sbcl
         ros use sbcl
     fi
+
+    # Install tmuxlayout
+    curl -fsSL https://raw.githubusercontent.com/jmaslak/tmuxlayout/main/install.sh | sh
 }
 
 doit "$@"

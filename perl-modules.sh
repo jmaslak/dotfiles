@@ -39,7 +39,6 @@ doit() {
     cpan install App::ccdiff
     cpan install CPAN
     cpan install JTM::Boilerplate
-    cpan install Term::Tmux::Layout
 }
 
 doit

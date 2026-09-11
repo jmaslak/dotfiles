@@ -1,7 +1,7 @@
 #!/bin/bash
 
 #
-# Copyright (C) 2018-2023 Joelle Maslak
+# Copyright (C) 2018-2026 Joelle Maslak
 # All Rights Reserved - See License
 #
 
@@ -71,6 +71,9 @@ doit() {
     if [ "$DISPLAY" != "" ] ; then
         sudo apt-get install -y emacs-gtk
     fi
+
+    # Install tmuxlayout
+    curl -fsSL https://raw.githubusercontent.com/jmaslak/tmuxlayout/main/install.sh | sh
 }
 
 doit "$@"
