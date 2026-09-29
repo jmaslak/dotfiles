@@ -45,3 +45,5 @@ alias d00="raku -e 'say (1..100).roll'"
 
 alias nb="grep '\S'"          # no blank lines
 alias nz="grep -E '[^0 ]'"    # no zeros
+
+alias adhd="ssh -t ubuntu.antelope.net c3270 busy.antelope.net 3270"
