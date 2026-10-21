@@ -531,8 +531,8 @@ autocmd BufNewFile *.pm exec "1,10s/<INSERT_NAME_HERE>/" . FilenameToPerlMod(exp
 set cursorline
 
 " Set up printing
-set printfont=Courier:h8
-set printoptions=number:y,paper:letter,duplex:off
+" set printfont=Courier:h8
+" set printoptions=number:y,paper:letter,duplex:off
 
 if filereadable(glob("~/.vimrc.local"))
     source ~/.vimrc.local
