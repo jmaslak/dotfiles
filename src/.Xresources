@@ -62,3 +62,19 @@ XTerm*selectToClipboard: true
 !! *color7:                S_base2
 !! *color15:               S_base3
 
+! x3270 sets grey backgrounds on its menus but no foreground, so the
+! global *foreground above would make menu text unreadable.
+x3270*menuBarContainer*foreground: black
+x3270*fileMenu*foreground:     black
+x3270*exitMenu*foreground:     black
+x3270*optionsMenu*foreground:  black
+x3270*hostMenu*foreground:     black
+x3270*macrosMenu*foreground:   black
+x3270*togglesMenu*foreground:  black
+x3270*fontsMenu*foreground:    black
+x3270*modelsMenu*foreground:   black
+x3270*colorsMenu*foreground:   black
+x3270*codepageMenu*foreground: black
+x3270*printerMenu*foreground:  black
+x3270.colorScheme.black: black dodgerBlue red magenta lime cyan yellow white darkSlateGrey blue3 orange purple paleGreen2 paleTurquoise3 lightSlateGrey whiteSmoke white black dimGrey 4 2 1 15
+x3270.colorScheme: black
