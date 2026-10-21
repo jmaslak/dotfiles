@@ -7,7 +7,7 @@
 
 set -euo pipefail
 
-GOLANGVER=1.27.0
+GOLANGVER=1.27.3
 BASEURL="https://go.dev/dl"
 
 doit() {
@@ -48,7 +48,10 @@ doit() {
     if [ -d /usr/local/go ] ; then
         sudo rm -rf /usr/local/go
     fi
-    sudo tar -xvzf "$tmpfile" --cd /usr/local
+    (
+        cd /usr/local
+        sudo tar -xvzf "$tmpfile"
+    )
     rm "$tmpfile"
 
     # shellcheck disable=SC2155
