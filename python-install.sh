@@ -5,9 +5,9 @@
 # All Rights Reserved - See License
 #
 
-PYTHON312=3.12.14
-PYTHON313=3.13.15
-PYTHON314=3.14.7
+PYTHON313=3.13.16
+PYTHON314=3.14.8
+PYTHON315=3.15.0
 
 PREFERRED="$PYTHON314"
 
@@ -43,11 +43,9 @@ doit() {
         git clone https://github.com/yyuu/pyenv-virtualenv.git pyenv-virtualenv
     fi
 
-    uninstall $PYTHON310
-    install $PYTHON311
-    install $PYTHON312
     install $PYTHON313
     install $PYTHON314
+    install $PYTHON315
 
     echo "Setting Python version to $PREFERRED"
     pyenv global "$PREFERRED"
