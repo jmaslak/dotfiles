@@ -286,4 +286,8 @@ alias d00="raku -e 'say (1..100).roll'"
 
 alias captions="flatpak run net.sapples.LiveCaptions"
 
-alias adhd="ssh -t ubuntu.antelope.net c3270 busy.antelope.net 3270"
+if [ "$(uname -s)" == "Linux" ] ; then
+    alias adhd="x3270 -model 3279-5 -efont 3270gt32 L:adhd.antelope.net:3270 &"
+else
+    alias adhd="c3270 L:adhd.antelope.net:3270"
+fi
