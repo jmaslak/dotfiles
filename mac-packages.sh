@@ -51,6 +51,8 @@ doit() {
     brewinstall wget
     brewinstall xz
 
+    brew install --cask xquartz  # OSX X server
+
     brew services start redis >/dev/null
 
     # Init roswell
