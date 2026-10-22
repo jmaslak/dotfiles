@@ -4,7 +4,7 @@
 # see /usr/share/doc/bash/examples/startup-files (in the package bash-doc)
 # for examples
 #
-# Modifications Copyright (C) 2024-2025 by Joelle Maslak
+# Modifications Copyright (C) 2024-2026 by Joelle Maslak
 
 
 # We remove anything from the PATH that begins with /mnt/c/ - this
@@ -499,3 +499,5 @@ if [ "$HASHSTATUS" == "off" ] ; then
     set +h
 fi
 
+# opencode
+export PATH=/home/jmaslak/.opencode/bin:$PATH
