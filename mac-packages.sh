@@ -49,9 +49,12 @@ doit() {
     brewinstall redis
     brewinstall watch
     brewinstall wget
+    brewinstall x3270      # X windows 3270 server
+    brewinstall xterm      # Xterm
     brewinstall xz
 
     brew install --cask xquartz  # OSX X server
+    brew install --cask font-3270  # X 3270 fonts
 
     brew services start redis >/dev/null
 
@@ -64,6 +67,16 @@ doit() {
 
     # Install tmuxlayout
     curl -fsSL https://raw.githubusercontent.com/jmaslak/tmuxlayout/main/install.sh | sh
+
+    # X3270 font
+    if [ ! -d ~/.fonts/3270 ]; then
+        mkdir -p ~/.fonts/3270
+        cp /Users/jmaslak/git/third-party/suite3270-4.6/obj/arm-apple-darwin27.0.0/x3270/3270gt32.pcf.gz ~/.fonts/3270/
+        /opt/X11/bin/mkfontdir ~/.fonts/3270
+        /opt/X11/bin/xset +fp ~/.fonts/3270
+        /opt/X11/bin/xset fp rehash
+        /opt/X11/bin/xset q | grep -A1 'Font Path'   # confirm it's listed
+    fi
 }
 
 doit "$@"
