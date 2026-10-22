@@ -46,4 +46,8 @@ alias d00="raku -e 'say (1..100).roll'"
 alias nb="grep '\S'"          # no blank lines
 alias nz="grep -E '[^0 ]'"    # no zeros
 
-alias adhd="c3270 L:adhd.antelope.net:3270"
+if [ "$DISPLAY" != "" ] ; then
+    alias adhd="x3270 -model 3279-5 -efont 3270gt32 L:adhd.antelope.net:3270 &"
+else
+    alias adhd="c3270 L:adhd.antelope.net:3270"
+fi
