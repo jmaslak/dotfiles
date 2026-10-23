@@ -20,6 +20,7 @@ brewinstall() {
 doit() {
     brewinstall bat        # Alternative to cat
     brewinstall bc
+    brewinstall bdftopcf
     brewinstall clisp      # Common lisp
     brewinstall countdown  # Display countdown timer
     brewinstall entr       # Watch files for change and exec commands
@@ -27,6 +28,7 @@ doit() {
     brewinstall graphviz
     brewinstall lesspipe   # Handle piping of less from non-files
     brewinstall librdkafka # Add kafka library
+    brewinstall mkfontscale
     brewinstall mtr
     brewinstall nmap
     brewinstall nodejs

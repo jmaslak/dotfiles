@@ -78,3 +78,4 @@ x3270*codepageMenu*foreground: black
 x3270*printerMenu*foreground:  black
 x3270.colorScheme.black: black dodgerBlue red magenta lime cyan yellow white darkSlateGrey blue3 orange purple paleGreen2 paleTurquoise3 lightSlateGrey whiteSmoke white black dimGrey 4 2 1 15
 x3270.colorScheme: black
+Xft.dpi: 151
