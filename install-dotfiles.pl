@@ -50,7 +50,7 @@ MAIN: {
         }
     }
     # Validate options
-    my (%valid) = map { $_, 1 } ( 'skipperl', 'skippython' );
+    my (%valid) = map { $_, 1 } ( 'skipperl', 'skippython', 'skipraku', 'skipclaude' );
     foreach my $arg ( sort keys %options ) {
         if ( !exists( $valid{$arg} ) ) {
             print STDERR "$arg is an unknown option\n";
@@ -65,7 +65,7 @@ MAIN: {
 
     my $network_available = network_available();
 
-    if ( ( !-f '~/.dotfile.nogit' ) || ( !exists( $ENV{DOTFILE_NOGIT} ) ) ) {
+    if ( ( !-f "$home/.dotfile.nogit" ) && ( !exists( $ENV{DOTFILE_NOGIT} ) ) ) {
         if ($network_available) {
             system "git fetch origin main >/dev/null 2>/dev/null";
             my $gitrevs = `git rev-list HEAD..origin/main | wc -l`;
@@ -103,6 +103,7 @@ MAIN: {
     install_files( $rename_old, $environment, '.config', 'src/.config', [], );
     install_vim_templates( $home, $copyright );
     install_git_config( $fullname, $email, $personal_email );
+    install_xquartz_config($home);
 
     if ( !-d "$home/tmp" ) {
         print "Creating temporary directory...";
@@ -132,7 +133,7 @@ sub assert_work_dotfiles_exist {
         exit 1;
     }
 
-    if ( ( !-f '~/.dotfile.nogit' ) || ( !exists( $ENV{DOTFILE_NOGIT} ) ) ) {
+    if ( ( !-f "$ENV{HOME}/.dotfile.nogit" ) && ( !exists( $ENV{DOTFILE_NOGIT} ) ) ) {
         chdir '../../netflix/dotfiles' or die($!);
         if ($network_available) {
             system "git fetch origin main >/dev/null 2>/dev/null";
@@ -520,6 +521,36 @@ sub install_git_config {
     } else {
         # New enough git!
         system("git config --global push.default simple");
+    }
+
+    return;
+}
+
+sub install_xquartz_config {
+    if ( scalar(@_) != 1 ) { confess 'invalid call'; }
+    my ($home) = @_;
+
+    return if $^O ne 'darwin';              # Mac only
+    return if !-x '/opt/X11/bin/xset';      # XQuartz not installed
+
+    my $current = getcwd;
+    my $dstdir  = "$home/.xinitrc.d";
+    mkdir $dstdir unless ( -d $dstdir );
+
+    opendir( my $dh, "$current/xquartz" );
+    my @files = sort grep { m/\.sh$/ } readdir($dh);
+    closedir $dh;
+
+    foreach my $file (@files) {
+        print "XQuartz: $file -> ";
+        if ( -e "$dstdir/$file" || -l "$dstdir/$file" ) {
+            print "file already exists, skipping\n";
+            next;
+        }
+
+        print "symlinking ... ";
+        symlink( "$current/xquartz/$file", "$dstdir/$file" );
+        print "done\n";
     }
 
     return;
